@@ -1,4 +1,3 @@
-export QTDIR=/opt/qt/4.7.4.vivox
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -6,6 +5,3 @@ export QTDIR=/opt/qt/4.7.4.vivox
 if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
 fi
-
-#set QT path
-set QTDIR=/opt/qt/4.7.4.vivox
