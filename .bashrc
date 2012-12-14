@@ -1,5 +1,6 @@
 #Platform detection 
 OS=${OSTYPE//[0-9.]/}
+
 echo ${OS}
 
 # Alias definitions.
@@ -9,6 +10,9 @@ echo ${OS}
 if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
 fi
+
+#default editor
+export EDITOR=$(which emacs)
 
 #grep highlighting 
 export GREP_OPTIONS='--color=auto' GREP_COLOR='01;31'
