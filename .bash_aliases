@@ -1,8 +1,19 @@
+#OS detection 
+OS=${OSTYPE//[0-9.]/}
+
 #GENERAL
-alias em='open -a /Applications/Emacs.app'
+alias em=emacs
 alias l='ls -AG'
 alias ll='ls -AGlh'
 alias dif='svn diff | less'
 alias ss='svn stat'
+
+#VIVOX SPECIFICS
+=======
+
+#OS Specific
+if [ "$OS" == 'darwin' ]; then
+alias em='open -a /Applications/Emacs.app'
+fi
 
 #VIVOX SPECIFICS
