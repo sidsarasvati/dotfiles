@@ -4,21 +4,10 @@
 
 
 ;;http://alexott.net/en/writings/emacs-devenv/EmacsCedet.html
-(load-file "~/tools/cedet-bzr/trunk/cedet-devel-load.el")      ; Loading CDET 
-(require 'semantic/ia)
-(require 'semantic/bovine/gcc)
+(load-file "~/.emacs.d/cedet-1.1/common/cedet.el")      ; Loading CDET 
 
-;;(add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode)
-(add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode)
-(add-to-list 'semantic-default-submodes 'global-semantic-highlight-func-mode)
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode)
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode)
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode)
-(add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode)
-
-
-;;(semantic-mode 1)                                              ; Enable Semantic
-(global-ede-mode t)                                            ; Enable (EDE) Project Management System
+;;enable semantic
+(semantic-load-enable-gaudy-code-helpers)
 
 ;;imenu integration
 (defun my-semantic-hook ()
