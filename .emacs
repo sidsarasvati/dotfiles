@@ -73,7 +73,9 @@ SCROLL-Up is non-nil to scroll up one line, nil to scroll down."
 ;; key bidings
 (global-set-key "\C-\M-n" 'scroll-up-in-place)
 (global-set-key "\C-\M-p" 'scroll-down-in-place)
+(global-set-key "\C-\M-o" 'scroll-down-in-place)
 
+(global-set-key "\C-x\C-g" 'find-file)
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-c\C-m" 'execute-extended-command)
 
