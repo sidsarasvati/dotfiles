@@ -13,7 +13,6 @@
 
 ;;end Loading custom scripts 
 
-
 (progn
   (load "cc-mode")
   (c-add-style "Kenstir"
