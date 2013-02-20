@@ -1,3 +1,6 @@
+;;Load Paths
+(add-to-list 'load-path "~/.emacs.d/")
+
 (setq default-tab-width 4)              ; Tab width = 4 
 (setq-default indent-tabs-mode nil)     ; Tab inserts spaces only
 (setq mac-command-modifier 'meta)       ;Sets the command (Apple) key as Meta
@@ -5,11 +8,11 @@
 ;;Loading Custom Scripts
 
 ;;CEDET
-(load-file ".emacs.d/cedet.el") 
+(load "cedet.el") 
 ;;Navigation fucntions and key binding
-(load-file ".emacs.d/scroll.el")
+(load "scroll.el")
 ;;KeyBindings
-(load-file ".emacs.d/keybindings.el")  
+(load "my-convenience.el")  
 
 ;;end Loading custom scripts 
 
@@ -27,10 +30,6 @@
                                      (statement-cont . +)
                                      ))
                  ))
-
-
-;; productivuty features 
-
 
 ;; someday might want to rotate windows if more than 2 of them
 (defun swap-windows ()
@@ -66,7 +65,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ede-project-directories (quote ("/home/sid/dev/asterisk-11.1.0-vivox")))
  '(inhibit-startup-screen t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
