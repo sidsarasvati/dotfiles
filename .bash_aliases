@@ -8,9 +8,6 @@ alias ll='ls -AGlh'
 alias dif='svn diff | less'
 alias ss='svn stat'
 
-#VIVOX SPECIFICS
-=======
-
 #OS Specific
 if [ "$OS" == 'darwin' ]; then
 alias em='open -a /Applications/Emacs.app'
