@@ -1,7 +1,7 @@
 #Platform detection 
 OS=${OSTYPE//[0-9.]/}
 
-echo ${OS}
+# echo ${OS}
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
