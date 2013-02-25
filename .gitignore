@@ -1,24 +1,29 @@
 #General 
-*.*~
-#*
+*~
+*#
+_*
 
+.gitconfig
 *.log
 .bash_history
+.history
 
+.semanticdb/
 
 #OSX 
+.DS_Store*
+.Trash/
+Desktop/
+Documents/
+Downloads/
+Library/
+Movies/
+Music/
+Pictures/
+Public/
 
-.DS_Store
-.DS_Store?
-/.Trash
-/Desktop
-/Documents 
-/Downloads
-/Library
-/Movies
-/Music
-/Pictures
-/Public
+#Windows 
+
 
 
 
