@@ -11,8 +11,9 @@ fi
 #default editor
 export EDITOR=$(which emacs)
 
-#grep highlighting 
-export GREP_OPTIONS='--color=auto' GREP_COLOR='01;31'
+#GREP
+export GREP_COLOR='01;31'
+export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.svn_base --exclude-dir=.temp --color=auto'
 
 #auto corrects case
 shopt -s nocaseglob
