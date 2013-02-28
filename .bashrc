@@ -13,7 +13,7 @@ export EDITOR=$(which emacs)
 
 #GREP
 export GREP_COLOR='01;31'
-export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.svn_base --exclude-dir=.temp --color=auto'
+export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.svn_base --exclude-dir=.temp --exclude-dir=build/ --color=auto'
 
 #auto corrects case
 shopt -s nocaseglob

@@ -13,6 +13,12 @@
 (load "scroll.el")
 ;;KeyBindings
 (load "my-convenience.el")  
+;;cmake-mode
+(require 'cmake-mode)
+(setq auto-mode-alist
+      (append '(("CMakeLists\\.txt\\'" . cmake-mode)
+                ("\\.cmake\\'" . cmake-mode))
+              auto-mode-alist))
 
 ;;end Loading custom scripts 
 
@@ -30,6 +36,8 @@
                                      (statement-cont . +)
                                      ))
                  ))
+
+
 
 ;; someday might want to rotate windows if more than 2 of them
 (defun swap-windows ()
