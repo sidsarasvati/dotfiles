@@ -3,6 +3,7 @@ OS=${OSTYPE//[0-9.]/}
 
 #GENERAL
 alias em=emacs
+alias g=grep
 alias l='ls -AG'
 alias ll='ls -AGlh'
 alias dif='svn diff | less'
