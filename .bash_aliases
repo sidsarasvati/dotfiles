@@ -1,5 +1,5 @@
 #OS detection 
-//TODO - try usign uname instead... confirm if it works on windows and linux
+#TODO - try usign uname instead... confirm if it works on windows and linux
 OS=${OSTYPE//[0-9.]/}
 
 #OS Specific
