@@ -9,7 +9,8 @@
 
 ;;buffer management 
 (global-set-key "\M-1" 'delete-other-windows)
-(global-set-key "\M-`" 'previous-buffer)
+(global-set-key "\M--" 'previous-buffer)
+(global-set-key "\M-=" 'next-buffer)
 
 ;;window management
 ;;using meta as modifier for windmove
