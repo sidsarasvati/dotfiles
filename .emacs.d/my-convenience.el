@@ -13,11 +13,11 @@
 
 ;;window management
 ;;using meta as modifier for windmove
-(windmove-default-keybindings 'shift)
-(global-set-key "\S-W" 'windmove-up)
-(global-set-key "\S-S" 'windmove-down)
-(global-set-key "\S-A" 'windmove-left)
-(global-set-key "\S-D" 'windmove-right)
+(windmove-default-keybindings 'meta)
+(global-set-key "\M-\C-w" 'windmove-up)
+(global-set-key "\M-\C-s" 'windmove-down)
+(global-set-key "\M-\C-a" 'windmove-left)
+(global-set-key "\M-\C-d" 'windmove-right)
 
 ;;MODE SPECIFIC
 
