@@ -13,6 +13,10 @@
 (global-set-key "\M-1" 'delete-other-windows)
 (global-set-key "\M-`" 'previous-buffer)
 
+;;window management
+;;using meta as modifier for windmove
+(windmove-default-keybindings 'meta)
+
 
 ;;MODE SPECIFIC
 
