@@ -4,6 +4,8 @@
 (global-set-key "\C-x\C-g" 'find-file)
 (global-set-key "\M-k" 'kill-buffer)
 
+;;keybinding macros
+(global-set-key "\C-\M-y" "\C-a\C- \C-n\M-w\C-y\C-p")
 ;;other useful stuff
 ;;(global-set-key "\M-g" 'grep)
 
