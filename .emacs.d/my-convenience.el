@@ -12,15 +12,16 @@
 ;;buffer management 
 (global-set-key "\M-1" 'delete-other-windows)
 (global-set-key "\M--" 'previous-buffer)
+(global-set-key "\M-`" 'previous-buffer) ;; dup for convenience and past habit hangover :) 
 (global-set-key "\M-=" 'next-buffer)
 
 ;;window management
 ;;using meta as modifier for windmove
 (windmove-default-keybindings 'meta)
-(global-set-key "\M-\C-w" 'windmove-up)
-(global-set-key "\M-\C-s" 'windmove-down)
-(global-set-key "\M-\C-a" 'windmove-left)
-(global-set-key "\M-\C-d" 'windmove-right)
+(global-set-key "\M-7" 'windmove-up)
+(global-set-key "\M-0" 'windmove-down)
+(global-set-key "\M-8" 'windmove-left)
+(global-set-key "\M-9" 'windmove-right)
 
 ;;MODE SPECIFIC
 
