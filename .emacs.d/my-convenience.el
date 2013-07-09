@@ -10,7 +10,6 @@
 ;;(global-set-key "\M-g" 'grep)
 
 ;;buffer management 
-(global-set-key "\M-1" 'delete-other-windows)
 (global-set-key "\M--" 'previous-buffer)
 (global-set-key "\M-`" 'previous-buffer) ;; dup for convenience and past habit hangover :) 
 (global-set-key "\M-=" 'next-buffer)
@@ -18,10 +17,15 @@
 ;;window management
 ;;using meta as modifier for windmove
 (windmove-default-keybindings 'meta)
-(global-set-key "\M-8" 'windmove-up)
-(global-set-key "\M-9" 'windmove-down)
-(global-set-key "\M-7" 'windmove-left)
-(global-set-key "\M-0" 'windmove-right)
+;;need to unset keys
+(global-unset-key kbd("\C-1"))
+;;(global-unset-key "\C-2")
+;;(global-unset-key "\C-3")
+;;(global-unset-key "\C-4")
+;;(global-set-key "\C-\M-2" 'windmove-up)
+(global-set-key "\M-3" 'windmove-down)
+(global-set-key "\M-1" 'windmove-left)
+(global-set-key "\M-4" 'windmove-right)
 
 ;;MODE SPECIFIC
 
