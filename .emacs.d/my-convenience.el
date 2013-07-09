@@ -17,12 +17,7 @@
 ;;window management
 ;;using meta as modifier for windmove
 (windmove-default-keybindings 'meta)
-;;need to unset keys
-(global-unset-key kbd("\C-1"))
-;;(global-unset-key "\C-2")
-;;(global-unset-key "\C-3")
-;;(global-unset-key "\C-4")
-;;(global-set-key "\C-\M-2" 'windmove-up)
+(global-set-key "\M-2" 'windmove-up)
 (global-set-key "\M-3" 'windmove-down)
 (global-set-key "\M-1" 'windmove-left)
 (global-set-key "\M-4" 'windmove-right)
