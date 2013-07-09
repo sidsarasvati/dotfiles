@@ -18,10 +18,10 @@
 ;;window management
 ;;using meta as modifier for windmove
 (windmove-default-keybindings 'meta)
-(global-set-key "\M-7" 'windmove-up)
-(global-set-key "\M-0" 'windmove-down)
-(global-set-key "\M-8" 'windmove-left)
-(global-set-key "\M-9" 'windmove-right)
+(global-set-key "\M-8" 'windmove-up)
+(global-set-key "\M-9" 'windmove-down)
+(global-set-key "\M-7" 'windmove-left)
+(global-set-key "\M-0" 'windmove-right)
 
 ;;MODE SPECIFIC
 
