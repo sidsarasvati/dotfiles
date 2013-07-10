@@ -54,7 +54,7 @@
  (set-window-start w1 s2)
  (set-window-start w2 s1)))))
 
-(global-set-key (kbd "M-2") 'swap-windows)
+;;(global-set-key (kbd "M-2") 'swap-windows)
 
   ;; See also kc-c-mode-common-hook above.
   (defun kc-c-mode-hook ()
