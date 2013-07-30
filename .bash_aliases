@@ -9,7 +9,7 @@ fi
 
 
 #GENERAL
-alias em=emacs
+alias em=runemacs
 alias g=grep
 
 #LIST#
@@ -29,6 +29,7 @@ alias ll='ls -Alh'
 #SVN
 alias dif='svn diff | less'
 alias ss='svn stat'
+alias sl='svn log'
 
 #GIT
 
