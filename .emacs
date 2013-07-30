@@ -80,3 +80,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(add-hook 'diff-mode-hook '(lambda () (require 'ansi-color)(ansi-color-apply-on-region (point-min) (point-max))))
