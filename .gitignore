@@ -1,14 +1,27 @@
-#General 
+############# General ############
+
+#FILES
 *~
 *#
 _*
 
-.gitconfig
 *.log
+*.ini
+*.last
+
+.profile
+.inputrc
+.recentf
+.lesshst
+.gitconfig
 .bash_history
 .history
 
+#DIRECTORIES
 .semanticdb/
+.ssh/
+
+########## PLATFORM SPECIFICS ############
 
 #OSX 
 .DS_Store*
@@ -22,8 +35,12 @@ Music/
 Pictures/
 Public/
 
-#Windows 
+#WINDOWS
 
+
+############# SPECIFICS #############
+
+.dia/
 
 
 
