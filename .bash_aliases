@@ -8,11 +8,10 @@ alias em='open -a /Applications/Emacs.app'
 fi
 
 
-#GENERAL
+############  GENERAL  #############
 alias em=runemacs
 alias g=grep
 
-#LIST#
 if [[ `uname` == 'Darwin' ]]; then
   alias ls="ls -G"
   # good for dark backgrounds
@@ -25,6 +24,8 @@ else
 fi
 alias la='ls -A'
 alias ll='ls -Alh'
+
+alias hl='--help | less'
 
 #SVN
 alias dif='svn diff | less'
