@@ -13,6 +13,9 @@ fi
 
 #default editor
 export EDITOR=$(which emacs)
+if [ "$OS" == 'cygwin' ]; then
+export EDITOR=emacs
+fi
 
 #GREP
 export GREP_COLOR='01;31'
