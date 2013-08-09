@@ -19,6 +19,9 @@
       (append '(("CMakeLists\\.txt\\'" . cmake-mode)
                 ("\\.cmake\\'" . cmake-mode))
               auto-mode-alist))
+;;dos mode
+(require 'dos)
+(add-to-list 'auto-mode-alist '("\\.bat\\'" . dos-mode))
 
 ;;end Loading custom scripts 
 
