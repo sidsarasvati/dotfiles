@@ -10,7 +10,7 @@ fi
 
 ############  GENERAL  #############
 alias em=runemacs
-alias g=grep
+alias g=grep -i
 
 if [[ `uname` == 'Darwin' ]]; then
   alias ls="ls -G"
