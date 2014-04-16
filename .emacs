@@ -8,7 +8,7 @@
 ;;Loading Custom Scripts
 
 ;;CEDET
-(load "cedet.el") 
+;;(load "cedet.el") 
 ;;Navigation fucntions and key binding
 (load "scroll.el")
 (load "my-convenience.el")  
