@@ -1,15 +1,14 @@
-#OS detection 
-#TODO - try usign uname instead... confirm if it works on windows and linux
-OS=${OSTYPE//[0-9.]/}
-
 #OS Specific
+
+#todo: need fix for *nix
 if [ "$OS" == 'darwin' ]; then
 alias em='open -a /Applications/Emacs.app'
+else
+alias em=runemacs
 fi
 
 
 ############  GENERAL  #############
-alias em=runemacs
 alias g="grep -i"
 alias eg="grep -E -i"
 alias fg="grep -F -i"
