@@ -25,10 +25,13 @@ _*
 
 #OSX 
 .DS_Store*
+.cups/
 .Trash/
+.CFUserTextEncoding
 Desktop/
 Documents/
 Downloads/
+Applications/
 Library/
 Movies/
 Music/
