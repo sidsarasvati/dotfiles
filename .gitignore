@@ -27,6 +27,8 @@ _*
 .DS_Store*
 .cups/
 .Trash/
+.subversion/
+.hgrc
 .CFUserTextEncoding
 Desktop/
 Documents/
