@@ -12,6 +12,7 @@ fi
 alias g="grep -i"
 alias eg="grep -E -i"
 alias fg="grep -F -i"
+alias env="env | sort"
 
 if [[ `uname` == 'Darwin' ]]; then
   alias ls="ls -G"
