@@ -4,7 +4,7 @@
 if [ "$OS" == 'darwin' ]; then
 alias em='open -a /Applications/Emacs.app'
 else
-alias em=runemacs
+alias em=emacs
 fi
 
 
