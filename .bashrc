@@ -12,7 +12,7 @@ if [ -f ~/.bash_aliases ]; then
 fi
 # Org. Specific definitions.
 #N.B This should called last to override any general behavior
-if [ -f ~/.bash_aliases ]; then
+if [ -f ~/.bash_aliases_org ]; then
 . ~/.bash_aliases_org
 fi
 
