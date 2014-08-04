@@ -1,0 +1,7 @@
+############  Cogito  #############
+alias mod='modula'
+
+#Source Control overrides
+alias dif='hg diff | less'
+alias ss='hg stat'
+alias sl='hg log'

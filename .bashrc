@@ -10,6 +10,11 @@ PATH="/usr/local/bin:$PATH"
 if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
 fi
+# Org. Specific definitions.
+#N.B This should called last to override any general behavior
+if [ -f ~/.bash_aliases ]; then
+. ~/.bash_aliases_org
+fi
 
 #default editor
 export EDITOR=$(which emacs)
