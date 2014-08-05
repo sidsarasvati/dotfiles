@@ -16,10 +16,13 @@ _*
 .gitconfig
 .bash_history
 .history
+.hgrc
+.hgignore
 
 #DIRECTORIES
 .semanticdb/
 .ssh/
+src/
 
 ########## PLATFORM SPECIFICS ############
 
