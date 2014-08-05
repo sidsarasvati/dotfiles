@@ -6,6 +6,7 @@ eval `ssh-agent -s`
 ssh-add
 
 alias mod='modula'
+alias modb='modula build'
 alias modg='modula graph'
 alias modgm='modula graph modules'
 alias modx='modula graph modules exec'
