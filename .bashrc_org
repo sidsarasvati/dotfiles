@@ -2,8 +2,13 @@
 export set HGREPO42=ssh://hg@10.0.1.42
 export JAVA_HOME=/usr/java/jdk1.7.0_15/
 eval `~/src/Platform/Cogito/Toolset/Modula/BUILD/bin/modula init`
+eval `ssh-agent -s`
+ssh-add
 
 alias mod='modula'
+alias modg='modula graph'
+alias modgm='modula graph modules'
+alias modx='modula graph modules exec'
 
 #Source Control overrides
 alias dif='hg diff | less'
