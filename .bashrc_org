@@ -1,7 +1,12 @@
 ############  Cogito  #############
+export set HGREPO42=ssh://hg@10.0.1.42
+export JAVA_HOME=/usr/java/jdk1.7.0_15/
+eval `~/src/Platform/Cogito/Toolset/Modula/BUILD/bin/modula init`
+
 alias mod='modula'
 
 #Source Control overrides
 alias dif='hg diff | less'
 alias ss='hg stat'
 alias sl='hg log'
+
