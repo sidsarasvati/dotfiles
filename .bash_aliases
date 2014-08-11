@@ -27,6 +27,7 @@ else
 fi
 alias la='ls -A'
 alias ll='ls -Alh'
+alias l='ls -Alh'
 
 alias hl='--help | less'
 
