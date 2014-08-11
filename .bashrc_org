@@ -11,10 +11,12 @@ alias modgm='modula graph modules'
 alias modx='modula graph modules exec'
 
 #modula operations 
+alias modx-br='modula graph modules exec "hg branch"'
 alias modx-cl='modula graph modules exec "rm -rf BUILD/"'
 alias modx-st='modula graph modules exec "hg status"'
 alias modx-dif='modula graph modules exec "hg diff"'
 alias modx-sum='modula graph modules exec "hg sum"'
+
 
 alias modg1='modula graph | egrep -v "\s{5}"'
 alias modg2='modula graph | egrep -v "\s{9}"'
