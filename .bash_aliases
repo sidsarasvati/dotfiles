@@ -11,7 +11,6 @@ fi
 ############  GENERAL  #############
 alias g="grep -i"
 alias eg="grep -E -i"
-alias fg="grep -F -i"
 alias env="env | sort"
 alias pd=pushd
 
