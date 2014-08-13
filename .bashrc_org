@@ -33,3 +33,9 @@ alias dif='hg diff | less'
 alias ss='hg stat'
 alias sl='hg log'
 
+hg_branchdiff() {
+#todo error check and usage message
+hg diff -r "branch ('$1') - branch ('$2')"
+}
+alias branchdiff=hg_branchdiff
+
