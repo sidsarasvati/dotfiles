@@ -35,7 +35,9 @@ alias sl='hg log'
 
 hg_branchdiff() {
 #todo error check and usage message
-hg diff -r "branch ('$1') - branch ('$2')"
+SRC=eval `hg branch`
+DEST="EnterpriseSuite_1_5_0"
+hg diff -r "branch ('$SRC') - branch ('$DEST')"
 }
 alias branchdiff=hg_branchdiff
 
