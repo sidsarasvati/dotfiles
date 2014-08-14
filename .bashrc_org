@@ -1,5 +1,6 @@
 ############  Cogito  #############
-export set HGREPO42=ssh://hg@10.0.1.42
+export HGREPO42=ssh://hg@10.0.1.42
+export COGITO_NAS=nas01
 export JAVA_HOME=/usr/java/jdk1.7.0_15/
 export PATH=$PATH:$HOME/tools/arcanist/bin
 eval `~/src/Platform/Cogito/Toolset/Modula/BUILD/bin/modula init`
@@ -10,6 +11,18 @@ alias modb='modula build'
 alias modg='modula graph'
 alias modgm='modula graph modules'
 alias modx='modula graph modules exec'
+
+#mount nas01 drives
+function nasmount
+{
+   if (( $# == 1 )); then
+       sudo mount -t cifs //${COGITO_NAS}/${1} ~/mnt/${1} -o username=`id -un`,uid=`id -un`,gid=`id -gn`;
+   elif (( $# == 2 )); then
+       sudo mount -t cifs //${COGITO_NAS}/${1} ~/mnt/${1} -o username=${2},uid=`id -un`,gid=`id -gn`;
+   fi
+}
+nasmount share
+nasmount Software
 
 #modula operations 
 alias modx-br='modula graph modules exec "hg branch"'
