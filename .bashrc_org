@@ -21,8 +21,6 @@ function nasmount
        sudo mount -t cifs //${COGITO_NAS}/${1} ~/mnt/${1} -o username=${2},uid=`id -un`,gid=`id -gn`;
    fi
 }
-nasmount share
-nasmount Software
 
 #modula operations 
 alias modx-br='modula graph modules exec "hg branch"'
