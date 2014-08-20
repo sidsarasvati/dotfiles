@@ -25,6 +25,23 @@
   (add-to-list 'package-archives source t))
 (package-initialize)
 
+;;maybe in future 
+;;; Required packages
+;;; everytime emacs starts, it will automatically check if those packages are
+;;; missing, it will install them automatically
+(when (not package-archive-contents)
+  (package-refresh-contents))
+(defvar tmtxt/packages
+  '(package1 package2 package3 package4 package5))
+(dolist (p tmtxt/packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
+
+;;Replace package1 package2 package3 package4 package5 with the packages that you want.
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 ;;cmake-mode
 (require 'cmake-mode)
 (setq auto-mode-alist
@@ -65,7 +82,6 @@
     ;; default value.
     (modify-syntax-entry ?: "_"))
   (add-hook 'c++-mode-hook 'kc-c++-mode-hook))
-
 
 ;; experimenting with cc coding style
 ;; writing below the original code so that I only override and not omit
