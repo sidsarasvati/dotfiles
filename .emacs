@@ -88,27 +88,24 @@
 ;; writing below the original code so that I only override and not omit
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
-;; no indent under namespaces 
-(defconst my-cc-style
-  '("cc-mode"
-    (c-offsets-alist . ((innamespace . [0])))))
-(c-add-style "my-cc-mode" my-cc-style)
-
-(defconst my-cc-style
-  '("gnu"
-    (c-offsets-alist . ((innamespace . [4])))))
-(c-add-style "my-cc-style" my-cc-style)
-
 (require 'autopair)
 (autopair-global-mode 1)
 (setq autopair-autowrap t)
+
+;; whitespace-mode
+;; highlight lines more than 80 chars
+;; free of trailing whitespace and to use 80-column width, standard indentation
+(setq whitespace-style '(trailing lines space-before-tab
+                                  indentation space-after-tab)
+      whitespace-line-column 80)
+(global-whitespace-mode 1)
 
 ;; someday might want to rotate windows if more than 2 of them
 (defun swap-windows ()
  "If you have 2 windows, it swaps them." (interactive) (cond ((not (= (count-windows) 2)) (message "You need exactly 2 windows to do this."))
  (t
  (let* ((w1 (first (window-list)))
-	 (w2 (second (window-list)))
+ 	 (W2 (second (window-list)))
 	 (b1 (window-buffer w1))
 	 (b2 (window-buffer w2))
 	 (s1 (window-start w1))
