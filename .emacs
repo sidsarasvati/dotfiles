@@ -56,7 +56,7 @@
 
 (progn
   (load "cc-mode")
-  (c-add-style "Kenstir"
+  (c-add-style "sid-cxx-style"
                '((c-basic-offset . 4)
                  (c-tab-always-indent . nil)
                  (tab-width . 8)
@@ -73,12 +73,12 @@
 
   ;; See also kc-c-mode-common-hook above.
   (defun kc-c-mode-hook ()
-    (c-set-style "Kenstir"))
+    (c-set-style "sid-cxx-style"))
   (add-hook 'c-mode-hook 'kc-c-mode-hook)
 
   ;; See also kc-c-mode-common-hook above.
   (defun kc-c++-mode-hook ()
-    (c-set-style "Kenstir")
+    (c-set-style "sid-cxx-style")
     ;; Make ':' a symbol constituent char so that find-tag gets the right
     ;; default value.
     (modify-syntax-entry ?: "_"))
