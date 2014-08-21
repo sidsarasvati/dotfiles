@@ -86,9 +86,20 @@
 ;; experimenting with cc coding style
 ;; writing below the original code so that I only override and not omit
 (require 'cc-mode)
-(setq-default c-basic-offset 2 c-default-style "linux")
+(setq-default c-basic-offset 4 c-default-style "linux")
 (setq-default tab-width 4 indent-tabs-mode t)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+
+;; no indent under namespaces 
+(defconst my-cc-style
+  '("cc-mode"
+    (c-offsets-alist . ((innamespace . [0])))))
+(c-add-style "my-cc-mode" my-cc-style)
+
+(defconst my-cc-style
+  '("gnu"
+    (c-offsets-alist . ((innamespace . [4])))))
+(c-add-style "my-cc-style" my-cc-style)
 
 (require 'autopair)
 (autopair-global-mode 1)
