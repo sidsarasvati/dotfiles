@@ -12,6 +12,36 @@
 ;;Navigation fucntions and key binding
 (load "scroll.el")
 (load "my-convenience.el")  
+
+;;package management 
+;;; Emacs is not a package manager, and here we load its package manager!
+(require 'package)
+(dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
+                  ("elpa" . "http://tromey.com/elpa/")
+                  ;; TODO: Maybe, use this after emacs24 is released
+                  ;; (development versions of packages)
+                  ("melpa" . "http://melpa.milkbox.net/packages/")
+                  ))
+  (add-to-list 'package-archives source t))
+(package-initialize)
+
+;;maybe in future 
+;;; Required packages
+;;; everytime emacs starts, it will automatically check if those packages are
+;;; missing, it will install them automatically
+;;(when (not package-archive-contents)
+;;  (package-refresh-contents))
+;;(defvar tmtxt/packages
+;;  '(package1 package2 package3 package4 package5))
+;;(dolist (p tmtxt/packages)
+;;  (when (not (package-installed-p p))
+;;    (package-install p)))
+
+;;Replace package1 package2 package3 package4 package5 with the packages that you want.
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 ;;cmake-mode
 (require 'cmake-mode)
 (setq auto-mode-alist
@@ -40,6 +70,29 @@
                  ))
 
 
+  ;; See also kc-c-mode-common-hook above.
+  (defun kc-c-mode-hook ()
+    (c-set-style "Kenstir"))
+  (add-hook 'c-mode-hook 'kc-c-mode-hook)
+
+  ;; See also kc-c-mode-common-hook above.
+  (defun kc-c++-mode-hook ()
+    (c-set-style "Kenstir")
+    ;; Make ':' a symbol constituent char so that find-tag gets the right
+    ;; default value.
+    (modify-syntax-entry ?: "_"))
+  (add-hook 'c++-mode-hook 'kc-c++-mode-hook))
+
+;; experimenting with cc coding style
+;; writing below the original code so that I only override and not omit
+(require 'cc-mode)
+(setq-default c-basic-offset 2 c-default-style "linux")
+(setq-default tab-width 4 indent-tabs-mode t)
+(define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+
+(require 'autopair)
+(autopair-global-mode 1)
+(setq autopair-autowrap t)
 
 ;; someday might want to rotate windows if more than 2 of them
 (defun swap-windows ()
@@ -58,18 +111,6 @@
 
 ;;(global-set-key (kbd "M-2") 'swap-windows)
 
-  ;; See also kc-c-mode-common-hook above.
-  (defun kc-c-mode-hook ()
-    (c-set-style "Kenstir"))
-  (add-hook 'c-mode-hook 'kc-c-mode-hook)
-
-  ;; See also kc-c-mode-common-hook above.
-  (defun kc-c++-mode-hook ()
-    (c-set-style "Kenstir")
-    ;; Make ':' a symbol constituent char so that find-tag gets the right
-    ;; default value.
-    (modify-syntax-entry ?: "_"))
-  (add-hook 'c++-mode-hook 'kc-c++-mode-hook))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

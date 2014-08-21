@@ -37,4 +37,7 @@ alias sl='svn log'
 
 #GIT
 
+#HG
+alias hgblog='hg log -b .'
+
 #VIVOX SPECIFICS
