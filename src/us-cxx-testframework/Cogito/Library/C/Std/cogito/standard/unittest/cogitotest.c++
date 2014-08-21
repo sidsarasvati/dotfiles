@@ -1,4 +1,6 @@
 #include "cogito/standard/unittest/cogitotest.h++"
+#include "cogito/standard/log/logger.h++"
+
 #include <iostream>
 
 namespace cogito {
@@ -10,11 +12,11 @@ namespace cogito {
         Test::~Test() {}
 
         void Test::Setup() {
-            cout << "Setup: Test\n";
+            LOG_INFO("Setup: Test\n");
         }
 
         void Test::Teardown() {
-            cout << "Teardown: Test\n";
+            LOG_INFO("Teardown: Test\n");
         }
 
         void Test::Run() {
