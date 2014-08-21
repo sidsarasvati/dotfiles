@@ -10,5 +10,5 @@ clear Mod2
 keycode 63 = Meta_L
 keycode 66 = Meta_L2
 keycode 69 = Mode_X11
-add Mod1 = Meta_L  Meta_L2
+add Mod1 = Meta_L Meta_L2
 add Mod2 = Mode_X11
