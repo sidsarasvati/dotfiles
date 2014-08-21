@@ -66,6 +66,7 @@
                                      (substatement-open . 0)
                                      (label . 0)
                                      (statement-cont . +)
+									 (innamespce . 0)
                                      ))
                  ))
 
@@ -85,9 +86,6 @@
 
 ;; experimenting with cc coding style
 ;; writing below the original code so that I only override and not omit
-(require 'cc-mode)
-(setq-default c-basic-offset 4 c-default-style "linux")
-(setq-default tab-width 4 indent-tabs-mode t)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
 ;; no indent under namespaces 
