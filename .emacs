@@ -13,6 +13,10 @@
 (load "scroll.el")
 (load "my-convenience.el")
 
+;; Preferences                          *** ----------------------------
+(setq make-backup-files nil)            ;;; Don't make backup files
+(setq column-number-mode t)             ;;; Put column number in display
+                                        ;;; -----------------------------
 ;;package management
 ;;; Emacs is not a package manager, and here we load its package manager!
 (require 'package)
