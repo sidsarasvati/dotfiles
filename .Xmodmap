@@ -1,6 +1,14 @@
+! undo anything already set
+! mod1 is meta/modifier key, mod2 x11 mod, Control is emacs
+! control key
 clear Mod1
 clear Mod2
-keycode 63 = Mode_switch
-keycode 66 = Meta_L
-add Mod1 = Meta_L
-add Mod2 = Mode_switch
+
+! keycodes 63 and 71 are the left and right COMMAND buttons 
+! adjacent to the spacebar
+! keycodes 66 and 69 are the option/alt keys 
+keycode 63 = Meta_L
+keycode 66 = Meta_L2
+keycode 69 = Mode_X11
+add Mod1 = Meta_L  Meta_L2
+add Mod2 = Mode_X11
