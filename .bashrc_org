@@ -1,6 +1,6 @@
 ############  Cogito  #############
 export HGREPO42=ssh://hg@10.0.1.42
-export COGITO_NAS=nas01
+export COGITO_NAS=nas01.cogitohealth.net
 export JAVA_HOME=/usr/java/jdk1.7.0_15/
 export PATH=$PATH:$HOME/tools/arcanist/bin
 eval `~/src/Platform/Cogito/Toolset/Modula/BUILD/bin/modula init`
