@@ -1,0 +1,19 @@
+[ui]
+username = Sid Sarasvati <sid@cogitocorp.com>
+ignore = ~/.hgignore
+
+[extensions]
+graphlog =
+color =
+purge =
+
+[alias]
+lga = glog --style=~/.hgrc.d/map_cmdline.lg
+# Nuke everything in the working copy
+nuke = !hg up -C . && hg clean
+
+[ui]
+merge = emacs
+
+[merge-tools] 
+emacs.args = -q --eval "(ediff-merge-with-ancestor \""$local"\" \""$other"\" \""$base"\" nil \""$output"\")"
