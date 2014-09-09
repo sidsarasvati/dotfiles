@@ -1,4 +1,4 @@
-#Platform detection 
+#Platform detection
 OS=${OSTYPE//[0-9.]/}
 
 # echo ${OS}
