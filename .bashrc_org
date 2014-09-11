@@ -5,6 +5,7 @@ export JAVA_HOME=/usr/java/jdk1.7.0_15/
 export PATH=$PATH:$HOME/tools/arcanist/bin
 eval `~/src/Platform/Cogito/Toolset/Modula/BUILD/bin/modula init`
 eval `ssh-agent -s`
+ssh-add
 
 alias mod='modula'
 alias modb='modula build'
@@ -40,7 +41,7 @@ alias modg2='modula graph | egrep -v "\s{9}"'
 alias modg3='modula graph | egrep -v "\s{13-"'
 
 #Source Control overrides
-alias dif='hg diff | less'
+alias dif='hg diff'
 alias ss='hg stat'
 alias sl='hg log'
 
