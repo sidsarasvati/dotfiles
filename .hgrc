@@ -25,7 +25,7 @@ changelog = !hg log --style=$HOME/dotfiles/mercurial-cli-templates/map-cmdline.c
 
 [pager]
 pager = LESS='FSRX' less
-attend = cat, diff, glog, log, incoming, outgoing, lg, show, lga
+attend = cat, diff, glog, log, blog, incoming, outgoing, lg, show, lga
 #to ignore some commands
 igore =
 
