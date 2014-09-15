@@ -9,6 +9,8 @@ purge =
 pager =
 
 [alias]
+#logs from current branch
+blog = log -b .
 lga = glog --style=~/.hgrc.d/map_cmdline.lg
 # Nuke everything in the working copy
 nuke = !hg up -C . && hg clean
