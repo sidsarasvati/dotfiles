@@ -7,8 +7,8 @@ clear Mod2
 ! keycodes 63 and 71 are the left and right COMMAND buttons 
 ! adjacent to the spacebar
 ! keycodes 66 and 69 are the option/alt keys 
-keycode 63 = Meta_L
-keycode 66 = Meta_L2
-keycode 69 = Mode_X11
+keycode 66 = Meta_L
+keycode 69 = Meta_L2
+keycode 63 = Mode_X11
 add Mod1 = Meta_L Meta_L2
 add Mod2 = Mode_X11
