@@ -1,0 +1,36 @@
+[ui]
+username = Sid Sarasvati <sid@cogitocorp.com>
+ignore = ~/.hgignore
+
+[extensions]
+graphlog =
+color =
+purge =
+pager =
+
+[alias]
+#logs from current branch
+blog = log -b .
+lga = glog --style=~/.hgrc.d/map_cmdline.lg
+# Nuke everything in the working copy
+nuke = !hg up -C . && hg clean
+#beacause you only wanna push your branch
+nudge = push -b .
+
+# Figuring out what I did
+today = !hg log --template '{rev} {desc|firstline|strip}\n' -r "sort(user('$(hg showconfig ui.username | sed 's/.*<\(.*\)>/\1/')') and date(-1), -date)"
+lastweek = !hg log --template '{rev} {date|shortdate} {desc|firstline|strip}\n' -r "sort(user('$(hg showconfig ui.username | sed 's/.*<\(.*\)>/\1/')') and date(-8), -date)"
+changelog = !hg log --style=$HOME/dotfiles/mercurial-cli-templates/map-cmdline.changelog -r "sort(user('$(hg showconfig ui.username | sed 's/.*<\(.*\)>/\1/')'), -date)"
+
+
+[pager]
+pager = LESS='FSRX' less
+attend = cat, diff, glog, log, blog, incoming, outgoing, lg, show, lga
+#to ignore some commands
+igore =
+
+[ui]
+merge = emacs
+
+[merge-tools]
+emacs.args = -q --eval "(ediff-merge-with-ancestor \""$local"\" \""$other"\" \""$base"\" nil \""$output"\")"

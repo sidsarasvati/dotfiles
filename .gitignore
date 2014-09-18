@@ -1,51 +1,16 @@
-############# General ############
+#Ignore Everything
+*
 
-#FILES
-*~
-*#
-_*
+#Except
+!.bashrc
+!.bash_aliases
+!.bashrc_org
+!.emacs
+!.Xmodmap
+!.hgrc
+!.gitignore
+!.gitattributes #do i need this?
+!.README.md
 
-*.log
-*.ini
-*.last
-
-.profile
-.inputrc
-.recentf
-.lesshst
-.gitconfig
-.bash_history
-.history
-.hgrc
-.hgignore
-
-#DIRECTORIES
-.semanticdb/
-.ssh/
-src/
-
-########## PLATFORM SPECIFICS ############
-
-#OSX 
-.DS_Store*
-.cups/
-.Trash/
-.subversion/
-.hgrc
-.CFUserTextEncoding
-Desktop/
-Documents/
-Downloads/
-Applications/
-Library/
-Movies/
-Music/
-Pictures/
-Public/
-
-#WINDOWS
-
-
-############# SPECIFICS #############
-
-.dia/
+!.emacs.d/
+!.mystuff/

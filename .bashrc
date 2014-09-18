@@ -1,4 +1,4 @@
-#Platform detection 
+#Platform detection
 OS=${OSTYPE//[0-9.]/}
 
 # echo ${OS}
@@ -9,6 +9,10 @@ PATH="/usr/local/bin:$PATH"
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
+fi
+# hg auto complete
+if [ -f ~/.hgrc.d/hg_completion.bash ]; then
+. ~/.hgrc.d/hg_completion.bash
 fi
 # Org. Specific definitions.
 #N.B This should called last to override any general behavior
