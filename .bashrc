@@ -10,6 +10,10 @@ PATH="/usr/local/bin:$PATH"
 if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
 fi
+# hg auto complete
+if [ -f ~/.hgrc.d/hg_completion.bash ]; then
+. ~/.hgrc.d/hg_completion.bash
+fi
 # Org. Specific definitions.
 #N.B This should called last to override any general behavior
 if [ -f ~/.bashrc_org ]; then
