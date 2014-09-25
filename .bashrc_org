@@ -4,8 +4,7 @@ export COGITO_NAS=nas01.cogitohealth.net
 export JAVA_HOME=/usr/java/jdk1.7.0_15/
 export PATH=$PATH:$HOME/tools/arcanist/bin
 eval `~/src/Platform/Cogito/Toolset/Modula/BUILD/bin/modula init`
-eval `ssh-agent -s`
-ssh-add
+
 
 alias mod='modula'
 alias modb='modula build'
@@ -23,7 +22,7 @@ function nasmount
    fi
 }
 
-#modula operations 
+#modula operations
 alias modx-br='modula graph modules exec "hg branch"'
 alias modx-branch='modula graph modules exec "hg branch"'
 alias modx-cl='modula graph modules exec "rm -rf BUILD/"'
