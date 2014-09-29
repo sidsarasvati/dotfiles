@@ -10,7 +10,7 @@ pager =
 
 [alias]
 #logs from current branch
-blog = log -b .
+blog = log --rev .
 lga = glog --style=~/.hgrc.d/map_cmdline.lg
 # Nuke everything in the working copy
 nuke = !hg up -C . && hg clean
