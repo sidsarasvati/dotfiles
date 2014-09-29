@@ -9,6 +9,7 @@
 !.Xmodmap
 !.hgrc
 !.gitignore
+!.hgignore
 !.gitattributes #do i need this?
 !.README.md
 
