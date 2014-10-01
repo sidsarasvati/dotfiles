@@ -7,6 +7,7 @@ graphlog =
 color =
 purge =
 pager =
+mq =
 
 [alias]
 #logs from current branch
