@@ -50,5 +50,5 @@ function hg_ps1
 {
     hg prompt "HG:{[+{incoming|count}]->}{root|basename}{[{branch}]}{status|modified|unknown}{->[+{outgoing|count}]}{at {bookmark}}" 2> /dev/null
 }
-PS1_HG='\e[37m\]{\e[32m\]$(hg_ps1)\e[37m\]} \e[0m\]'
+PS1_HG='\e[37m\]{\e[32m\]$(hg_ps1)\e[37m\]}'
 PS1="$PS1_ERROR_CHECK\n$PS1_CLOCK $PS1_HG $PS1_PATH\n$PS1_PROMPT\e[0m\] "
