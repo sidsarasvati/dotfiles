@@ -51,7 +51,7 @@ PS1="$PS1_ERROR_CHECK \n$PS1_CLOCK $PS1_PATH \n$PS1_PROMPT\e[0m\]"
 
 function hg_ps1
 {
-    hg prompt "HG:{branch}" 2> /dev/null
+    hg prompt "HG:{branch} {status}" 2> /dev/null
 }
 PS1_HG='\e[37m\]{\e[32m\]$(hg_ps1)\e[37m\]} \e[0m\]'
 #export PS1="\`if [ \$? != 0 ]; then echo \[\e[33m\]---=== \[\e[31m\]Oh noes, bad command \[\e[33m\]===---; fi\`\n\[\e[0;37m\][\[\e[1;31m\]\@\[\e[0;37m\]] \h $PS1_HG\[\e[0;37m\][\[\e[1;34m\]\W\[\e[0;37m\]] \[\e[0;32m\]\n\$ \[\e[0m\]"
