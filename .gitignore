@@ -14,5 +14,6 @@
 !.README.md
 
 !.emacs.d/
+!.bash.d/
 !.mystuff/
 !.hgrc.d/
