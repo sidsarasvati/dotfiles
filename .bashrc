@@ -47,7 +47,14 @@ PS1_PATH="\[\e[37m\][\[\e[1;34m\]\h:\W\[\e[37m\]]"
 PS1_ERROR_CHECK="\`if [ \$? != 0 ]; then echo \[\e[33m\]---=== \[\e[31m\]Oh noes, bad command \[\e[33m\]===---; fi\`"
 function hg_ps1
 {
+    if hg status &>/dev/null
+    then
     hg prompt "HG:{[+{incoming|count}]->}{root|basename}{/{branch}}{status|modified|unknown}{->[+{outgoing|count}]}{at {bookmark}}" 2> /dev/null
+    elif git status 2>&1>/dev/null
+    then
+        GIT_BRANCH=`git branch`
+        echo "GIT:$GIT_BRANCH"
+    fi
 }
 PS1_HG='\[\e[37m\]{\[\e[32m\]$(hg_ps1)\[\e[37m\]}'
 PS1="$PS1_ERROR_CHECK\n$PS1_CLOCK $PS1_HG $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
