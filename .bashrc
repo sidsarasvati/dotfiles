@@ -30,6 +30,9 @@ fi
 export GREP_COLOR='01;31'
 export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.svn_base --exclude-dir=.temp --exclude-dir=build/ --color=auto'
 
+#OTHER ENVIRONMENTS
+JAVA_HOME=$(/usr/libexec/java_home)
+
 #auto corrects case
 shopt -s nocaseglob
 
