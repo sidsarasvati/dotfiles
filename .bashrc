@@ -43,7 +43,7 @@ export CLICOLOR=1
 export LSCOLORS=ExFxCxDxbxegedabagacad
 
 PS1_CLOCK="\[\e[37m\][\[\e[1;31m\]\@\\[\e[37m\]]"
-PS1_PATH="\[\e[37m\][\[\e[1;34m\]\h:\W\[\e[37m\]]"
+PS1_PATH="\[\e[37m\][\[\e[1;34m\]\h:\w\[\e[37m\]]"
 PS1_ERROR_CHECK="\`if [ \$? != 0 ]; then echo \[\e[33m\]---=== \[\e[31m\]Oh noes, bad command \[\e[33m\]===---; fi\`"
 function hg_ps1
 {
