@@ -46,7 +46,8 @@ export CLICOLOR=1
 export LSCOLORS=ExFxCxDxbxegedabagacad
 
 PS1_CLOCK="\[\e[37m\][\[\e[1;31m\]\@\\[\e[37m\]]"
-PS1_PATH="\[\e[37m\][\[\e[1;34m\]\h:\w\[\e[37m\]]"
+PS1_PATH="\[\e[37m\][\[\e[1;34m\]\w\[\e[37m\]]"
+PS1_HOST="\[\e[37m\][\[\e[1;31m\]\h\\[\e[37m\]]"
 PS1_ERROR_CHECK="\`if [ \$? != 0 ]; then echo \[\e[33m\]---=== \[\e[31m\]Oh noes, bad command \[\e[33m\]===---; fi\`"
 function hg_ps1
 {
@@ -60,4 +61,9 @@ function hg_ps1
     fi
 }
 PS1_HG='\[\e[37m\]{\[\e[32m\]$(hg_ps1)\[\e[37m\]}'
-PS1="$PS1_ERROR_CHECK\n$PS1_CLOCK $PS1_HG $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
+
+#################v1: [clock][SCM][pwd]
+#PS1="$PS1_ERROR_CHECK\n$PS1_CLOCK $PS1_HG $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
+
+#################v2: [host][SCM][pwd]
+PS1="$PS1_ERROR_CHECK\n$PS1_HOST $PS1_HG $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
