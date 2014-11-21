@@ -26,9 +26,10 @@ else
 fi
 alias la='ls -A'
 alias ll='ls -Alh'
-alias l='ls -Alh'
 
-alias hl='--help | less'
+#print directory structure as tree
+alias lst="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+
 
 #SVN
 alias dif='svn diff | less'
