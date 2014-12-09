@@ -59,4 +59,7 @@ PS1_HG='\[\e[37m\]{\[\e[32m\]$(hg_ps1)\[\e[37m\]}'
 #PS1="$PS1_ERROR_CHECK\n$PS1_CLOCK $PS1_HG $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
 
 #################v2: [host][SCM][pwd]
-PS1="$PS1_ERROR_CHECK\n$PS1_HOST $PS1_HG $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
+#PS1="$PS1_ERROR_CHECK\n$PS1_HOST $PS1_HG $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
+
+#################v3: [host][pwd]
+PS1="$PS1_ERROR_CHECK\n$PS1_HOST $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
