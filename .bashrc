@@ -5,6 +5,8 @@ OS=${OSTYPE//[0-9.]/}
 
 #Add local bin to path to use non-dafault system tools (like grep latest version)
 PATH="/usr/local/bin:$PATH"
+#also added home bin for own tools
+PATH="~/bin:$PATH"
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
