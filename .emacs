@@ -9,9 +9,9 @@
 
 ;;CEDET
 ;;(load "cedet.el")
-;;Navigation fucntions and key binding
-(load "scroll.el")
-(load "my-convenience.el")
+(load "scroll.el") ;; scrolling 
+(load "my-convenience.el") ;; key binding
+(load "gud.el") ;; lldb mode
 
 ;; Preferences                          *** ----------------------------
 (setq make-backup-files nil)            ;;; Don't make backup files
