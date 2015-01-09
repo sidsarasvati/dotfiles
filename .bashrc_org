@@ -31,6 +31,7 @@ alias modx-st='modula graph modules exec "hg status"'
 alias modx-status='modula graph modules exec "hg status"'
 alias modx-dif='modula graph modules exec "hg diff"'
 alias modx-diff='modula graph modules exec "hg diff"'
+alias modx-out='modula graph modules exec "hg out"'
 alias modx-sum='modula graph modules exec "hg sum"'
 alias modx-summary='modula graph modules exec "hg sum"'
 
