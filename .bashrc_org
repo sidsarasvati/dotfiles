@@ -31,22 +31,18 @@ function nasmount
 }
 
 #modula operations
-alias modx-br='modula graph modules exec "hg branch"'
-alias modx-branch='modula graph modules exec "hg branch"'
-alias modx-cl='modula graph modules exec "rm -rf BUILD/"'
-alias modx-clean='modula graph modules exec "rm -rf BUILD/"'
-alias modx-st='modula graph modules exec "hg status"'
-alias modx-status='modula graph modules exec "hg status"'
-alias modx-dif='modula graph modules exec "hg diff"'
-alias modx-diff='modula graph modules exec "hg diff"'
-alias modx-out='modula graph modules exec "hg out"'
-alias modx-sum='modula graph modules exec "hg sum"'
-alias modx-summary='modula graph modules exec "hg sum"'
+alias modx-br='modula modules exec "hg branch"'
+alias modx-cl='modula modules exec "rm -rf BUILD/"'
+alias modx-st='modula modules exec "hg status"'
+alias modx-dif='modula  modules exec "hg diff"'
+alias modx-out='modula  modules exec "hg out"'
+alias modx-sum='modula  modules exec "hg sum"'
+alias modx-pull='modula  modules exec "hg pull"'
+alias modx-up='modula  modules exec "hg up"'
 
-
-alias modg1='modula graph | egrep -v "\s{5}"'
-alias modg2='modula graph | egrep -v "\s{9}"'
-alias modg3='modula graph | egrep -v "\s{13-"'
+alias modg1='modula modules | egrep -v "\s{5}"'
+alias modg2='modula modules | egrep -v "\s{9}"'
+alias modg3='modula modules | egrep -v "\s{13-"'
 
 #Source Control overrides
 alias dif='hg diff'
