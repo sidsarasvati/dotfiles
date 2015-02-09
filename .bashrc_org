@@ -14,9 +14,8 @@ fi
 
 alias mod='modula'
 alias modb='modula build'
-alias modg='modula graph'
-alias modgm='modula graph modules'
-alias modx='modula graph modules exec'
+alias modx='modula modules exec'
+alias modm='modula modules'
 
 #mount nas01 drives
 function nasmount
