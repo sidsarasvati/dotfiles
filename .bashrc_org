@@ -3,8 +3,6 @@ export HGREPO42=ssh://hg@10.0.1.42
 export COGITO_NAS=nas01.cogitohealth.net
 
 export PATH=$PATH:$HOME/tools/arcanist/bin
-export PATH=$PATH:$HOME/src/Platform/Cogito/Toolset/MODULA_2_0/BUILD/bin
-
 
 if [ "Darwin" = "$(uname -s)" ]; then
    export JAVA_HOME=$(/usr/libexec/java_home)
