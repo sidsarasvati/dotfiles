@@ -4,7 +4,7 @@ OS=${OSTYPE//[0-9.]/}
 # echo ${OS}
 
 #Add local bins to path to use non-dafault system tools (like grep latest version)
-PATH="$HOME/bin:/usr/local/bin:$PATH"
+PATH="$HOME/bin:$PATH"
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
