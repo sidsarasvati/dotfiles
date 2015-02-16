@@ -36,6 +36,7 @@ shopt -s nocaseglob
 #bash history commands
 export HISTCONTROL=erasedups
 export HISTSIZE=10000
+export HISTFILESIZE=10000
 shopt -s histappend
 
 # Colorize the prompt
