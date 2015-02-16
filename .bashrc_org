@@ -36,6 +36,7 @@ alias modx-out='modula  modules exec "hg out" exec.mode=ignore'
 alias modx-sum='modula  modules exec "hg sum"'
 alias modx-pull='modula  modules exec "hg pull" exec.mode=ignore'
 alias modx-up='modula  modules exec "hg up" exec.mode=ignore'
+alias modx-sync='modula  modules exec "hg pull; hg up" exec.mode=ignore'
 
 alias modg1='modula modules | egrep -v "\s{5}"'
 alias modg2='modula modules | egrep -v "\s{9}"'
