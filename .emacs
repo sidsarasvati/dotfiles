@@ -92,8 +92,10 @@
 ;; writing below the original code so that I only override and not omit
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
+;; auto pair braces, quotes, brackets
 (require 'autopair)
-(autopair-global-mode 1)
+;; disabling it, as this is more for pain then beign usefulc
+;; (autopair-global-mode 1) 
 (setq autopair-autowrap t)
 
 ;; whitespace-mode
