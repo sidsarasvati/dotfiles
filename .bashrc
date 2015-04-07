@@ -14,6 +14,10 @@ fi
 if [ -f ~/.hgrc.d/hg_completion.bash ]; then
 . ~/.hgrc.d/hg_completion.bash
 fi
+# host completetion
+if [ -f ~/.bash.d/host_completion.sh ]; then
+. ~/.bash.d/host_completion.sh
+fi
 # Org. Specific definitions.
 #N.B This should called last to override any general behavior
 if [ -f ~/.bashrc_org ]; then
