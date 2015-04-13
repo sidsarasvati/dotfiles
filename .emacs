@@ -1,11 +1,16 @@
-;;Load Paths
+;;------------------------------------------------------------------------------
+;; Set Load Path (Should be first)
+;;------------------------------------------------------------------------------
+
 (add-to-list 'load-path "~/.emacs.d/")
 
 (setq default-tab-width 4)              ; Tab width = 4
 (setq-default indent-tabs-mode nil)     ; Tab inserts spaces only
 (setq mac-command-modifier 'meta)       ; Sets the command (Apple) key as Meta
 
-;;Loading Custom Scripts
+;;------------------------------------------------------------------------------
+;; Loading Custom Scripts
+;;------------------------------------------------------------------------------
 
 ;;CEDET
 ;;(load "cedet.el")
@@ -56,8 +61,18 @@
 (require 'dos)
 (add-to-list 'auto-mode-alist '("\\.bat\\'" . dos-mode))
 
-;;end Loading custom scripts
+;;yaml mode
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
+
+;;
+;;end Loading custom scripts
+;;
+
+;;------------------------------------------------------------------------------
+;; CC Mode
+;;------------------------------------------------------------------------------
 (progn
   (load "cc-mode")
   (c-add-style "sid-cxx-style"
@@ -137,6 +152,10 @@
  ;; If there is more than one, they won't work right.
  )
 
+;;------------------------------------------------------------------------------
+;; Hooks
+;;------------------------------------------------------------------------------
+
 (add-hook 'diff-mode-hook '(lambda ()
                              (require 'ansi-color)
                              (ansi-color-apply-on-region
@@ -150,3 +169,7 @@
   (aset buffer-display-table ?\^M []))
 
 (add-hook 'diff-mode-hook 'remove-dos-eol)
+
+(add-hook 'yaml-mode-hook
+		  (lambda ()
+			 (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
