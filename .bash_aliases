@@ -40,7 +40,8 @@ alias ss='svn stat'
 alias sl='svn log'
 
 #GIT
-
+alias glog='log --graph --all --decorate --color'
+alias st='status -uall --procelain'
 #HG
 alias hgblog='hg log -b .'
 
