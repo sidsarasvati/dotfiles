@@ -43,9 +43,10 @@ alias modg2='modula modules | egrep -v "\s{9}"'
 alias modg3='modula modules | egrep -v "\s{13-"'
 
 #Source Control overrides
-alias dif='hg diff'
-alias ss='hg stat'
-alias sl='hg log'
+alias dif='git diff'
+alias difc='git diff --cached'
+alias ss='git stat'
+alias sl='git log'
 
 hg_branchdiff() {
 #todo error check and usage message
