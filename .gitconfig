@@ -20,5 +20,18 @@
 	ui = auto
 
 [alias]
+    # Divergence (commits we added and commits remote added)
+
+    # Alternative, you can add git-divergence.sh in you path and git 
+    # will pick it up
+	div = !sh ~/.git.d/git-divergence.sh
+
     glog = log --graph --all --decorate --color
-    stat = status -uall --porcelain
+    stat = status
+    st = status -uall --porcelain
+    ci = commit
+    co = checkout
+    dif = diff
+    difc = diff --cached
+    amend = commit --amend
+
