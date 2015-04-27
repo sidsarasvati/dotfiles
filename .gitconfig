@@ -20,11 +20,11 @@
 	ui = auto
 
 [alias]
-    # Divergence (commits we added and commits remote added)
+    # InOut (commits we added and commits remote added)
 
-    # Alternative, you can add git-divergence.sh in you path and git 
-    # will pick it up
-	div = !sh ~/.git.d/git-divergence.sh
+    # Alternative, you can add git-inout.sh in you path and git 
+    # will pick it up  as 'git inout' with having to add an alias  
+	inout = !sh ~/.git.d/git-inout.sh
 
     glog = log --graph --all --decorate --color
     stat = status
