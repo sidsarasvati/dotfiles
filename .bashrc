@@ -10,10 +10,19 @@ PATH="$HOME/bin:$PATH"
 if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
 fi
-# hg auto complete
-if [ -f ~/.hgrc.d/hg_completion.bash ]; then
-. ~/.hgrc.d/hg_completion.bash
+
+# hg auto complete (disabled for now)
+################################################
+# if [ -f ~/.hgrc.d/hg_completion.bash ]; then #
+# . ~/.hgrc.d/hg_completion.bash               #
+# fi                                           #
+################################################
+
+# git auto complete
+if [ -f ~/.git.d/git-completion.bash ]; then
+. ~/.git.d/git-completion.bash
 fi
+
 # host completetion
 if [ -f ~/.bash.d/host_completion.sh ]; then
 . ~/.bash.d/host_completion.sh
