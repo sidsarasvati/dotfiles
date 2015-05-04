@@ -1,6 +1,6 @@
 ############  Cogito  #############
 export HGREPO42=ssh://hg@10.0.1.42
-export COGITO_NAS=nas01.cogitohealth.net
+export COGITO_NAS=nas-ha.cogitohealth.net
 
 export PATH=$PATH:$HOME/tools/arcanist/bin
 
