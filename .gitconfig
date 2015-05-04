@@ -24,7 +24,7 @@
 
     # Alternative, you can add git-inout.sh in you path and git 
     # will pick it up  as 'git inout' with having to add an alias  
-	inout = !sh ~/.git.d/git-inout.sh
+	io = !sh ~/.git.d/git-inout.sh
 
     glog = log --graph --all --decorate --color
     stat = status
