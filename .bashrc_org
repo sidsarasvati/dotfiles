@@ -5,7 +5,7 @@ export COGITO_NAS=nas-ha.cogitohealth.net
 export PATH=$PATH:$HOME/tools/arcanist/bin
 
 
-local VC_CLIENT=git # we use git at cogito
+VC_CLIENT=git # we use git at cogito
 
 if [ "Darwin" = "$(uname -s)" ]; then
    export JAVA_HOME=$(/usr/libexec/java_home)
