@@ -28,10 +28,12 @@ alias la='ls -A'
 alias ll='ls -Alh'
 alias l='ls -Alh'
 
-#print directory structure as tree
+# print directory structure as tree
 alias lsd="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+alias lst='tree' # should be availabe on most variants
 
-alias lst='tree'
+# list human readable disk usage for files and folder
+alias lsu='du -sh *'
 
 
 #SVN
