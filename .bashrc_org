@@ -1,8 +1,11 @@
 ############  Cogito  #############
 export HGREPO42=ssh://hg@10.0.1.42
-export COGITO_NAS=nas01.cogitohealth.net
+export COGITO_NAS=nas-ha.cogitohealth.net
 
 export PATH=$PATH:$HOME/tools/arcanist/bin
+
+
+local VC_CLIENT=git # we use git at cogito
 
 if [ "Darwin" = "$(uname -s)" ]; then
    export JAVA_HOME=$(/usr/libexec/java_home)
@@ -28,15 +31,15 @@ function nasmount
 }
 
 #modula operations
-alias modx-br='modula modules exec "hg branch"'
+alias modx-br='modula modules exec "$VC_CLIENT branch"'
 alias modx-cl='modula modules exec "rm -rf BUILD/"'
-alias modx-st='modula modules exec "hg status"'
-alias modx-dif='modula  modules exec "hg diff" exec.mode=ignore'
-alias modx-out='modula  modules exec "hg out" exec.mode=ignore'
-alias modx-sum='modula  modules exec "hg sum"'
-alias modx-pull='modula  modules exec "hg pull" exec.mode=ignore'
-alias modx-up='modula  modules exec "hg up" exec.mode=ignore'
-alias modx-sync='modula  modules exec "hg pull; hg up" exec.mode=ignore'
+alias modx-st='modula modules exec "$VC_CLIENT st"'
+alias modx-dif='modula  modules exec "$VC_CLIENT dif" exec.mode=ignore'
+alias modx-io='modula  modules exec "$VC_CLIENT io" exec.mode=ignore'
+alias modx-sum='modula  modules exec "$VC_CLIENT sum"'
+alias modx-fetch='modula  modules exec "$VC_CLIENT fetch -" exec.mode=ignore'
+alias modx-pull='modula  modules exec "$VC_CLIENT pull" exec.mode=ignore'
+alias modx-sync='modula  modules exec "$VC_CLIENT pull; $VC_CLIENT up" exec.mode=ignore'
 
 alias modg1='modula modules | egrep -v "\s{5}"'
 alias modg2='modula modules | egrep -v "\s{9}"'
