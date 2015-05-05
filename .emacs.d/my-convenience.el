@@ -11,7 +11,6 @@
 
 ;;buffer management 
 (global-set-key "\M--" 'previous-buffer)
-(global-set-key "\M-`" 'previous-buffer) ;; dup for convenience and past habit hangover :) 
 (global-set-key "\M-=" 'next-buffer)
 
 ;;window management
