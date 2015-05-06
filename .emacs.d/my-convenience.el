@@ -16,7 +16,7 @@
 ;;window management
 ;;using meta as modifier for windmove
 (windmove-default-keybindings 'meta)
-(global-set-key "\M-2" 'windmove-up)
+(global-set-key "\M-p" 'windmove-up)
 (global-set-key "\M-n" 'windmove-down)
 (global-set-key "\M-1" 'windmove-left)
 (global-set-key "\M-0" 'windmove-right)
