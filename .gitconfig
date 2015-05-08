@@ -14,7 +14,7 @@
     trustExitCode = true
 
 [push]
-    default = matching
+    default = current
 
 [color]
     ui = auto
