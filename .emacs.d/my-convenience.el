@@ -3,6 +3,7 @@
 ;;duplicate binding for my convenience
 (global-set-key "\C-x\C-g" 'find-file)
 (global-set-key "\M-k" 'kill-buffer)
+(global-set-key "\M-o" 'other-window)
 
 ;;keybinding macros
 (global-set-key "\C-\M-y" "\C-a\C- \C-n\M-w\C-y\C-p")
