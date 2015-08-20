@@ -4,6 +4,16 @@ export COGITO_NAS=nas-ha.cogitohealth.net
 
 export PATH=$PATH:$HOME/tools/arcanist/bin
 
+export COGITO_USE_CCACHE=1 # enable ccache
+
+# Vagrant #
+export PUPPET_DIR=$HOME/cogito/puppet
+export VAGRANT_MEMORY=4096
+export VAGRANT_CPUS=2
+export VAGRANT_HOSTNAME=comserv #default; override for other types
+alias vag='vagrant'
+
+
 
 VC_CLIENT=git # we use git at cogito
 
