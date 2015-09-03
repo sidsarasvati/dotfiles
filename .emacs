@@ -122,6 +122,9 @@
 (global-whitespace-mode 1)
 
 
+;; disable toolbar from GUI (THIS IS EMACS!)
+(tool-bar-mode -1)
+
 ;; turn line numbers on (left margin) - globally
 (global-linum-mode t)
 
