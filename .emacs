@@ -121,6 +121,23 @@
       whitespace-line-column 80)
 (global-whitespace-mode 1)
 
+
+;; turn line numbers on (left margin) - globally
+(global-linum-mode t)
+
+;; set highlight color 10% darker default background
+(require 'color)
+(defun set-hl-line-color-based-on-theme ()
+  "Sets the hl-line face to have no foregorund and a background
+    that is 10% darker than the default face's background."
+  (set-face-attribute 'hl-line nil
+                      :foreground nil
+                      :background (color-darken-name (face-background 'default) 10)))
+
+(add-hook 'global-hl-line-mode-hook 'set-hl-line-color-based-on-theme)
+
+(global-hl-line-mode t)
+
 ;; someday might want to rotate windows if more than 2 of them
 (defun swap-windows () "If you have 2 windows, it swaps them."
   (interactive) (cond ((not (= (count-windows) 2))
@@ -173,6 +190,8 @@
 (add-hook 'yaml-mode-hook
 		  (lambda ()
 			 (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-
-;; enable upcase-region command
+;; enable upcase-region command (this uppercases the selection)
 (put 'upcase-region 'disabled nil)
+;; enable narrow-to-region command (I forgot why/how I would use is
+(put 'narrow-to-region 'disabled nil)
+
