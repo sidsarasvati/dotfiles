@@ -193,4 +193,8 @@
 (add-hook 'yaml-mode-hook
 		  (lambda ()
 			 (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+;; enable upcase-region command (this uppercases the selection)
+(put 'upcase-region 'disabled nil)
+;; enable narrow-to-region command (I forgot why/how I would use is
 (put 'narrow-to-region 'disabled nil)
+
