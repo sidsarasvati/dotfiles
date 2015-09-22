@@ -5,6 +5,7 @@ export COGITO_NAS=nas-ha.cogitohealth.net
 export PATH=$PATH:$HOME/tools/arcanist/bin
 
 export COGITO_USE_CCACHE=1 # enable ccache
+export COGITO_MAXSIZE=3G # max ccache size in GB
 
 # Vagrant #
 export PUPPET_DIR=$HOME/cogito/puppet
