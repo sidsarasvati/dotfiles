@@ -47,4 +47,5 @@ alias st='status -uall --procelain'
 #HG
 alias hgblog='hg log -b .'
 
-#VIVOX SPECIFICS
+#VAGRANT
+alias vag='vagrant'
