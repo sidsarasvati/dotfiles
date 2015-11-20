@@ -29,3 +29,6 @@
 ;;cmake
 (eval-after-load 'cmake
                      '(define-key CMAKE-mode-map (kbd "\C-c-h") 'cmake-help-command))
+
+;; clang format
+(global-set-key [C-M-tab] 'clang-format-region)
