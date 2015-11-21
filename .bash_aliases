@@ -44,6 +44,8 @@ alias sl='svn log'
 #GIT
 alias glog='log --graph --all --decorate --color'
 alias st='status -uall --procelain'
+alias gg='git grep'
+
 #HG
 alias hgblog='hg log -b .'
 
