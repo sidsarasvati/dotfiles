@@ -24,7 +24,7 @@
                                         ;;; -----------------------------
 
 ;; clang format
-(require 'clang-format)
+;; (require 'clang-format)
 
 ;;package management
 ;;; Emacs is not a package manager, and here we load its package manager!
