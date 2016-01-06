@@ -2,7 +2,8 @@
 ;; Set Load Path (Should be first)
 ;;------------------------------------------------------------------------------
 
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/elisp")
+(add-to-list 'load-path "~/.emacs.d/elpa")
 
 (setq default-tab-width 4)              ; Tab width = 4
 (setq-default indent-tabs-mode nil)     ; Tab inserts spaces only
@@ -69,6 +70,10 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
+;;web development
+(add-hook 'js2-mode-hook 'skewer-mode)
+(add-hook 'css-mode-hook 'skewer-css-mode)
+(add-hook 'html-mode-hook 'skewer-html-mode)
 
 ;;
 ;;end Loading custom scripts
@@ -202,3 +207,6 @@
 ;; enable narrow-to-region command (I forgot why/how I would use is
 (put 'narrow-to-region 'disabled nil)
 
+;; Treat CamelCase words the same special way it treats lisp-case and
+;; snake_case words.
+(add-hook 'prog-mode-hook 'subword-mode)
