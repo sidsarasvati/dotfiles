@@ -1,3 +1,5 @@
+(setq debug-on-error t) ; get backtrace or errors
+
 ;;------------------------------------------------------------------------------
 ;; Set Load Path (Should be first)
 ;;------------------------------------------------------------------------------
@@ -71,6 +73,8 @@
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;;web development
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
 (add-hook 'js2-mode-hook 'skewer-mode)
 (add-hook 'css-mode-hook 'skewer-css-mode)
 (add-hook 'html-mode-hook 'skewer-html-mode)
