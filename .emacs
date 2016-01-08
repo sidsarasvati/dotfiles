@@ -29,10 +29,9 @@
 ;; clang format
 ;; (require 'clang-format)
 
-(require 'simple-httpd);
-
 ;; init smart-mode-line with powerline theme
-(setq sml/theme 'powerline)
+(require 'smart-mode-line)
+(setq sml/no-confirm-load-theme t)
 (sml/setup)
 
 ;;package management
