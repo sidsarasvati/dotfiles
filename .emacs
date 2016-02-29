@@ -1,4 +1,4 @@
-(setq debug-on-error t) ; get backtrace or errors
+;;(setq debug-on-error t) ; get backtrace or errors
 
 ;;------------------------------------------------------------------------------
 ;; Set Load Path (Should be first)
@@ -9,7 +9,7 @@
 (let ((default-directory  "~/.emacs.d/elpa/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-(setq default-tab-width 4)              ; Tab width = 4
+(setq default-tab-width 2)              ; Tab width = 2
 (setq-default indent-tabs-mode nil)     ; Tab inserts spaces only
 (setq mac-command-modifier 'meta)       ; Sets the command (Apple) key as Meta
 
@@ -76,13 +76,56 @@
 ;;yaml mode
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-    
-;;web development
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
-(add-hook 'js2-mode-hook 'skewer-mode)
-(add-hook 'css-mode-hook 'skewer-css-mode)
-(add-hook 'html-mode-hook 'skewer-html-mode)
+;; markdown mode
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+
+;;----------------------------------------------------------
+;;WEB DEVELOPMENT
+;;----------------------------------------------------------
+
+(require 'web-mode)
+(setq js-indent-level 2)
+
+
+(setq web-mode-content-types-alist
+      '(("jsx" . "\\.js[x]?\\'")))
+
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
+
+
+;; see http://web-mode.org/
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+
+  ;; indents 
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+
+  ;; smartparens
+  (setq web-mode-enable-auto-pairing nil)
+
+  ;; Add those lines in the web-mode hook
+  (add-hook 'local-write-file-hooks
+            (lambda ()
+              (delete-trailing-whitespace)
+              nil))
+)
+(add-hook 'web-mode-hook  'my-web-mode-hook)
+
+;; Add those lines in the web-mode hook
+
+
+;;------------xxxxxxxxx-------------------------------------
 
 ;;
 ;;end Loading custom scripts
