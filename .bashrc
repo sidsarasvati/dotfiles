@@ -83,8 +83,8 @@ PS1="$PS1_ERROR_CHECK\n$PS1_HOST $PS1_GIT $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
 #################v3: [host][pwd]
 #PS1="$PS1_ERROR_CHECK\n$PS1_HOST $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
 
-PATH="/Users/ssarasvati/perl5/bin${PATH+:}${PATH}"; export PATH;
-PERL5LIB="/Users/ssarasvati/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/Users/ssarasvati/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/Users/ssarasvati/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/Users/ssarasvati/perl5"; export PERL_MM_OPT;
+# PATH="/Users/ssarasvati/perl5/bin${PATH+:}${PATH}"; export PATH;
+# PERL5LIB="/Users/ssarasvati/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
+# PERL_LOCAL_LIB_ROOT="/Users/ssarasvati/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
+# PERL_MB_OPT="--install_base \"/Users/ssarasvati/perl5\""; export PERL_MB_OPT;
+# PERL_MM_OPT="INSTALL_BASE=/Users/ssarasvati/perl5"; export PERL_MM_OPT;

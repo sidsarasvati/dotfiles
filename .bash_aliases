@@ -2,7 +2,7 @@
 
 #todo: need fix for *nix
 if [ "$OS" == 'darwin' ]; then
-alias em='open -a /Applications/Emacs.app'
+alias em='open -a ~/Applications/Emacs.app'
 else
 alias em=emacs
 fi
