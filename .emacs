@@ -114,15 +114,15 @@
   ;; smartparens
   (setq web-mode-enable-auto-pairing nil)
 
-  ;; Add those lines in the web-mode hook
+  ;; key bindings
+  (local-set-key (kbd "C-c C-v") 'browse-url-of-buffer)
+  
   (add-hook 'local-write-file-hooks
             (lambda ()
               (delete-trailing-whitespace)
               nil))
 )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
-
-;; Add those lines in the web-mode hook
 
 
 ;;------------xxxxxxxxx-------------------------------------
