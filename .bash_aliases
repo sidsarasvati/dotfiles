@@ -35,6 +35,11 @@ alias lst='tree' # should be availabe on most variants
 # list human readable disk usage for files and folder
 alias lsu='du -sh *'
 
+# mkdir -p && cd
+mcd() {
+  mkdir -p $1
+  cd $1
+}
 
 #SVN
 alias dif='svn diff | less'
