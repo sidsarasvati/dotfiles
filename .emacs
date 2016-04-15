@@ -32,7 +32,7 @@
 ;; init smart-mode-line with powerline theme
 (require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t)
-(setq sml/theme 'automatic)
+(setq sml/theme 'light-powerline)
 (sml/setup)
 
 ;;package management
