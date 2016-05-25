@@ -12,5 +12,5 @@ As of now this works on,
  - Mac OSx
  - Linux 
 
-Note: For Windows, it recommended to to C:\cygwin_home as %HOME%
+Note: For Windows, I recommend setting C:\cygwin_home as %HOME%
 enviroment variable, this keeps the configs away from cygwin binaries.
