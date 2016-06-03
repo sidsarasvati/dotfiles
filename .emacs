@@ -32,7 +32,7 @@
 ;; init smart-mode-line with powerline theme
 (require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t)
-(setq sml/theme 'light-powerline)
+(setq sml/theme 'automatic)
 (sml/setup)
 
 ;;package management
@@ -96,6 +96,7 @@
 (setq web-mode-content-types-alist
       '(("jsx" . "\\.js[x]?\\'")))
 
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
@@ -110,6 +111,7 @@
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
+  (setq web-mode-attr-indent-offset 2)
 
   ;; smartparens
   (setq web-mode-enable-auto-pairing nil)
