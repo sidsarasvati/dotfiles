@@ -40,6 +40,7 @@
 (require 'package)
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
                   ("elpa" . "http://tromey.com/elpa/")
+                  ("melpa-stable" . "https://stable.melpa.org/packages/")
                   ;; (development versions of packages)
                   ("melpa" . "http://melpa.milkbox.net/packages/")
                   ))
