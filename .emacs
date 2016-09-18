@@ -226,7 +226,7 @@
 ;; turn line numbers on (left margin) - globally
 (global-linum-mode t)
 
-;; enable git-gutter
+;; enable git-gutter https://github.com/syohex/emacs-git-gutter
 (global-git-gutter-mode +1)
 
 ;; set highlight color 10% darker default background
