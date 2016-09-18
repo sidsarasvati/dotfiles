@@ -226,6 +226,9 @@
 ;; turn line numbers on (left margin) - globally
 (global-linum-mode t)
 
+;; enable git-gutter
+(global-git-gutter-mode +1)
+
 ;; set highlight color 10% darker default background
 (require 'color)
 (defun set-hl-line-color-based-on-theme ()
