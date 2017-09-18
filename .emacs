@@ -1,6 +1,31 @@
 ;;(setq debug-on-error t) ; get backtrace or errors
 
 ;;------------------------------------------------------------------------------
+;; Package Management: Package Listing and Auto Installation
+;;-----------------------------------------------------------------------------
+; list the packages you want
+(setq package-list '(yaml-mode cmake-mode))
+
+; list the repositories containing them
+(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+
+; activate all the packages (in particular autoloads)
+(package-initialize)
+
+; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; install the missing packages - DOESN'T WORK!!
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+;;------------------------------------------------------------------------------
 ;; Set Load Path (Should be first)
 ;;------------------------------------------------------------------------------
 
@@ -37,15 +62,15 @@
 
 ;;package management
 ;;; Emacs is not a package manager, and here we load its package manager!
-(require 'package)
-(dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
-                  ("elpa" . "http://tromey.com/elpa/")
-                  ("melpa-stable" . "https://stable.melpa.org/packages/")
-                  ;; (development versions of packages)
-                  ("melpa" . "http://melpa.milkbox.net/packages/")
-                  ))
-  (add-to-list 'package-archives source t))
-(package-initialize)
+;; (require 'package)
+;; (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
+;;                   ("elpa" . "http://tromey.com/elpa/")
+;;                   ("melpa-stable" . "https://stable.melpa.org/packages/")
+;;                   ;; (development versions of packages)
+;;                   ("melpa" . "http://melpa.milkbox.net/packages/")
+;;                   ))
+;;   (add-to-list 'package-archives source t))
+;; (package-initialize)
 
 ;;maybe in future
 ;;; Required packages
@@ -226,7 +251,7 @@
 ;; turn line numbers on (left margin) - globally
 (global-linum-mode t)
 
-;; enable git-gutter https://github.com/syohex/emacs-git-gutter
+;; enable git-gutter https://github.com/syohex/emacs-git-gutter-fringe
 (global-git-gutter-mode +1)
 
 ;; set highlight color 10% darker default background
