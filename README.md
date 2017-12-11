@@ -1,11 +1,12 @@
-devenv
-======
+Dotfiles
+========
 
-This is the cross-platform development enviroment intial setup config
-files.
+This is my cross-platform development enviroment setup config files. I
+am an avid 'emacs' user, so you'll like to look at my emacs config to
+see if there is anything you may find userful. Other than that, I
+don't user 'Oh-my-zsh', but rather have my bash prompt modified as per
+my needs using custom scripts.
 
-Simply git clone it in your $HOME folder
-Eg: git clone <url>. // You cannot clone git repo in a non-empty directory. Clone to devenv/ folder, then 'cp -r devenv ~/' 
 
 As of now this works on, 
  - Windows(with cygwin)
@@ -14,3 +15,13 @@ As of now this works on,
 
 Note: For Windows, I recommend setting C:\cygwin_home as %HOME%
 enviroment variable, this keeps the configs away from cygwin binaries.
+
+Installation
+============
+
+Simply git clone the repo, and run the install.sh script from there.
+
+Example:
+git clone https://github.com/sidsarasvati/dotfiles.git dotfiles
+cd dotfiles
+./install.sh
