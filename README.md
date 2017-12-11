@@ -1,7 +1,7 @@
 Dotfiles
 ========
 
-This is my cross-platform development enviroment setup config files. I
+This is my cross-platform development environment setup config files. I
 am an avid 'emacs' user, so you'll like to look at my emacs config to
 see if there is anything you may find userful. Other than that, I
 don't user 'Oh-my-zsh', but rather have my bash prompt modified as per
