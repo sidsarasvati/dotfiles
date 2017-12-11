@@ -24,6 +24,11 @@ Simply git clone the repo anywhere you like (I use ~/dotfiles), install GNU stow
 It won't overwrite existing files, so move those out of the way first. GNU stow gives a nice descriptive error, so re-rerun install.sh script as you keep backing up the files. 
 
 Example:
-git clone https://github.com/sidsarasvati/dotfiles.git dotfiles
-cd dotfiles
-./install.sh
+- git clone https://github.com/sidsarasvati/dotfiles.git dotfiles
+- cd dotfiles
+- ./install.sh
+
+Contributing
+============
+
+Shoot me a pull request.I am open to PRs - especially if it fixes cross-platform issues. 
