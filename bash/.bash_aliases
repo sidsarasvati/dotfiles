@@ -51,6 +51,9 @@ alias glog='log --graph --all --decorate --color'
 alias st='status -uall --procelain'
 alias gg='git grep'
 
+# DOCKER
+alias d='docker'
+
 #HG
 alias hgblog='hg log -b .'
 
