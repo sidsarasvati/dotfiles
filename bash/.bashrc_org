@@ -14,6 +14,9 @@ export VAGRANT_HOSTNAME=comserv #default; override for other types
 alias vag='vagrant'
 
 
+# Cloudgito #
+eval "$(register-python-argcomplete cloudgito)"
+
 
 VC_CLIENT=git # we use git at cogito
 
