@@ -53,6 +53,7 @@ alias gg='git grep'
 
 # DOCKER
 alias d='docker'
+alias dc='docker-compose'
 
 #HG
 alias hgblog='hg log -b .'
