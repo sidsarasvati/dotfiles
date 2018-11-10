@@ -36,7 +36,7 @@ alias lst='tree' # should be availabe on most variants
 alias lsu='du -sh *'
 
 # mkdir -p && cd
-mcd() {
+md() {
   mkdir -p $1
   cd $1
 }
