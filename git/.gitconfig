@@ -1,6 +1,6 @@
 [user]
     name = Sid Sarasvati
-    email = sid@cogitocorp.com
+    email = sidsarasvati@gmail.com
 
 [core]
     excludesfile = /Users/ssarasvati/.gitignore_global
@@ -15,7 +15,7 @@
   cmd = emacsclient -c -a \"\"  --eval \"(ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\")\"
 
 [push]
-    default = current
+	default = nothing
 
 [color]
     ui = auto
