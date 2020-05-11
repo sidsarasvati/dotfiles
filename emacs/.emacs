@@ -252,7 +252,7 @@
 (global-linum-mode t)
 
 ;; enable git-gutter https://github.com/syohex/emacs-git-gutter-fringe
-(global-git-gutter-mode +1)
+;; (global-git-gutter-mode +1)
 
 ;; set highlight color 10% darker default background
 (require 'color)
@@ -321,7 +321,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
+    (markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
