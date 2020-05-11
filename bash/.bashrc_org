@@ -1,74 +1,89 @@
-############  Cogito  #############
-export HGREPO42=ssh://hg@10.0.1.42
-export COGITO_NAS=nas-ha.cogitohealth.net
+############  Compass  #############
+export PATH=/usr/local/opt/python@2/bin:$PATH
+export IGNORE_PYTHON_VERSION_REQUIREMENT=true
+export VIRTUALENVWRAPPER_PYTHON=`which python2.7`
+export VIRTUALENVWRAPPER_VIRTUALENV=`which virtualenv`
+export GITROOT=$HOME/development
+export IGNORE_PYTHON_VERSION_REQUIREMENT=1
 
-export PATH=$PATH:$HOME/tools/arcanist/bin
+export GOPROXY=https://sid.sarasvati@compass.com:AKCp5em6ctSgbu6DGSttScroD5n5YmsG93CE6zxFoZYDjHshBnxbb5pLSfmbDHUxMW8PXB2Gz@urbancompass.jfrog.io/urbancompass/api/go/go
 
-export COGITO_USE_CCACHE=1 # enable ccache
-export COGITO_MAXSIZE=3G # max ccache size in GB
+export PATH="/usr/local/opt/go@1.12/bin:$PATH"
+export GOBIN=$HOME/go
+export ANVIL_THRIFT_HOME=~/development/urbancompass/src/thrift/urbancompass/
 
-# Vagrant #
-export VAGRANT_MEMORY=4096
-export VAGRANT_CPUS=2
-export VAGRANT_HOSTNAME=comserv #default; override for other types
-alias vag='vagrant'
+############  Cogito  ############# (end: 06/2019)
 
+# export HGREPO42=ssh://hg@10.0.1.42
+# export COGITO_NAS=nas-ha.cogitohealth.net
 
-# Cloudgito #
-eval "$(register-python-argcomplete cloudgito)"
+# export PATH=$PATH:$HOME/tools/arcanist/bin
 
+# export COGITO_USE_CCACHE=1 # enable ccache
+# export COGITO_MAXSIZE=3G # max ccache size in GB
 
-VC_CLIENT=git # we use git at cogito
-
-if [ "Darwin" = "$(uname -s)" ]; then
-   export JAVA_HOME=$(/usr/libexec/java_home)
-else
-   export JAVA_HOME=/usr/java/latest
-fi
+# # Vagrant #
+# export VAGRANT_MEMORY=4096
+# export VAGRANT_CPUS=2
+# export VAGRANT_HOSTNAME=comserv #default; override for other types
+# alias vag='vagrant'
 
 
+# # Cloudgito #
+# eval "$(register-python-argcomplete cloudgito)"
 
-alias mod='modula'
-alias modb='modula build'
-alias modx='modula modules exec'
-alias modm='modula modules'
 
-#mount nas01 drives
-function nasmount
-{
-   if (( $# == 1 )); then
-       sudo mount -t cifs //${COGITO_NAS}/${1} ~/mnt/${1} -o username=`id -un`,uid=`id -un`,gid=`id -gn`;
-   elif (( $# == 2 )); then
-       sudo mount -t cifs //${COGITO_NAS}/${1} ~/mnt/${1} -o username=${2},uid=`id -un`,gid=`id -gn`;
-   fi
-}
+# VC_CLIENT=git # we use git at cogito
 
-#modula operations
-alias modx-br='modula modules exec "$VC_CLIENT branch"'
-alias modx-cl='modula modules exec "rm -rf BUILD/"'
-alias modx-st='modula modules exec "$VC_CLIENT st"'
-alias modx-dif='modula  modules exec "$VC_CLIENT dif" exec.mode=ignore'
-alias modx-io='modula  modules exec "$VC_CLIENT io" exec.mode=ignore'
-alias modx-sum='modula  modules exec "$VC_CLIENT sum"'
-alias modx-fetch='modula  modules exec "$VC_CLIENT fetch -" exec.mode=ignore'
-alias modx-pull='modula  modules exec "$VC_CLIENT pull" exec.mode=ignore'
-alias modx-sync='modula  modules exec "$VC_CLIENT pull; $VC_CLIENT up" exec.mode=ignore'
+# if [ "Darwin" = "$(uname -s)" ]; then
+#    export JAVA_HOME=$(/usr/libexec/java_home)
+# else
+#    export JAVA_HOME=/usr/java/latest
+# fi
 
-alias modg1='modula modules | egrep -v "\s{5}"'
-alias modg2='modula modules | egrep -v "\s{9}"'
-alias modg3='modula modules | egrep -v "\s{13-"'
 
-#Source Control overrides
-alias dif='git diff'
-alias difc='git diff --cached'
-alias ss='git stat'
-alias sl='git log'
 
-hg_branchdiff() {
-#todo error check and usage message
-SRC=eval `hg branch`
-DEST="EnterpriseSuite_1_5_0"
-hg diff -r "branch ('$SRC') - branch ('$DEST')"
-}
-alias branchdiff=hg_branchdiff
+# alias mod='modula'
+# alias modb='modula build'
+# alias modx='modula modules exec'
+# alias modm='modula modules'
+
+# #mount nas01 drives
+# function nasmount
+# {
+#    if (( $# == 1 )); then
+#        sudo mount -t cifs //${COGITO_NAS}/${1} ~/mnt/${1} -o username=`id -un`,uid=`id -un`,gid=`id -gn`;
+#    elif (( $# == 2 )); then
+#        sudo mount -t cifs //${COGITO_NAS}/${1} ~/mnt/${1} -o username=${2},uid=`id -un`,gid=`id -gn`;
+#    fi
+# }
+
+# #modula operations
+# alias modx-br='modula modules exec "$VC_CLIENT branch"'
+# alias modx-cl='modula modules exec "rm -rf BUILD/"'
+# alias modx-st='modula modules exec "$VC_CLIENT st"'
+# alias modx-dif='modula  modules exec "$VC_CLIENT dif" exec.mode=ignore'
+# alias modx-io='modula  modules exec "$VC_CLIENT io" exec.mode=ignore'
+# alias modx-sum='modula  modules exec "$VC_CLIENT sum"'
+# alias modx-fetch='modula  modules exec "$VC_CLIENT fetch -" exec.mode=ignore'
+# alias modx-pull='modula  modules exec "$VC_CLIENT pull" exec.mode=ignore'
+# alias modx-sync='modula  modules exec "$VC_CLIENT pull; $VC_CLIENT up" exec.mode=ignore'
+
+# alias modg1='modula modules | egrep -v "\s{5}"'
+# alias modg2='modula modules | egrep -v "\s{9}"'
+# alias modg3='modula modules | egrep -v "\s{13-"'
+
+# #Source Control overrides
+# alias dif='git diff'
+# alias difc='git diff --cached'
+# alias ss='git stat'
+# alias sl='git log'
+
+# hg_branchdiff() {
+# #todo error check and usage message
+# SRC=eval `hg branch`
+# DEST="EnterpriseSuite_1_5_0"
+# hg diff -r "branch ('$SRC') - branch ('$DEST')"
+# }
+# alias branchdiff=hg_branchdiff
 
