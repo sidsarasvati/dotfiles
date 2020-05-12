@@ -41,12 +41,11 @@ md() {
   cd $1
 }
 
-#SVN
-alias dif='svn diff | less'
-alias ss='svn stat'
-alias sl='svn log'
-
-#GIT
+# GIT
+alias dif='git diff'
+alias difc='git diff --cached'
+qalias ss='git stat'
+alias sl='git log'
 alias glog='log --graph --all --decorate --color'
 alias st='status -uall --procelain'
 alias gg='git grep'
@@ -55,9 +54,6 @@ alias gg='git grep'
 alias d='docker'
 alias dc='docker-compose'
 alias kb='kubectl'
-
-#HG
-alias hgblog='hg log -b .'
 
 #VAGRANT
 alias vag='vagrant'
