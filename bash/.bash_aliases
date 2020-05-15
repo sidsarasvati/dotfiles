@@ -44,7 +44,7 @@ md() {
 # GIT
 alias dif='git diff'
 alias difc='git diff --cached'
-qalias ss='git stat'
+alias ss='git stat'
 alias sl='git log'
 alias glog='log --graph --all --decorate --color'
 alias st='status -uall --procelain'
