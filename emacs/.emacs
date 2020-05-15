@@ -110,9 +110,26 @@
 
 
 ;;----------------------------------------------------------
-;;GOLANG DEV
+;; GLOBAL DEV MODE SETUP {
 ;;----------------------------------------------------------
 
+;; flycheck and linting settings (copied from web-mode setup)
+;; ---------------------------------------------------------
+(require 'flycheck) ;; http://www.flycheck.org/manual/latest/index.html
+
+;; turn on flychecking globally
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; customize flycheck temp file prefix
+(setq-default flycheck-temp-prefix ".flycheck")
+
+;;----------------------------------------------------------
+;; } END GLOBAL DEV MODE ----------------------------------
+;;----------------------------------------------------------
+
+;;----------------------------------------------------------
+;; GOLANG DEVELOPMENT {
+;;----------------------------------------------------------
 ;; from
 ;; http://tleyden.github.io/blog/2014/05/22/configure-emacs-as-a-go-editor-from-scratch/
 (defun my-go-mode-hook ()
@@ -122,17 +139,22 @@
   (local-set-key (kbd "M-.") 'godef-jump)
   (local-set-key (kbd "M-*") 'pop-tag-mark)
   )
-
 (add-hook 'go-mode-hook 'my-go-mode-hook)
-
 
 ;; autocomplete for go
 (defun auto-complete-for-go ()
   (auto-complete-mode 1))
 (add-hook 'go-mode-hook 'auto-complete-for-go)
 
+(with-eval-after-load 'go-mode
+   (require 'go-autocomplete))
+
 ;;----------------------------------------------------------
-;;WEB DEVELOPMENT
+;; } END GOLANG DEV ----------------------------------------
+;;----------------------------------------------------------
+
+;;----------------------------------------------------------
+;; WEB DEVELOPMENT
 ;;----------------------------------------------------------
 (require 'web-mode)
 (setq js-indent-level 2)
@@ -178,14 +200,6 @@
       ad-do-it)
     ad-do-it))
 
-;; flycheck and linting settings
-;; ------------------------------
-
-(require 'flycheck) ;; http://www.flycheck.org/manual/latest/index.html
-
-;; turn on flychecking globally
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
 ;; disable jshint since we prefer eslint checking
 (setq-default flycheck-disabled-checkers
   (append flycheck-disabled-checkers
@@ -194,12 +208,9 @@
 ;; use eslint with web-mode for jsx files
 (flycheck-add-mode 'javascript-eslint 'web-mode)
 
-;; customize flycheck temp file prefix
-(setq-default flycheck-temp-prefix ".flycheck")
-
 
 ;;---------------------------------------------------------
-;;------------ End Web Development Settings----------------
+;; } End Web Development Settings--------------------------
 ;;---------------------------------------------------------
 
 ;;
@@ -334,7 +345,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
+    (go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
