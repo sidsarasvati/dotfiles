@@ -126,6 +126,11 @@
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 
+;; autocomplete for go
+(defun auto-complete-for-go ()
+  (auto-complete-mode 1))
+(add-hook 'go-mode-hook 'auto-complete-for-go)
+
 ;;----------------------------------------------------------
 ;;WEB DEVELOPMENT
 ;;----------------------------------------------------------
@@ -329,7 +334,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
+    (auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
