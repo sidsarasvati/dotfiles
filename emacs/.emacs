@@ -28,7 +28,6 @@
 ;;------------------------------------------------------------------------------
 ;; Set Load Path (Should be first)
 ;;------------------------------------------------------------------------------
-
 (add-to-list 'load-path "~/.emacs.d/elisp")
 
 (let ((default-directory  "~/.emacs.d/elpa/"))
@@ -50,7 +49,6 @@
 (setq make-backup-files nil)            ;;; Don't make backup files
 (setq column-number-mode t)             ;;; Put column number in display
                                         ;;; -----------------------------
-
 ;; clang format
 ;; (require 'clang-format)
 
@@ -112,12 +110,27 @@
 
 
 ;;----------------------------------------------------------
-;;WEB DEVELOPMENT
+;;GOLANG DEV
 ;;----------------------------------------------------------
 
+;; from
+;; http://tleyden.github.io/blog/2014/05/22/configure-emacs-as-a-go-editor-from-scratch/
+(defun my-go-mode-hook ()
+  ;; Gofmt Call before saving
+  (add-hook 'before-hook-save 'gofmt-before-save)
+  ;; Godef jump key binding
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "M-*") 'pop-tag-mark)
+  )
+
+(add-hook 'go-mode-hook 'my-go-mode-hook)
+
+
+;;----------------------------------------------------------
+;;WEB DEVELOPMENT
+;;----------------------------------------------------------
 (require 'web-mode)
 (setq js-indent-level 2)
-
 
 (setq web-mode-content-types-alist
       '(("jsx" . "\\.js[x]?\\'")))
@@ -144,7 +157,7 @@
 
   ;; key bindings
   (local-set-key (kbd "C-c C-v") 'browse-url-of-buffer)
-  
+
   (add-hook 'local-write-file-hooks
             (lambda ()
               (delete-trailing-whitespace)
@@ -179,11 +192,6 @@
 ;; customize flycheck temp file prefix
 (setq-default flycheck-temp-prefix ".flycheck")
 
-;; https://github.com/purcell/exec-path-from-shell
-;; only need exec-path-from-shell on OSX
-;; this hopefully sets up path and other vars better
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
 
 ;;---------------------------------------------------------
 ;;------------ End Web Development Settings----------------
@@ -233,7 +241,7 @@
 ;; auto pair braces, quotes, brackets
 (require 'autopair)
 ;; disabling it, as this is more for pain then beign usefulc
-;; (autopair-global-mode 1) 
+;; (autopair-global-mode 1)
 (setq autopair-autowrap t)
 
 ;; whitespace-mode
@@ -304,8 +312,8 @@
 (add-hook 'diff-mode-hook 'remove-dos-eol)
 
 (add-hook 'yaml-mode-hook
-		  (lambda ()
-			 (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+                  (lambda ()
+                         (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 ;; enable upcase-region command (this uppercases the selection)
 (put 'upcase-region 'disabled nil)
 ;; enable narrow-to-region command (I forgot why/how I would use is
@@ -321,7 +329,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
+    (govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -7,10 +7,9 @@ export GITROOT=$HOME/development
 export IGNORE_PYTHON_VERSION_REQUIREMENT=1
 
 export GOPROXY=https://sid.sarasvati@compass.com:AKCp5em6ctSgbu6DGSttScroD5n5YmsG93CE6zxFoZYDjHshBnxbb5pLSfmbDHUxMW8PXB2Gz@urbancompass.jfrog.io/urbancompass/api/go/go
-
-export PATH="/usr/local/opt/go@1.12/bin:$PATH"
 export GOBIN=$HOME/go
 export ANVIL_THRIFT_HOME=~/development/urbancompass/src/thrift/urbancompass/
+export PATH="/usr/local/opt/go@1.12/bin:$GOBIN:$PATH"
 
 ############  Cogito  ############# (end: 06/2019)
 
