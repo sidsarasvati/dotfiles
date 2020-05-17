@@ -130,6 +130,13 @@
 ;;----------------------------------------------------------
 ;; GOLANG DEVELOPMENT {
 ;;----------------------------------------------------------
+
+;; from: https://github.com/dominikh/go-mode.el/blob/master/go-guru.el
+(require 'go-guru)
+
+;; To enable identifier highlighting mode in a Go source buffer, use:
+(add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
+
 ;; from
 ;; http://tleyden.github.io/blog/2014/05/22/configure-emacs-as-a-go-editor-from-scratch/
 (defun my-go-mode-hook ()
