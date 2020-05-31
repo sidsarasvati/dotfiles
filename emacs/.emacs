@@ -365,7 +365,7 @@
  '(google-this-mode t)
  '(package-selected-packages
    (quote
-    (dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
+    (restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
