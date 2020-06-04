@@ -1,9 +1,14 @@
 - Swift Mode
 - Swift Playground mode
 
+- move all README to org mode :)
+- take literate programming inspiration from https://github.com/hrs/dotfiles
+
+- magit 
 
 Commands:
 - Move file: https://zck.me/emacs-move-file
+
 
 
 
