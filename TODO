@@ -1,14 +1,15 @@
-- Swift Mode
-- Swift Playground mode
+* All Todos
 
-- move all README to org mode :)
-- take literate programming inspiration from https://github.com/hrs/dotfiles
+** Big Ones
+*** TODO Swift Mode
+*** TODO Swift Playground mode
 
-- magit 
+** Quick Captures
+*** TODO move all README to org mode :)
+*** TODO take literate programming inspiration from https://github.com/hrs/dotfiles
+*** TODO magit 
 
-Commands:
-- Move file: https://zck.me/emacs-move-file
-
-
-
-
+** Commands
+*** Move file: https://zck.me/emacs-move-file
+** Videos to watch
+*** TODO [[https://www.youtube.com/watch?v=dljNabciEGg][Literate Devops with Emacs]]
