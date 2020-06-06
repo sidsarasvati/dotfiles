@@ -37,10 +37,11 @@
 (setq-default indent-tabs-mode nil)     ; Tab inserts spaces only
 (setq mac-command-modifier 'meta)       ; Sets the command (Apple) key as Meta
 
-;;------------------------------------------------------------------------------
-;; Loading Custom Scripts
-;;------------------------------------------------------------------------------
+;;------------------------------------------------
+;; Global Emacs Config {
+;;------------------------------------------------
 
+;; load custom scripts 
 (load "scroll.el") ;; scrolling 
 (load "my-convenience.el") ;; key binding
 (load "gud.el") ;; lldb mode
@@ -57,6 +58,12 @@
 (setq sml/no-confirm-load-theme t)
 (setq sml/theme 'automatic)
 (sml/setup)
+
+;; my dark mode theme: dracula 
+(load-theme 'dracula t)
+;;------------------------------------------------
+;; Global Emacs Config }
+;;------------------------------------------------
 
 ;;package management
 ;;; Emacs is not a package manager, and here we load its package manager!
@@ -87,8 +94,6 @@
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-;; my dark mode theme: dracula 
-(load-theme 'dracula t)
 
 ;;cmake-mode
 (require 'cmake-mode)
