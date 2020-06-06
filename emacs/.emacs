@@ -53,6 +53,9 @@
 ;; clang format
 ;; (require 'clang-format)
 
+;; Change “yes or no” to “y or n”
+(fset 'yes-or-no-p 'y-or-n-p)
+
 ;; init smart-mode-line with powerline theme
 (require 'smart-mode-line)
 (setq sml/no-confirm-load-theme t)
