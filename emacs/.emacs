@@ -131,6 +131,15 @@
 ;;----------------------------------------------------------
 
 ;;----------------------------------------------------------
+;; ORG MODE  {
+;;----------------------------------------------------------
+
+(global-set-key (kbd "C-x p i") 'org-cliplink)
+;;----------------------------------------------------------
+;; ORG MODE  }
+;;----------------------------------------------------------
+
+;;----------------------------------------------------------
 ;; GOLANG DEVELOPMENT {
 ;;----------------------------------------------------------
 
@@ -365,7 +374,7 @@
  '(google-this-mode t)
  '(package-selected-packages
    (quote
-    (htmlize multiple-cursors restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode)))
+    (org-cliplink htmlize multiple-cursors restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode)))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
