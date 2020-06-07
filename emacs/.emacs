@@ -49,6 +49,7 @@
 ;; Preferences                          *** ----------------------------
 (setq make-backup-files nil)            ;;; Don't make backup files
 (setq column-number-mode t)             ;;; Put column number in display
+(setq-default fill-column 80)           ;;; M-q to fill col; width set to 80
                                         ;;; -----------------------------
 ;; clang format
 ;; (require 'clang-format)
@@ -142,6 +143,7 @@
 ;; ORG MODE  {
 ;;----------------------------------------------------------
 
+;; automaticaly sets web page title on link paste 
 (global-set-key (kbd "C-x p i") 'org-cliplink)  ;; TODO - change keys
 
 ;; conveniences ---
