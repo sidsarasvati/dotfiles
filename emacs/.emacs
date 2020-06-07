@@ -152,6 +152,11 @@
 
 ;; Task Management {
 
+(setq org-todo-keywords
+      '((sequence "TODO(t!)"
+                  "STARTED(s!)"
+                  "WAITING(w@/!)" "|" "DONE(x@/!)")))
+
 (setq org-log-done 'time)
 
 ;; Task  Management }
@@ -396,7 +401,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (bind-key org-cliplink htmlize multiple-cursors restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode)))
+    (avy bind-key org-cliplink htmlize multiple-cursors restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode)))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

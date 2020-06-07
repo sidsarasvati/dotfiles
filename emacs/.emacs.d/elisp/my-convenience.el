@@ -40,6 +40,10 @@
 (global-set-key [C-M-tab] 'clang-format-region)
 
 
+;; avy jump
+
+(bind-key (kbd "C-:") 'avy-goto-char)
+
 ;; ------- functions to make it happen  -----
 
 (defun copy-file-name-to-clipboard ()
