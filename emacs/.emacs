@@ -146,11 +146,23 @@
 ;; automaticaly sets web page title on link paste 
 (global-set-key (kbd "C-x p i") 'org-cliplink)  ;; TODO - change keys
 
-;; conveniences ---
+;; ---- conveniences ---
+
+;; global key activation, from https://orgmode.org/manual/Activation.html
+(bind-key (kbd "C-c l") 'org-store-link)
+(bind-key (kbd "C-c a") 'org-agenda)
+(bind-key (kbd "C-c c") 'org-capture)
+
+;; TODO - not a fan of this anymore, remove.. 
 (with-eval-after-load 'org
   (bind-key "C-c k" 'org-cut-subtree org-mode-map)
   (setq org-yank-adjusted-subtrees t))
 
+;; keybind for org-agenda with n option selected
+;; (defun org-agenda-show-agenda-and-todo (&optional arg)
+;;   (interactive "P")
+;;   (org-agenda arg "n"))
+;; (define-key org-mode-map (kbd "C-c C-a " 'org-agenda-show-agenda-and-todo))
 
 ;; Task Management {
 
@@ -162,6 +174,13 @@
 (setq org-log-done 'time)
 
 ;; Task  Management }
+
+;; Agenda Setup
+(setq org-agenda-files (list "~/.org/life.org"
+                             "~/.org/work.org"))
+
+;; start week on weekend i.e saturday 
+(setq org-agenda-start-on-weekday 6)
 
 ;;----------------------------------------------------------
 ;; ORG MODE  }
