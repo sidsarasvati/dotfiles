@@ -1,13 +1,13 @@
 * All Todos
 
-** Big Ones
-*** TODO Swift Mode
-*** TODO Swift Playground mode
-
 ** Quick Captures
 *** TODO move all README to org mode :)
 *** TODO take literate programming inspiration from https://github.com/hrs/dotfiles
 *** TODO magit 
+*** TODO add .gitignore for .emacs.d/auto-save-list
+** Big Ones
+*** TODO Swift Mode
+*** TODO Swift Playground mode
 
 ** Commands
 *** Move file: https://zck.me/emacs-move-file
