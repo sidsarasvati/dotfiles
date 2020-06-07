@@ -142,7 +142,20 @@
 ;; ORG MODE  {
 ;;----------------------------------------------------------
 
-(global-set-key (kbd "C-x p i") 'org-cliplink)
+(global-set-key (kbd "C-x p i") 'org-cliplink)  ;; TODO - change keys
+
+;; conveniences ---
+(with-eval-after-load 'org
+  (bind-key "C-c k" 'org-cut-subtree org-mode-map)
+  (setq org-yank-adjusted-subtrees t))
+
+
+;; Task Management {
+
+(setq org-log-done 'time)
+
+;; Task  Management }
+
 ;;----------------------------------------------------------
 ;; ORG MODE  }
 ;;----------------------------------------------------------
@@ -382,7 +395,7 @@
  '(google-this-mode t)
  '(package-selected-packages
    (quote
-    (org-cliplink htmlize multiple-cursors restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode)))
+    (bind-key org-cliplink htmlize multiple-cursors restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode)))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
