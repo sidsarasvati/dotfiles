@@ -33,12 +33,17 @@ stow_files() {
   ln -s ~/.bashrc ~/.bash_profile
 }
 
+setup() {
+    # create symlink for org files sync with iCloud
+    ln -s ~/Library/Mobile\ Documents/iCloud~com~appsonthemove~beorg/Documents/org .org
+}
 
 
 main() {
   install_homebrew
   install_packages    
   stow_files
+  setup
 }
 
 main
