@@ -47,4 +47,4 @@ Example:
 Contributing
 ============
 
-Shoot me a pull request.I am open to PRs - especially if it fixes cross-platform issues. 
+Shoot me a pull request. I am open to PRs - especially if it fixes cross-platform issues. 
