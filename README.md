@@ -28,6 +28,22 @@ Example:
 - cd dotfiles
 - ./install.sh
 
+
+# Mac Setting
+
+## iTerm2
+
+### To use Left Cmd key as meta in the terminal
+- Preferences->Profile->Keys : Change Left Alt to Esc+
+- Preferences->Keys->Remap Modifier : Map Left Cmd to Left Alt 
+
+### Use intellij mono font; brew install it
+
+### Use Tago Dark Theme
+
+
+
+
 Contributing
 ============
 
