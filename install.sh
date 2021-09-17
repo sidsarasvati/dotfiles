@@ -35,7 +35,7 @@ stow_files() {
 
 setup() {
     # create symlink for org files sync with iCloud
-    ln -s ~/Library/Mobile\ Documents/iCloud~com~appsonthemove~beorg/Documents/org .org
+    ln -s ~/Library/Mobile\ Documents/iCloud~com~appsonthemove~beorg/Documents/org ~/.org
 }
 
 
