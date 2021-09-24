@@ -2,16 +2,18 @@
 
 set -eu
 
-HOMEBREW_DOWNLOAD_URL=https://raw.githubusercontent.com/Homebrew/install/master/install
+HOMEBREW_DOWNLOAD_URL=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
 
 install_homebrew() {
   echo "Checking for Homebrew, and installing if necessary"
   if ! [[ $( command -v brew ) ]]; then
     echo 'Installing homebrew...'
-    /usr/bin/ruby -e "$(curl -fsSL $HOMEBREW_DOWNLOAD_URL)" > /dev/null
-  else
+    /bin/bash -c "$(curl -fsSL $HOMEBREW_DOWNLOAD_URL)"
+  else 	
     echo 'Homebrew installed.'
   fi
+
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 }
 
 # TODO - use brew bundle

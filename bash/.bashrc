@@ -6,6 +6,10 @@ OS=${OSTYPE//[0-9.]/}
 #Add local bins to path to use non-dafault system tools (like grep latest version)
 PATH="$HOME/bin:/usr/local/bin:$PATH"
 
+# Addd homebrew and associated env variables to path
+# TODO - check for brew before running
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
