@@ -47,8 +47,7 @@
 (load "gud.el") ;; lldb mode
 
 ;; Preferences                          *** ----------------------------
-(setq auto-save-file-name-transforms    ;;; Save backup files into central place
-  `((".*" "~/.emacs-saves/" t)))
+(setq make-backup-files nil)            ;;; disable backup files
 (setq column-number-mode t)             ;;; Put column number in display
 (setq-default fill-column 80)           ;;; M-q to fill col; width set to 80
                                         ;;; -----------------------------

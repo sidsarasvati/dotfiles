@@ -12,16 +12,22 @@ tap "homebrew/cask-fonts" # for fonts
 # core command line tools
 brew "mas"
 brew "tree"
+brew "watch"
 
 # core apps
 cask "emacs"
 cask "iterm2"
 cask "font-jetbrains-mono"
-cask "visual-studio-code"
-cask "slack"
 
-# office
+# others
+cask "visual-studio-code"
 cask "superhuman"
+cask "evernote"
+cask "slack"
+cask "google-chrome"
+
+# Mac App Store Apps
+mas "endel", id: 1484348796
 
 
 

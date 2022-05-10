@@ -2,7 +2,7 @@
   "entries": {
     "tap": {
       "homebrew/cask": {
-        "revision": "c6e44289c3293f53b7492ebb680d82b7f411775f"
+        "revision": "220ca76a54300dbe73aa55dc1a0cf5d7f028449b"
       },
       "homebrew/cask-fonts": {
         "revision": "83917533b006d97508f47326f1b416d8680241c7"
@@ -43,6 +43,12 @@
         "version": "11.0.26",
         "options": {
           "full_name": "superhuman"
+        }
+      },
+      "evernote": {
+        "version": "10.22.3,2958",
+        "options": {
+          "full_name": "evernote"
         }
       }
     },
@@ -115,6 +121,9 @@
           }
         }
       }
+    },
+    "mas": {
+      "endel": null
     }
   },
   "system": {

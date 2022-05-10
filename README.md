@@ -43,6 +43,11 @@ Example:
 
 
 
+## Moving to Zsh 
+
+- Aliases in zsh work just like aliases in bash. 
+- As with aliases, functions in your zsh configuration will work just as they did in bash.
+
 
 Contributing
 ============
