@@ -16,6 +16,7 @@
 
 [push]
 	default = current
+	autoSetupRemote = true
 
 [color]
     ui = auto
@@ -36,3 +37,8 @@
     difc = diff --cached
     amend = commit --amend
 
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
