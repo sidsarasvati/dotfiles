@@ -89,3 +89,4 @@ PS1="$PS1_ERROR_CHECK\n$PS1_HOST $PS1_GIT $PS1_PATH\n\[\e[0;32m\]\$\[\e[0m\] "
 
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "$HOME/.cargo/env"
