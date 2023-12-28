@@ -1,5 +1,4 @@
-Dotfiles
-========
+Dotfiles ========
 
 This is my cross-platform development environment setup config files. I
 am an avid 'emacs' user, so you'll like to look at my emacs config to

@@ -10,29 +10,16 @@ PATH="$HOME/bin:/usr/local/bin:$PATH"
 # TODO - check for brew before running
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-
-# Homebrew: Python
-export PATH="/opt/homebrew/opt/python/libexec/bin:$PATH"
-
-# ruby version from brew
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
-# -- ruby
+# Pyenv: Python
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/shims:$PATH"
+if which pyenv >/dev/null; then eval "$(pyenv init -)"; fi
 
 # copied from brew install nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"                                       # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 # -- nvm
-
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-export JAVA_HOME=$(/usr/libexec/java_home -v 11)
 
 #default editor
 export EDITOR=$(which emacs)
@@ -51,11 +38,10 @@ export HISTFILESIZE=10000
 
 #todo: need fix for *nix
 if [[ "$OS" == 'darwin' ]]; then
-alias em='open -a /Applications/Emacs.app'
+  alias em='open -a /Applications/Emacs.app'
 else
-alias em=emacs
+  alias em=emacs
 fi
-
 
 ############  GENERAL  #############
 alias g="grep -i"
@@ -63,7 +49,7 @@ alias eg="grep -E -i"
 alias env="env | sort"
 alias pd="pushd"
 
-if [[ `uname` == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
   alias ls="ls -G"
   # good for dark backgrounds
   export LSCOLORS=gxfxcxdxbxegedabagacad
@@ -103,4 +89,3 @@ alias gg='git grep'
 alias d='docker'
 alias dc='docker-compose'
 alias kb='kubectl'
-

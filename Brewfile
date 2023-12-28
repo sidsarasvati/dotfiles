@@ -21,13 +21,13 @@ cask "font-jetbrains-mono"
 
 # others
 cask "visual-studio-code"
-cask "superhuman"
-cask "evernote"
-cask "slack"
+# cask "superhuman"
+# cask "evernote"
+# cask "slack"
 cask "google-chrome"
 
 # Mac App Store Apps
-mas "endel", id: 1484348796
+# mas "endel", id: 1484348796
 
 
 
