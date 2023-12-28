@@ -1,3 +1,13 @@
+# Dotfiles
+
+
+## Update 2024
+- bash config ported to zshell in bashrc_port.zsh
+- we only maintain mac setup for now
+- next up, we shall write cleanup install.sh as inpired by - https://gist.github.com/sidsarasvati/32834aa0eafd69339f5727621473c4c7
+
+
+
 Dotfiles ========
 
 This is my cross-platform development environment setup config files. I
