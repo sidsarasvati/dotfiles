@@ -6,9 +6,12 @@ HOMEBREW_DOWNLOAD_URL=https://raw.githubusercontent.com/Homebrew/install/HEAD/in
 
 # Detect Mac architecture to determine Homebrew path
 detect_homebrew_path() {
-  if [[ "$(uname -m)" == "arm64" ]]; then
+  # Use safe command execution with fallback
+  arch=$(uname -m 2>/dev/null || echo "unknown")
+  if [[ "$arch" == "arm64" ]]; then
     echo "/opt/homebrew/bin/brew"
   else
+    # Intel Mac or architecture detection failed
     echo "/usr/local/bin/brew"
   fi
 }
@@ -65,7 +68,10 @@ setup() {
     # Setup zsh configuration
     setup_zsh
     
-    # NOTE: org-mode file symlink has been removed as org-mode is no longer used for knowledge management
+    # NOTE: The previous org-mode file symlink linking iCloud to ~/.org has been removed for two reasons:
+    # 1. It created a hardcoded path dependency that only worked on macOS with iCloud configured
+    # 2. The dotfiles now use a more portable approach with org-directory variable in Emacs config
+    # If you need to sync org files, consider doing so outside this script with a platform-agnostic approach
 }
 
 

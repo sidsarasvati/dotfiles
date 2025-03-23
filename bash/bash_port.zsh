@@ -1,19 +1,27 @@
-#Platform detection
-OS=${OSTYPE//[0-9.]/}
+# Source OS detection and Homebrew prefix from env.zsh to avoid duplication
+# This ensures we use the same detection logic across files
+if [[ -f "$HOME/.zsh/env.zsh" ]]; then
+  # Extract just the platform detection and Homebrew prefix parts
+  source "$HOME/.zsh/env.zsh"
+else
+  # Fallback in case env.zsh isn't available
+  #Platform detection
+  OS=${OSTYPE//[0-9.]/}
 
-# === Homebrew Detection ===
-# Detect Homebrew location based on platform and architecture
-if [[ "$OS" == "darwin" ]]; then
-  # Check for Apple Silicon Mac
-  if [[ "$(uname -m)" == "arm64" ]]; then
-    HOMEBREW_PREFIX="/opt/homebrew"
+  # === Homebrew Detection ===
+  # Detect Homebrew location based on platform and architecture
+  if [[ "$OS" == "darwin" ]]; then
+    # Check for Apple Silicon Mac
+    if [[ "$(uname -m)" == "arm64" ]]; then
+      HOMEBREW_PREFIX="/opt/homebrew"
+    else
+      # Intel Mac
+      HOMEBREW_PREFIX="/usr/local"
+    fi
   else
-    # Intel Mac
+    # Default for other platforms
     HOMEBREW_PREFIX="/usr/local"
   fi
-else
-  # Default for other platforms
-  HOMEBREW_PREFIX="/usr/local"
 fi
 
 #Add local bins to path to use non-default system tools

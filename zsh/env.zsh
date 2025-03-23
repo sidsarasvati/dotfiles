@@ -17,11 +17,13 @@ OS=${OSTYPE//[0-9.]/}
 #
 # Detect Homebrew location based on platform and architecture
 if [[ "$OS" == "darwin" ]]; then
-  # Check for Apple Silicon Mac
-  if [[ "$(uname -m)" == "arm64" ]]; then
+  # Check for Apple Silicon Mac 
+  # Use safe command execution with fallback
+  arch=$(uname -m 2>/dev/null || echo "unknown")
+  if [[ "$arch" == "arm64" ]]; then
     HOMEBREW_PREFIX="/opt/homebrew"
   else
-    # Intel Mac
+    # Intel Mac or architecture detection failed
     HOMEBREW_PREFIX="/usr/local"
   fi
 else

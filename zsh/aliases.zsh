@@ -76,21 +76,31 @@ alias mkcd='mkdir -p "$@" && cd "$_"' # Create directory and cd into it
 # Emacs aliases for macOS
 # Launch Emacs GUI, properly detached from terminal
 function em() {
-  # If no arguments, open Emacs without any files
+  # Determine platform-specific launch method once
+  local launch_cmd
+  if [[ "$OS" == "darwin" ]]; then
+    launch_cmd="/usr/bin/open -a Emacs"
+  else
+    # For non-macOS, just use emacs directly with & to run in background
+    launch_cmd="emacs"
+    # Add & for background only on non-macOS platforms
+    local bg_suffix="&"
+  fi
+  
+  # Launch with or without arguments
   if [[ $# -eq 0 ]]; then
+    # No files specified
     if [[ "$OS" == "darwin" ]]; then
-      /usr/bin/open -a Emacs
+      $launch_cmd
     else
-      # For non-macOS, just use emacs directly
-      emacs &
+      eval "$launch_cmd $bg_suffix"
     fi
   else
-    # Open Emacs with specified files
+    # Files specified
     if [[ "$OS" == "darwin" ]]; then
-      /usr/bin/open -a Emacs "$@"
+      $launch_cmd "$@"
     else
-      # For non-macOS, just use emacs directly
-      emacs "$@" &
+      eval "$launch_cmd $(printf '%q ' "$@") $bg_suffix"
     fi
   fi
 }
