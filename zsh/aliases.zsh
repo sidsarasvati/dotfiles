@@ -78,10 +78,20 @@ alias mkcd='mkdir -p "$@" && cd "$_"' # Create directory and cd into it
 function em() {
   # If no arguments, open Emacs without any files
   if [[ $# -eq 0 ]]; then
-    /usr/bin/open -a Emacs
+    if [[ "$OS" == "darwin" ]]; then
+      /usr/bin/open -a Emacs
+    else
+      # For non-macOS, just use emacs directly
+      emacs &
+    fi
   else
     # Open Emacs with specified files
-    /usr/bin/open -a Emacs "$@"
+    if [[ "$OS" == "darwin" ]]; then
+      /usr/bin/open -a Emacs "$@"
+    else
+      # For non-macOS, just use emacs directly
+      emacs "$@" &
+    fi
   fi
 }
 

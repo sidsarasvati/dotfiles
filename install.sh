@@ -4,6 +4,15 @@ set -eu
 
 HOMEBREW_DOWNLOAD_URL=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
 
+# Detect Mac architecture to determine Homebrew path
+detect_homebrew_path() {
+  if [[ "$(uname -m)" == "arm64" ]]; then
+    echo "/opt/homebrew/bin/brew"
+  else
+    echo "/usr/local/bin/brew"
+  fi
+}
+
 install_homebrew() {
   echo "Checking for Homebrew, and installing if necessary"
   if ! [[ $( command -v brew ) ]]; then
@@ -13,7 +22,8 @@ install_homebrew() {
     echo 'Homebrew installed.'
   fi
 
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  BREW_PATH=$(detect_homebrew_path)
+  eval "$($BREW_PATH shellenv)"
 }
 
 # TODO - use brew bundle
@@ -52,11 +62,10 @@ EOF
 }
 
 setup() {
-    # create symlink for org files sync with iCloud
-    ln -s ~/Library/Mobile\ Documents/iCloud~com~appsonthemove~beorg/Documents/org ~/.org
-    
     # Setup zsh configuration
     setup_zsh
+    
+    # NOTE: org-mode file symlink has been removed as org-mode is no longer used for knowledge management
 }
 
 
