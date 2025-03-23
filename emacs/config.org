@@ -186,7 +186,7 @@ Configure GUI-specific elements like the toolbar and line numbers.
 
 ** Highlight and Visual Enhancements
 
-Configure visual enhancements like line highlighting.
+Configure visual enhancements like line highlighting and parenthesis matching.
 
 #+begin_src emacs-lisp
   ;; set highlight color 10% darker default background
@@ -201,6 +201,10 @@ Configure visual enhancements like line highlighting.
   (add-hook 'global-hl-line-mode-hook 'set-hl-line-color-based-on-theme)
 
   (global-hl-line-mode t)
+  
+  ;; Enable highlighting of matching parentheses
+  (show-paren-mode 1)
+  (setq show-paren-delay 0)  ; Show matching parenthesis without delay
 #+end_src
 
 * Programming Modes
@@ -383,6 +387,7 @@ Configure settings for web development, including JavaScript, HTML, CSS, and JSX
   ;;---------------------------------------------------------
 #+end_src
 
+
 ** File Type Associations
 
 Configure various file types to use the appropriate major modes.
@@ -514,6 +519,7 @@ Functions for better window management.
 
   ;;(global-set-key (kbd "M-2") 'swap-windows)
 #+end_src
+
 
 * Utility Functions
 

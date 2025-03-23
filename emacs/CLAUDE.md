@@ -19,6 +19,7 @@ This folder contains Sid's Emacs configuration, recently converted to a literate
 - Ensured Dracula theme loads early for consistent appearance
 - Updated .gitignore to exclude Emacs temporary files
 - Added improved terminal/GUI launching commands in zsh aliases
+- Enabled show-paren-mode for highlighting matching parentheses
 
 ## Technical Details
 1. **Path Resolution**: Uses file-truename to resolve the actual path of the .emacs symlink
@@ -47,3 +48,4 @@ This folder contains Sid's Emacs configuration, recently converted to a literate
 - web-mode: Web development (HTML/CSS/JS)
 - go-mode: Go programming language support
 - org-mode: Organization, notes, TODOs
+- magit: Git interface for Emacs
