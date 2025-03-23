@@ -345,7 +345,10 @@
 (tool-bar-mode -1)
 
 ;; turn line numbers on (left margin) - globally
-(global-linum-mode t)
+;; Use display-line-numbers-mode (built-in since Emacs 26)
+;; which is more efficient than the older linum-mode
+(when (version<= "26.0.50" emacs-version)
+  (global-display-line-numbers-mode t))
 
 ;; enable git-gutter https://github.com/syohex/emacs-git-gutter-fringe
 ;; (global-git-gutter-mode +1)

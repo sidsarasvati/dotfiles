@@ -73,13 +73,20 @@ alias mkcd='mkdir -p "$@" && cd "$_"' # Create directory and cd into it
 #
 # Quick access to text editors with appropriate options.
 
-# OS-specific editor aliases
-if [[ "$OSTYPE" == *darwin* ]]; then
-  alias em=emacs                  # Launch Emacs graphical interface
-  alias emac='emacs -nw'          # Launch Emacs in terminal mode
-else
-  alias em=emacs                  # Default Emacs command for other platforms
-fi
+# Emacs aliases for macOS
+# Launch Emacs GUI, properly detached from terminal
+function em() {
+  # If no arguments, open Emacs without any files
+  if [[ $# -eq 0 ]]; then
+    /usr/bin/open -a Emacs
+  else
+    # Open Emacs with specified files
+    /usr/bin/open -a Emacs "$@"
+  fi
+}
+
+# Make 'emacs' launch terminal Emacs by default
+alias emacs='emacs -nw'          # Launch Emacs in terminal mode
 
 alias e=$EDITOR                   # Use the default editor
 alias nv="nvim"                   # Launch Neovim
