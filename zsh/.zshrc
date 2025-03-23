@@ -93,23 +93,62 @@ bindkey "^R" history-incremental-search-backward  # Ctrl + R → Incremental sea
 
 # === Prompt Configuration ===
 #
-# A clean, informative prompt that shows:
-# - Username and hostname
-# - Current directory
-# - Git branch (when in a git repository)
-# - Different colors for better visual parsing
+# A collection of awesome prompts for different styles and needs.
+# Uncomment the one you want to use and comment out the others.
 
 # Load version control information
 autoload -Uz vcs_info
-precmd() { vcs_info }
+setopt prompt_subst                    # Allow substitution in prompt
+
+# Setup prompt timer functionality (for prompt option 4)
+function preexec() {
+  timer=$(($(date +%s%0N)/1000000))
+}
+
+# Precmd function that updates vcs_info before each prompt
+function precmd() {
+  vcs_info
+  
+  # Calculate command execution time (for prompt option 4)
+  if [ $timer ]; then
+    now=$(($(date +%s%0N)/1000000))
+    elapsed=$(($now-$timer))
+    export RPROMPT="%F{cyan}${elapsed}ms %(?:%F{green}✓:%F{red}✗)%f"
+    unset timer
+  fi
+}
 
 # Configure which VCS info to show and how
 zstyle ':vcs_info:git:*' formats '%b'  # Just show branch name
-setopt prompt_subst                    # Allow substitution in prompt
+zstyle ':vcs_info:git:*' actionformats '%b|%a'  # Show branch name and action (rebase/merge)
 
-# Prompt shows: username@host:directory(git_branch)$
-# Colors: username/host (green), directory (blue), git branch (red)
-PROMPT='%F{green}%n@%m%f:%F{blue}%~%f%F{yellow}${vcs_info_msg_0_:+(%f%F{red}${vcs_info_msg_0_}%f%F{yellow})}%f$ '
+# ------------------------------
+# PROMPT OPTIONS - Choose one by uncommenting
+# ------------------------------
+
+# === OPTION 1: Minimal Path-Focused with Lambda ===
+# Clean, with focus only on what matters - the path and git status
+# PROMPT='%F{cyan}%~%f %F{yellow}${vcs_info_msg_0_:+(%f%F{red}${vcs_info_msg_0_}%f%F{yellow})}%f
+# %F{magenta}λ%f '
+
+# === OPTION 2: Developer Pro Prompt (Default) ===
+# More compact but super informative, with a dedicated line for commands
+PROMPT=$'%F{blue}╭─%f %F{cyan}%~%f %F{yellow}${vcs_info_msg_0_:+(%f%F{red}${vcs_info_msg_0_}%f%F{yellow})}%f
+%F{blue}╰─%f %F{green}❯%f '
+
+# === OPTION 3: AI-Coder Vibe Prompt ===
+# Modern feel with unique symbols, perfect for coding sessions
+# PROMPT=$'%F{magenta}%~ %F{yellow}${vcs_info_msg_0_:+(%f%F{cyan}${vcs_info_msg_0_}%f%F{yellow})}%f
+# %F{green}⟩%f '
+
+# === OPTION 4: Informativity + Style ===
+# Commands on second line with execution time and return status shown at right
+# PROMPT=$'%F{blue}%~%f %F{yellow}${vcs_info_msg_0_:+(%f%F{red}${vcs_info_msg_0_}%f%F{yellow})}%f
+# %F{magenta}❯%f '
+
+# === OPTION 5: Classic with Lambda ===
+# Similar to the original style but with lambda and cleaner formatting
+# PROMPT='%F{cyan}%~%f %F{yellow}${vcs_info_msg_0_:+(%f%F{red}${vcs_info_msg_0_}%f%F{yellow})}%f %F{magenta}λ%f '
 
 # === Custom Function Loading ===
 #
