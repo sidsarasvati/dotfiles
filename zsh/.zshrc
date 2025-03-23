@@ -105,16 +105,15 @@ function preexec() {
   timer=$(date +%s)
 }
 
-# Precmd function that updates vcs_info before each prompt
+# Get git branch for prompt - returns empty string if not in a git repo
+function git_prompt_info() {
+  local ref
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo "${ref#refs/heads/}"
+}
+
+# Precmd function for prompt
 function precmd() {
-  # Initialize git_branch variable
-  git_branch=""
-  
-  # Check if we're in a git repository and get branch name
-  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    git_branch=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
-  fi
-  
   # Calculate command execution time (for prompt option 4)
   if [ $timer ]; then
     now=$(date +%s)
@@ -130,27 +129,27 @@ function precmd() {
 
 # === OPTION 1: Minimal Path-Focused with Lambda ===
 # Clean, with focus only on what matters - the path and git status
-# PROMPT='%F{cyan}%~%f${git_branch:+%F{yellow} (%F{red}$git_branch%F{yellow})}
+# PROMPT='%F{cyan}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{red}$branch%F{yellow})")
 # %F{magenta}λ%f '
 
 # === OPTION 2: Developer Pro Prompt (Default) ===
 # More compact but super informative, with a dedicated line for commands
-PROMPT=$'%F{blue}╭─%f %F{cyan}%~%f${git_branch:+%F{yellow} (%F{red}$git_branch%F{yellow})}
+PROMPT=$'%F{blue}╭─%f %F{cyan}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{red}$branch%F{yellow})")
 %F{blue}╰─%f %F{green}❯%f '
 
 # === OPTION 3: AI-Coder Vibe Prompt ===
 # Modern feel with unique symbols, perfect for coding sessions
-# PROMPT=$'%F{magenta}%~%f${git_branch:+%F{yellow} (%F{cyan}$git_branch%F{yellow})}
+# PROMPT=$'%F{magenta}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{cyan}$branch%F{yellow})")
 # %F{green}⟩%f '
 
 # === OPTION 4: Informativity + Style ===
 # Commands on second line with execution time and return status shown at right
-# PROMPT=$'%F{blue}%~%f${git_branch:+%F{yellow} (%F{red}$git_branch%F{yellow})}
+# PROMPT=$'%F{blue}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{red}$branch%F{yellow})")
 # %F{magenta}❯%f '
 
 # === OPTION 5: Classic with Lambda ===
 # Similar to the original style but with lambda and cleaner formatting
-# PROMPT='%F{cyan}%~%f${git_branch:+%F{yellow} (%F{red}$git_branch%F{yellow})} %F{magenta}λ%f '
+# PROMPT='%F{cyan}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{red}$branch%F{yellow})") %F{magenta}λ%f '
 
 # === Custom Function Loading ===
 #
