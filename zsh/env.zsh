@@ -24,18 +24,14 @@ typeset -U path
 # Add directories to PATH in order of precedence (first has highest priority)
 path=(
   "$HOME/bin"                 # User's personal bin directory for custom scripts
-  "/usr/local/bin"            # Common location for user-installed programs
+  "/opt/homebrew/bin"         # Homebrew on Apple Silicon Macs
+  "/usr/local/bin"            # Homebrew on Intel Macs and other user programs
   "$HOME/.local/bin"          # Python tools installed by pipx
   "$HOME/.lmstudio/bin"       # LM Studio CLI tools
   $path                       # Existing path entries
 )
 
 # --- Language-Specific Path Additions ---
-
-# Add Doom Emacs bin directory if it exists
-if [ -d "$HOME/.config/emacs/bin" ]; then
-  path=("$HOME/.config/emacs/bin" $path)
-fi
 
 # Add Java to path if it exists (Homebrew OpenJDK)
 if [ -d "/opt/homebrew/opt/openjdk/bin" ]; then
