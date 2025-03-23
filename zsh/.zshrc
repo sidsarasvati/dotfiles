@@ -107,7 +107,13 @@ function preexec() {
 
 # Precmd function that updates vcs_info before each prompt
 function precmd() {
-  vcs_info
+  # Initialize git_branch variable
+  git_branch=""
+  
+  # Check if we're in a git repository and get branch name
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    git_branch=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
+  fi
   
   # Calculate command execution time (for prompt option 4)
   if [ $timer ]; then
@@ -118,39 +124,33 @@ function precmd() {
   fi
 }
 
-# Configure which VCS info to show and how
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' formats '%b'  # Just show branch name
-zstyle ':vcs_info:git:*' actionformats '%b|%a'  # Show branch name and action (rebase/merge)
-
 # ------------------------------
 # PROMPT OPTIONS - Choose one by uncommenting
 # ------------------------------
 
 # === OPTION 1: Minimal Path-Focused with Lambda ===
 # Clean, with focus only on what matters - the path and git status
-# PROMPT='%F{cyan}%~%f%F{yellow}${vcs_info_msg_0_:+ (%F{red}${vcs_info_msg_0_}%F{yellow})}%f
+# PROMPT='%F{cyan}%~%f${git_branch:+%F{yellow} (%F{red}$git_branch%F{yellow})}
 # %F{magenta}λ%f '
 
 # === OPTION 2: Developer Pro Prompt (Default) ===
 # More compact but super informative, with a dedicated line for commands
-PROMPT=$'%F{blue}╭─%f %F{cyan}%~%f%F{yellow}${vcs_info_msg_0_:+ (%F{red}${vcs_info_msg_0_}%F{yellow})}%f
+PROMPT=$'%F{blue}╭─%f %F{cyan}%~%f${git_branch:+%F{yellow} (%F{red}$git_branch%F{yellow})}
 %F{blue}╰─%f %F{green}❯%f '
 
 # === OPTION 3: AI-Coder Vibe Prompt ===
 # Modern feel with unique symbols, perfect for coding sessions
-# PROMPT=$'%F{magenta}%~%f%F{yellow}${vcs_info_msg_0_:+ (%F{cyan}${vcs_info_msg_0_}%F{yellow})}%f
+# PROMPT=$'%F{magenta}%~%f${git_branch:+%F{yellow} (%F{cyan}$git_branch%F{yellow})}
 # %F{green}⟩%f '
 
 # === OPTION 4: Informativity + Style ===
 # Commands on second line with execution time and return status shown at right
-# PROMPT=$'%F{blue}%~%f%F{yellow}${vcs_info_msg_0_:+ (%F{red}${vcs_info_msg_0_}%F{yellow})}%f
+# PROMPT=$'%F{blue}%~%f${git_branch:+%F{yellow} (%F{red}$git_branch%F{yellow})}
 # %F{magenta}❯%f '
 
 # === OPTION 5: Classic with Lambda ===
 # Similar to the original style but with lambda and cleaner formatting
-# PROMPT='%F{cyan}%~%f%F{yellow}${vcs_info_msg_0_:+ (%F{red}${vcs_info_msg_0_}%F{yellow})}%f %F{magenta}λ%f '
+# PROMPT='%F{cyan}%~%f${git_branch:+%F{yellow} (%F{red}$git_branch%F{yellow})} %F{magenta}λ%f '
 
 # === Custom Function Loading ===
 #
