@@ -186,14 +186,17 @@ Configure GUI-specific elements like the toolbar, line numbers, and frame size.
   ;; Set default frame size for GUI (approximately 9:16 aspect ratio)
   ;; Only applies when running in GUI mode
   (when (display-graphic-p)
-    (setq default-frame-alist
-          '((width . 100)    ;; characters wide
-            (height . 56)    ;; lines tall (9:16 ratio with width of 100)
-            (tool-bar-lines . 0)
-            (vertical-scroll-bars . nil))))
-            
-  ;; Apply size to the initial frame as well
-  (setq initial-frame-alist (copy-alist default-frame-alist))
+    ;; Add frame size settings to default-frame-alist
+    (add-to-list 'default-frame-alist '(width . 100))  ;; characters wide
+    (add-to-list 'default-frame-alist '(height . 56))  ;; lines tall (9:16 ratio)
+    (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
+    (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+    
+    ;; Apply the same settings to the initial frame
+    (add-to-list 'initial-frame-alist '(width . 100))
+    (add-to-list 'initial-frame-alist '(height . 56))
+    (add-to-list 'initial-frame-alist '(tool-bar-lines . 0))
+    (add-to-list 'initial-frame-alist '(vertical-scroll-bars . nil)))
 #+end_src
 
 ** Highlight and Visual Enhancements
