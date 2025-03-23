@@ -1,0 +1,12 @@
+# Ignore local customizations
+local.zsh
+
+# Ignore the history file
+.zsh_history
+
+# Ignore zcompdump files
+.zcompdump*
+
+# Ignore temporary files
+*.zwc
+*.zwc.old

@@ -29,15 +29,34 @@ stow_files() {
   stow git
   stow emacs
   stow misc # all other things that don't fit cleanly in a category
+  stow zsh  # add the new zsh configurations
 
   # Link .bash_profile -> .bashrc
   rm -f ~/.bash_profile
   ln -s ~/.bashrc ~/.bash_profile
 }
 
+setup_zsh() {
+  echo "Setting up Zsh configuration..."
+  
+  # Get the absolute path to the dotfiles directory
+  DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  
+  # Create .zshenv file in home directory to point to dotfiles
+  cat > ~/.zshenv << EOF
+# This file redirects to the dotfiles-managed zsh configuration
+export ZDOTDIR="${DOTFILES_DIR}/zsh"
+EOF
+  
+  echo "Zsh configuration linked via ~/.zshenv"
+}
+
 setup() {
     # create symlink for org files sync with iCloud
     ln -s ~/Library/Mobile\ Documents/iCloud~com~appsonthemove~beorg/Documents/org ~/.org
+    
+    # Setup zsh configuration
+    setup_zsh
 }
 
 
