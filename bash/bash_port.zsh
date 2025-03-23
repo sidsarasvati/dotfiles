@@ -1,29 +1,50 @@
-#Platform detection
-OS=${OSTYPE//[0-9.]/}
+# Source OS detection and Homebrew prefix from env.zsh to avoid duplication
+# This ensures we use the same detection logic across files
+if [[ -f "$HOME/.zsh/env.zsh" ]]; then
+  # Extract just the platform detection and Homebrew prefix parts
+  source "$HOME/.zsh/env.zsh"
+else
+  # Fallback in case env.zsh isn't available
+  #Platform detection
+  OS=${OSTYPE//[0-9.]/}
 
-# echo ${OS}
+  # === Homebrew Detection ===
+  # Detect Homebrew location based on platform and architecture
+  if [[ "$OS" == "darwin" ]]; then
+    # Check for Apple Silicon Mac
+    if [[ "$(uname -m)" == "arm64" ]]; then
+      HOMEBREW_PREFIX="/opt/homebrew"
+    else
+      # Intel Mac
+      HOMEBREW_PREFIX="/usr/local"
+    fi
+  else
+    # Default for other platforms
+    HOMEBREW_PREFIX="/usr/local"
+  fi
+fi
 
-#Add local bins to path to use non-dafault system tools (like grep latest version)
-PATH="$HOME/bin:/usr/local/bin:$PATH"
+#Add local bins to path to use non-default system tools
+PATH="$HOME/bin:$HOMEBREW_PREFIX/bin:/usr/local/bin:$PATH"
 
-# Addd homebrew and associated env variables to path
-# TODO - check for brew before running
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Add homebrew and associated env variables to path
+# Check for brew before running
+if command -v brew &>/dev/null; then
+  eval "$(brew shellenv)"
+fi
 
 # Pyenv: Python
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/shims:$PATH"
 if which pyenv >/dev/null; then eval "$(pyenv init -)"; fi
 
-# copied from brew install nvm
+# NVM configuration
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"                                       # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"                                       # This loads nvm
+[ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 # -- nvm
 
-# JAVA
-# from brew - for compilers to find openjdk
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+# Note: Java configuration removed as it's no longer used
 
 #default editor
 export EDITOR=$(which emacs)

@@ -4,6 +4,18 @@ set -eu
 
 HOMEBREW_DOWNLOAD_URL=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
 
+# Detect Mac architecture to determine Homebrew path
+detect_homebrew_path() {
+  # Use safe command execution with fallback
+  arch=$(uname -m 2>/dev/null || echo "unknown")
+  if [[ "$arch" == "arm64" ]]; then
+    echo "/opt/homebrew/bin/brew"
+  else
+    # Intel Mac or architecture detection failed
+    echo "/usr/local/bin/brew"
+  fi
+}
+
 install_homebrew() {
   echo "Checking for Homebrew, and installing if necessary"
   if ! [[ $( command -v brew ) ]]; then
@@ -13,7 +25,8 @@ install_homebrew() {
     echo 'Homebrew installed.'
   fi
 
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  BREW_PATH=$(detect_homebrew_path)
+  eval "$($BREW_PATH shellenv)"
 }
 
 # TODO - use brew bundle
@@ -52,11 +65,13 @@ EOF
 }
 
 setup() {
-    # create symlink for org files sync with iCloud
-    ln -s ~/Library/Mobile\ Documents/iCloud~com~appsonthemove~beorg/Documents/org ~/.org
-    
     # Setup zsh configuration
     setup_zsh
+    
+    # NOTE: The previous org-mode file symlink linking iCloud to ~/.org has been removed for two reasons:
+    # 1. It created a hardcoded path dependency that only worked on macOS with iCloud configured
+    # 2. The dotfiles now use a more portable approach with org-directory variable in Emacs config
+    # If you need to sync org files, consider doing so outside this script with a platform-agnostic approach
 }
 
 

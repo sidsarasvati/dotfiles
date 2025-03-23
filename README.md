@@ -40,6 +40,14 @@ Example:
 
 # Mac Setting
 
+## Architecture Detection
+
+This repository automatically detects Apple Silicon vs Intel Mac architectures and configures Homebrew paths accordingly:
+- Apple Silicon Macs: Uses `/opt/homebrew` as the Homebrew prefix
+- Intel Macs: Uses `/usr/local` as the Homebrew prefix
+
+This detection happens in several key files (`install.sh`, `zsh/env.zsh`, and `bash/bash_port.zsh`) to ensure portability across Mac architectures.
+
 ## iTerm2
 
 ### To use Left Cmd key as meta in the terminal

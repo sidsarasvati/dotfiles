@@ -13,6 +13,24 @@
 # This takes OSTYPE (like "darwin21.0") and removes numbers and dots to get just "darwin".
 OS=${OSTYPE//[0-9.]/}
 
+# === Homebrew Detection ===
+#
+# Detect Homebrew location based on platform and architecture
+if [[ "$OS" == "darwin" ]]; then
+  # Check for Apple Silicon Mac 
+  # Use safe command execution with fallback
+  arch=$(uname -m 2>/dev/null || echo "unknown")
+  if [[ "$arch" == "arm64" ]]; then
+    HOMEBREW_PREFIX="/opt/homebrew"
+  else
+    # Intel Mac or architecture detection failed
+    HOMEBREW_PREFIX="/usr/local"
+  fi
+else
+  # Default for other platforms
+  HOMEBREW_PREFIX="/usr/local"
+fi
+
 # === PATH Management ===
 #
 # The PATH environment variable determines where the shell looks for commands.
@@ -23,20 +41,17 @@ typeset -U path
 
 # Add directories to PATH in order of precedence (first has highest priority)
 path=(
-  "$HOME/bin"                 # User's personal bin directory for custom scripts
-  "/opt/homebrew/bin"         # Homebrew on Apple Silicon Macs
-  "/usr/local/bin"            # Homebrew on Intel Macs and other user programs
-  "$HOME/.local/bin"          # Python tools installed by pipx
-  "$HOME/.lmstudio/bin"       # LM Studio CLI tools
-  $path                       # Existing path entries
+  "$HOME/bin"                          # User's personal bin directory for custom scripts
+  "$HOMEBREW_PREFIX/bin"               # Homebrew on any platform
+  "/usr/local/bin"                     # System binaries and other user programs
+  "$HOME/.local/bin"                   # Python tools installed by pipx
+  "$HOME/.lmstudio/bin"                # LM Studio CLI tools
+  $path                                # Existing path entries
 )
 
 # --- Language-Specific Path Additions ---
 
-# Add Java to path if it exists (Homebrew OpenJDK)
-if [ -d "/opt/homebrew/opt/openjdk/bin" ]; then
-  path=("/opt/homebrew/opt/openjdk/bin" $path)
-fi
+# Language-specific paths can be added here as needed
 
 # === Homebrew Configuration ===
 #
@@ -62,18 +77,13 @@ fi
 # --- Node.js: NVM ---
 # Node Version Manager for managing multiple Node.js versions
 export NVM_DIR="$HOME/.nvm"
-if [ -s "/opt/homebrew/opt/nvm/nvm.sh" ]; then
-  source "/opt/homebrew/opt/nvm/nvm.sh"
+if [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ]; then
+  source "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
 fi
-if [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ]; then
-  source "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+if [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ]; then
+  source "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"
 fi
 
-# --- Java Configuration ---
-# Set compiler flags for Java development
-if [ -d "/opt/homebrew/opt/openjdk" ]; then
-  export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
-fi
 
 # === Editor Configuration ===
 #

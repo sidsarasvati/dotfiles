@@ -95,20 +95,24 @@ Set some basic editor defaults for tabs, indentation, and key bindings.
 Configure Emacs to centralize backup and auto-save files instead of scattering them throughout the file system.
 
 #+begin_src emacs-lisp
+  ;; Get user-emacs-directory for portability
+  (defvar backup-dir (expand-file-name "backups" user-emacs-directory))
+  (defvar auto-save-dir (expand-file-name "auto-saves" user-emacs-directory))
+  
   ;; Store backup files in a central location
   (setq backup-directory-alist
-        '(("." . "~/.emacs.d/backups")))
+        `(("." . ,backup-dir)))
   
   ;; Make backup files even when file is under version control
   (setq vc-make-backup-files t)
   
   ;; Store auto-save files in a central location
   (setq auto-save-file-name-transforms
-        '((".*" "~/.emacs.d/auto-saves/" t)))
+        `((".*" ,auto-save-dir t)))
   
   ;; Create the backup and auto-save directories if they don't exist
-  (make-directory "~/.emacs.d/backups" t)
-  (make-directory "~/.emacs.d/auto-saves" t)
+  (make-directory backup-dir t)
+  (make-directory auto-save-dir t)
   
   ;; Disable lock files (.#file.txt)
   (setq create-lockfiles nil)
@@ -471,9 +475,10 @@ Configure Org mode, one of Emacs' most powerful packages for notes, TODOs, and m
 
   ;; Task  Management }
 
-  ;; Agenda Setup
-  (setq org-agenda-files (list "~/.org/life.org"
-                               "~/.org/work.org"))
+  ;; Agenda Setup - using a variable for org directory to improve portability
+  (defvar org-directory (expand-file-name "~/.org"))
+  (setq org-agenda-files (list (expand-file-name "life.org" org-directory)
+                               (expand-file-name "work.org" org-directory)))
 
   ;; start week on weekend i.e saturday 
   (setq org-agenda-start-on-weekday 6)
