@@ -33,6 +33,7 @@ This document outlines the workflow for making structured, incremental improveme
 - [x] Fix PATH configuration in env.zsh (complete)
 - [x] Setup Emacs terminal/GUI launch commands (complete)
 - [x] Enable show-paren-mode (complete)
+- [ ] Set default frame size with 9:16 aspect ratio (branch: `feature/frame-size`)
 - [ ] Configure Magit for Git integration (branch: `feature/magit-integration`)
 - [ ] Move all README files to org-mode format (branch: `feature/org-readme`)
 - [ ] Implement move-file utility (branch: `feature/move-file-util`)

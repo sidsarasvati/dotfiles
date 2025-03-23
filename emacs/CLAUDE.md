@@ -20,6 +20,7 @@ This folder contains Sid's Emacs configuration, recently converted to a literate
 - Updated .gitignore to exclude Emacs temporary files
 - Added improved terminal/GUI launching commands in zsh aliases
 - Enabled show-paren-mode for highlighting matching parentheses
+- Set default frame size with 9:16 aspect ratio (100 columns × 56 lines)
 
 ## Technical Details
 1. **Path Resolution**: Uses file-truename to resolve the actual path of the .emacs symlink

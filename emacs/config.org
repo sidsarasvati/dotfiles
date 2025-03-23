@@ -171,7 +171,7 @@ Set up the Dracula theme for a pleasant dark mode experience.
 
 ** GUI Elements
 
-Configure GUI-specific elements like the toolbar and line numbers.
+Configure GUI-specific elements like the toolbar, line numbers, and frame size.
 
 #+begin_src emacs-lisp
   ;; disable toolbar from GUI (THIS IS EMACS!)
@@ -182,6 +182,18 @@ Configure GUI-specific elements like the toolbar and line numbers.
   ;; which is more efficient than the older linum-mode
   (when (version<= "26.0.50" emacs-version)
     (global-display-line-numbers-mode t))
+    
+  ;; Set default frame size for GUI (approximately 9:16 aspect ratio)
+  ;; Only applies when running in GUI mode
+  (when (display-graphic-p)
+    (setq default-frame-alist
+          '((width . 100)    ;; characters wide
+            (height . 56)    ;; lines tall (9:16 ratio with width of 100)
+            (tool-bar-lines . 0)
+            (vertical-scroll-bars . nil))))
+            
+  ;; Apply size to the initial frame as well
+  (setq initial-frame-alist (copy-alist default-frame-alist))
 #+end_src
 
 ** Highlight and Visual Enhancements
