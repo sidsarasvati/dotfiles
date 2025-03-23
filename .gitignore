@@ -7,3 +7,4 @@ zsh/.zsh_sessions/
 .\#*
 .emacs.desktop
 .emacs.desktop.lock
+emacs/config.el
