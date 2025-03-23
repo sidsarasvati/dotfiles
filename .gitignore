@@ -1,2 +1,9 @@
 **/auto-save-list/
 zsh/.zsh_sessions/
+
+# Emacs temporary files
+*~
+\#*\#
+.\#*
+.emacs.desktop
+.emacs.desktop.lock

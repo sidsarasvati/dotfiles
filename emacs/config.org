@@ -90,6 +90,30 @@ Set some basic editor defaults for tabs, indentation, and key bindings.
   (setq mac-command-modifier 'meta)       ; Sets the command (Apple) key as Meta
 #+end_src
 
+** Backup and Auto-Save Files
+
+Configure Emacs to centralize backup and auto-save files instead of scattering them throughout the file system.
+
+#+begin_src emacs-lisp
+  ;; Store backup files in a central location
+  (setq backup-directory-alist
+        '(("." . "~/.emacs.d/backups")))
+  
+  ;; Make backup files even when file is under version control
+  (setq vc-make-backup-files t)
+  
+  ;; Store auto-save files in a central location
+  (setq auto-save-file-name-transforms
+        '((".*" "~/.emacs.d/auto-saves/" t)))
+  
+  ;; Create the backup and auto-save directories if they don't exist
+  (make-directory "~/.emacs.d/backups" t)
+  (make-directory "~/.emacs.d/auto-saves" t)
+  
+  ;; Disable lock files (.#file.txt)
+  (setq create-lockfiles nil)
+#+end_src
+
 * UI and Appearance
 
 ** Global UI Configuration
@@ -110,6 +134,8 @@ Configure the global UI elements and behavior.
   (setq make-backup-files nil)            ;;; disable backup files
   (setq column-number-mode t)             ;;; Put column number in display
   (setq-default fill-column 80)           ;;; M-q to fill col; width set to 80
+  (setq inhibit-startup-screen t)         ;;; Disable welcome screen
+  (setq initial-scratch-message nil)      ;;; Empty scratch buffer
                                           ;;; -----------------------------
   ;; clang format
   ;; (require 'clang-format)
@@ -123,11 +149,12 @@ Configure the global UI elements and behavior.
 Configure the status line (mode line) with the smart-mode-line package.
 
 #+begin_src emacs-lisp
-  ;; init smart-mode-line with powerline theme
-  (require 'smart-mode-line)
-  (setq sml/no-confirm-load-theme t)
-  (setq sml/theme 'automatic)
-  (sml/setup)
+  ;; Initialize smart-mode-line if available
+  (when (package-installed-p 'smart-mode-line)
+    (require 'smart-mode-line)
+    (setq sml/no-confirm-load-theme t)
+    (setq sml/theme 'automatic)
+    (sml/setup))
 #+end_src
 
 ** Theme Configuration
@@ -135,8 +162,8 @@ Configure the status line (mode line) with the smart-mode-line package.
 Set up the Dracula theme for a pleasant dark mode experience.
 
 #+begin_src emacs-lisp
-  ;; my dark mode theme: dracula 
-  (load-theme 'dracula t)
+  ;; Theme is loaded early in .emacs for immediate visual feedback
+  ;; This is just a note that we're using the Dracula theme
   ;;------------------------------------------------
   ;; Global Emacs Config }
   ;;------------------------------------------------

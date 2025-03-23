@@ -1,37 +1,36 @@
 ;; Bootstrap config.org - Sid's Literate Emacs Configuration
-
-;; This is just a minimal bootstrap file that loads the actual configuration
-;; from config.org using org-babel-load-file. All actual configuration
-;; is maintained in that file in a literate programming style.
-
-;; When first installing:
-;; 1. Install org-mode if not already available
-;; 2. Load the literate config file
+;;
+;; This minimal bootstrap file loads the actual configuration from config.org.
+;; All configuration is maintained in that file in a literate programming style.
 
 ;; Set up package system
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
-(package-initialize)
 
 ;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Ensure dracula theme is installed and loaded early
+(unless (package-installed-p 'dracula-theme)
+  (package-refresh-contents)
+  (package-install 'dracula-theme))
+
+;; Consider all themes safe to prevent prompting
+(setq custom-safe-themes t)
+
+;; Load the theme immediately
+(load-theme 'dracula t)
+
 ;; Ensure org is installed
 (use-package org
   :ensure t)
 
-;; Load the org config file
-(org-babel-load-file
- (expand-file-name "config.org"
-                   (file-name-directory (or load-file-name buffer-file-name))))
-
-;; If there are issues loading the org file, we can fall back to a simple configuration
-;; that just loads the necessary packages. This is useful when first setting up the
-;; configuration on a new system.
-(when (not (boundp 'org-babel-load-file))
-  (message "Failed to load org-babel-load-file, falling back to basic configuration")
-  ;; Basic fallback configuration goes here
-  (load-theme 'tango-dark t))
+;; Load the literate configuration from config.org
+(let* ((this-file (file-truename load-file-name))
+       (this-dir (file-name-directory this-file))
+       (config-file (expand-file-name "config.org" this-dir)))
+  (when (file-exists-p config-file)
+    (org-babel-load-file config-file)))

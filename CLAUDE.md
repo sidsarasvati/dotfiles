@@ -35,3 +35,14 @@
 - Uses GNU stow for symlink management
 - Primary focus on macOS, limited support for Linux
 - Brewfile contains all package dependencies organized by category
+
+## Recent Updates (2025-03-23)
+- Updated PATH configuration for Homebrew on Apple Silicon Macs
+- Removed Doom Emacs path configuration (using vanilla Emacs now)
+- Converted Emacs configuration to literate programming style with org-mode
+- Fixed config.org path resolution and theme loading in Emacs
+- Centralized backup/auto-save files and disabled lock files in Emacs
+- Updated .gitignore to exclude Emacs temporary files
+- Improved Emacs launch commands:
+  - `em` launches GUI Emacs properly detached from terminal
+  - `emacs` launches terminal Emacs with -nw option
