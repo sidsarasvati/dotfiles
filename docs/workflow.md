@@ -20,7 +20,12 @@ This document outlines the workflow for making structured, incremental improveme
    git commit -m "Add/Update/Fix: Concise description of change"
    ```
 
-4. **Merge back to master when ready**
+4. **Update documentation**
+   - Update CLAUDE.md with technical details if necessary
+   - Add an entry to CHANGELOG.md for significant changes
+   - Update any relevant README files
+
+5. **Merge back to master when ready**
    ```bash
    git checkout master
    git merge feature/name-of-enhancement

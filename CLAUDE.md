@@ -30,6 +30,14 @@
 - **Command Structure**: Place complex commands on multiple lines for readability
 - **Testing**: Test scripts with `bash -n script.sh` for syntax checking
 
+## Development Workflow
+- Use feature branches for each enhancement (`feature/name-of-enhancement`)
+- Make focused changes related to a single enhancement
+- Test changes thoroughly before committing
+- Use descriptive commit messages explaining the purpose of changes
+- Update documentation (CLAUDE.md, CHANGELOG.md) when making significant changes
+- Reference the workflow documentation in `docs/workflow.md` for detailed process
+
 ## Repository Organization
 - Organized by tool/category (bash, git, emacs, misc)
 - Uses GNU stow for symlink management
