@@ -7,7 +7,8 @@
 - Primarily manages bash/zsh and Emacs configurations
 - Collection of useful tools and settings accumulated over time
 - Designed to be portable to any new Mac or Unix-based environment
-- Custom zsh configuration that doesn't rely on oh-my-zsh
+- Custom zsh configuration with literate programming approach (no external dependencies)
+- Multiple prompt styles with git integration and Emacs-style keybindings
 
 ## Build & Install Commands
 - `./install.sh` - Main setup script (installs homebrew, packages, links configs)
