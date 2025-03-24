@@ -37,12 +37,14 @@
 - Use descriptive commit messages explaining the purpose of changes
 - Update documentation (CLAUDE.md, CHANGELOG.md) when making significant changes
 - Reference the workflow documentation in `docs/workflow.md` for detailed process
+- Create GitHub issues for tracking work items (see `docs/workflow.md`)
 
 ## Repository Organization
 - Organized by tool/category (bash, git, emacs, misc)
 - Uses GNU stow for symlink management
 - Primary focus on macOS, limited support for Linux
 - Brewfile contains all package dependencies organized by category
+- Educational documentation in org-mode format under docs/emacs/
 
 ## Recent Updates (2025-03-23)
 - Updated PATH configuration for Homebrew on Apple Silicon Macs
@@ -54,3 +56,19 @@
 - Improved Emacs launch commands:
   - `em` launches GUI Emacs properly detached from terminal
   - `emacs` launches terminal Emacs with -nw option
+- Created org-mode educational documentation (version-control.org)
+- Established GitHub issue-based workflow with 8 planned enhancements
+- Added architecture detection for cross-platform compatibility
+
+## Active Issues and Roadmap
+The following issues have been created for ongoing improvements:
+- #9: Add GitHub Copilot Integration for Emacs
+- #11: Add tmux Configuration for Terminal Session Management
+- #12: Add project.el Configuration for Emacs Project Management
+- #13: Implement move-file Utility for Emacs
+- #14: Enhance Search Capabilities with Swiper and ripgrep in Emacs
+- #15: Add Terminal-based AI Assistant Tools and Functions
+- #16: Integrate fzf for Fuzzy Finding in ZSH Configuration
+- #17: Create Emacs Educational Documentation Series
+
+See GitHub issues for the latest status of these enhancements.

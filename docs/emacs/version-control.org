@@ -1,0 +1,113 @@
+#+TITLE: Emacs Version Control Guide
+#+AUTHOR: Sid Sarasvati
+#+DESCRIPTION: Using Emacs' built-in version control capabilities for Git operations
+#+STARTUP: overview
+#+OPTIONS: toc:2 num:nil
+
+* Emacs Version Control Guide
+
+This guide explains how to use Emacs' built-in version control capabilities for Git operations, without requiring additional packages like Magit.
+
+** Basic Version Control Operations
+
+Emacs provides a comprehensive set of version control commands through its =vc= package, which is built-in and supports Git and other VCS systems.
+
+*** Essential Commands
+
+| Command                  | Keybinding | Description                                              |
+|--------------------------+------------+----------------------------------------------------------|
+| =vc-next-action=         | =C-x v v=  | Smart command - Add/commit file or show commit message   |
+| =vc-print-log=           | =C-x v l=  | Show commit history for current file                     |
+| =vc-annotate=            | =C-x v g=  | Show "git blame" information (who changed each line)     |
+| =vc-diff=                | =C-x v ==  | Show diff of current file                                |
+| =vc-revert=              | =C-x v u=  | Discard changes in current file                          |
+| =vc-history=             | =C-x v h=  | Show file history with diffs between versions            |
+| =vc-print-root-log=      | =C-x v L=  | Show commit log for entire repository                    |
+| =vc-update=              | =C-x v +=  | Update working tree (git pull)                           |
+| =vc-revision-other-window= | =C-x v ~= | View specific revision of a file                         |
+
+** Workflow Examples
+
+*** Committing Changes
+:PROPERTIES:
+:CUSTOM_ID: committing-changes
+:END:
+
+1. Make changes to a file
+2. Press =C-x v v= (=vc-next-action=)
+3. If the file is new, it will be added to version control
+4. If the file was modified, a commit message buffer appears
+5. Type your commit message
+6. Press =C-c C-c= to complete the commit
+
+#+begin_src emacs-lisp :eval no
+  ;; Example of programmatically committing a file
+  (with-current-buffer "myfile.txt"
+    (vc-next-action nil))
+#+end_src
+
+*** Viewing File History
+:PROPERTIES:
+:CUSTOM_ID: viewing-history
+:END:
+
+1. Open a file under version control
+2. Press =C-x v l= to see commit history
+3. Navigate with arrow keys or =n/p= to move between commits
+4. Press =Enter= on a specific commit to view details
+
+#+begin_src emacs-lisp :eval no
+  ;; Example of programmatically viewing history
+  (with-current-buffer "myfile.txt"
+    (vc-print-log))
+#+end_src
+
+*** Examining Who Changed Code (Blame)
+:PROPERTIES:
+:CUSTOM_ID: git-blame
+:END:
+
+1. Open a file under version control
+2. Press =C-x v g= to enter annotate mode (git blame)
+3. Each line is color-coded by age and shows the author
+4. Press =p= to see previous revision of the current line
+5. Press =q= to exit annotate mode
+
+#+begin_src emacs-lisp :eval no
+  ;; Example of programmatically showing blame information
+  (with-current-buffer "myfile.txt"
+    (vc-annotate))
+#+end_src
+
+*** Comparing Changes
+:PROPERTIES:
+:CUSTOM_ID: comparing-changes
+:END:
+
+1. Press =C-x v == to see uncommitted changes
+2. In diff buffer, navigate with =n/p= to move between hunks
+3. Use =a= to apply a hunk (from version control to working copy)
+4. Use =q= to exit the diff view
+
+#+begin_src emacs-lisp :eval no
+  ;; Example of programmatically showing diff
+  (with-current-buffer "myfile.txt"
+    (vc-diff))
+#+end_src
+
+** Tips for Effective Use
+:PROPERTIES:
+:CUSTOM_ID: tips
+:END:
+
+- Configure Emacs to use your preferred git credential helper for authentication
+- Use directory tracking (dired) with version control for a more comprehensive view
+- Set proper user name and email in your Git configuration
+- Learn the diff-mode navigation keys for faster review of changes
+- Use =C-h m= in any VC buffer to see available commands for that mode
+
+#+begin_tip
+You can customize version control behavior through the =M-x customize-group= command with group =vc=.
+#+end_tip
+
+This guide covers the most common operations, but Emacs VC supports many more capabilities. Use =C-h f vc-= and then press Tab to see a list of all available VC functions.

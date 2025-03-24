@@ -1,0 +1,38 @@
+#+TITLE: Emacs Documentation
+#+AUTHOR: Sid Sarasvati
+#+DESCRIPTION: Documentation for Emacs features and workflows
+#+STARTUP: overview
+#+OPTIONS: toc:2 num:nil
+
+* Emacs Documentation Collection
+
+This directory contains educational documentation on Emacs features and workflows, organized as literate programming in org-mode. 
+
+** Available Documentation
+
+- [[file:version-control.org][Version Control]] - Using Emacs' built-in VC package with Git
+- Window Management - /Coming soon/
+- Search and Navigation - /Coming soon/
+- Project Management - /Coming soon/
+- Keyboard Macros - /Coming soon/
+- Editing Commands - /Coming soon/
+- Org-mode Guide - /Coming soon/
+
+** How to Use These Documents
+
+These documents are written in org-mode format, which provides several advantages:
+
+1. *Collapsible Sections*: Use TAB to collapse/expand sections
+2. *Executable Code Blocks*: Try examples with C-c C-c
+3. *Fast Navigation*: Use C-c C-j to jump to sections
+4. *Export Options*: Convert to other formats with C-c C-e
+
+** Contributing
+
+To add new documentation or improve existing docs:
+
+1. Create or update org files in this directory
+2. Follow the existing format with proper headings
+3. Include practical examples
+4. Add cross-links to related documentation
+5. Update this README.org with new document entries
