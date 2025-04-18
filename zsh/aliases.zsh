@@ -27,10 +27,13 @@ alias lst='tree'                  # Directory tree using 'tree' command
 alias lsu='du -sh *'              # Human-readable disk usage for files/folders
 
 # Create and navigate to directory in one command
-function md() {
+function mcd() {
   mkdir -p "$1"                   # Create directory (including parents)
   cd "$1"                         # Change to the new directory
 }
+
+# Markdown preview with glow
+alias md='glow -p'
 
 # === Git Version Control ===
 #
