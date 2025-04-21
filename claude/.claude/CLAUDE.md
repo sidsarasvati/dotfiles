@@ -4,7 +4,17 @@
 - Keep it simple
 - Think from first principles. Break down the problem. Grok the fundamentals. 
 - Ask me questions for important decisions. Simple yes/no. I'll answer with guidnace.
-- Always try to run the code you are writing before going too far. DO the OOB testing using commands. Make sure it works. 
+- Always try to run the code you are writing before going too far. DO the OOB testing using commands. Make sure it works.
+
+## AI Code Collaboration
+
+1. AI code agents will be coding
+   1. Use structure that helps
+   2. Context is limited. Keep only useful code and documentation.
+2. Sid is the sole owner and benevolent dictator. Code is written for me (Sid) so it:
+   - Makes sense in future
+   - Is easy to debug
+   - Helps me learn from it
 
 ## Package Management
 
