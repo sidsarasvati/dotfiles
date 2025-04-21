@@ -4,6 +4,11 @@ This changelog documents significant changes to the dotfiles repository, with hi
 
 ## 2025
 
+### April
+
+- **2025-04-21**: Added Claude Code CLI configuration with global memory
+- **2025-04-21**: Updated install script to manage Claude Code configuration
+
 ### March
 
 - **2025-03-23**: Set default Emacs GUI frame size with 9:16 aspect ratio (100 columns × 56 lines)

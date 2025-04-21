@@ -43,6 +43,9 @@ stow_files() {
   stow emacs
   stow misc # all other things that don't fit cleanly in a category
   stow zsh  # add the new zsh configurations
+  
+  # Claude config is handled separately in setup_claude function
+  # since it requires special handling for the .claude directory
 
   # Link .bash_profile -> .bashrc
   rm -f ~/.bash_profile
@@ -64,9 +67,24 @@ EOF
   echo "Zsh configuration linked via ~/.zshenv"
 }
 
+setup_claude() {
+  echo "Setting up Claude Code configuration..."
+  
+  # Ensure .claude directory exists
+  mkdir -p ~/.claude
+  
+  # Create symlink for Claude config file
+  ln -sf "$(pwd)/claude/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
+  
+  echo "Claude configuration linked to ~/.claude/CLAUDE.md"
+}
+
 setup() {
     # Setup zsh configuration
     setup_zsh
+    
+    # Setup Claude configuration
+    setup_claude
     
     # NOTE: The previous org-mode file symlink linking iCloud to ~/.org has been removed for two reasons:
     # 1. It created a hardcoded path dependency that only worked on macOS with iCloud configured
