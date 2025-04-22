@@ -129,13 +129,19 @@ function precmd() {
 
 # === Developer Pro Prompt ===
 # More compact but super informative, with a dedicated line for commands
-# Shows git branch and unpushed commits count with an up arrow
+# Shows git branch status with indicators for unpushed commits and local changes
 #
 # Examples:
-# ╭─ ~/Code/sid/dotfiles (master)
+# ╭─ ~/Code/sid/dotfiles (master)              # Clean branch
 # ╰─ ❯
 #
-# ╭─ ~/Code/sid/dotfiles (master ↑2)
+# ╭─ ~/Code/sid/dotfiles (master ↑2)           # 2 unpushed commits
+# ╰─ ❯
+#
+# ╭─ ~/Code/sid/dotfiles (master ✱)            # Local changes
+# ╰─ ❯
+#
+# ╭─ ~/Code/sid/dotfiles (master ↑2 ✱)         # Both unpushed commits and local changes
 # ╰─ ❯
 PROMPT=$'%F{blue}╭─%f %F{cyan}%~%f$(git_info=$(git_prompt_with_status); [[ -n $git_info ]] && echo " $git_info")
 %F{blue}╰─%f %F{green}❯%f '

@@ -1,7 +1,11 @@
-# Function to get git info with unpushed commits for prompt
+# Function to get git info with status indicators for prompt
 #
 # Example usage: $(git_prompt_with_status)
-# Output: (master ↑2) - when there are 2 unpushed commits
+# Output examples: 
+#   (master)           - clean branch
+#   (master ↑2)        - 2 unpushed commits
+#   (master ✱)         - local changes
+#   (master ↑2 ✱)      - both unpushed commits and local changes
 #
 function git_prompt_with_status() {
   # Get current branch
@@ -20,6 +24,12 @@ function git_prompt_with_status() {
     unpushed=" %F{magenta}↑%F{white}${count}"
   fi
   
+  # Check for local changes
+  local changes=""
+  if ! git diff --quiet 2>/dev/null || ! git diff --staged --quiet 2>/dev/null; then
+    changes=" %F{yellow}✱"
+  fi
+  
   # Output formatted git info
-  echo "%F{yellow}(%F{red}${branch}${unpushed}%F{yellow})"
+  echo "%F{yellow}(%F{red}${branch}${unpushed}${changes}%F{yellow})"
 }
