@@ -138,10 +138,16 @@ function precmd() {
 # ╭─ ~/Code/sid/dotfiles (master ↑2)           # 2 unpushed commits
 # ╰─ ❯
 #
-# ╭─ ~/Code/sid/dotfiles (master ✱)            # Local changes
+# ╭─ ~/Code/sid/dotfiles (master ✱)            # Untracked files (yellow star)
 # ╰─ ❯
 #
-# ╭─ ~/Code/sid/dotfiles (master ↑2 ✱)         # Both unpushed commits and local changes
+# ╭─ ~/Code/sid/dotfiles (master ✱)            # Modified files (red star)
+# ╰─ ❯
+#
+# ╭─ ~/Code/sid/dotfiles (master ✱)            # Staged changes (green star)
+# ╰─ ❯
+#
+# ╭─ ~/Code/sid/dotfiles (master ↑2 ✱)         # Unpushed commits and local changes
 # ╰─ ❯
 PROMPT=$'%F{blue}╭─%f %F{cyan}%~%f$(git_info=$(git_prompt_with_status); [[ -n $git_info ]] && echo " $git_info")
 %F{blue}╰─%f %F{green}❯%f '
