@@ -35,15 +35,15 @@ function git_prompt_with_status() {
   local status_output=$(git status --porcelain 2>/dev/null)
   
   if [[ -n "$status_output" ]]; then
-    # Check for modified/unstaged files (starts with M or has M in second column)
-    if echo "$status_output" | grep -E '^ M|^MM' > /dev/null; then
-      changes=" %F{red}✱"
-    # Check if all changes are staged (all lines start with A, M, D, R, C)
-    elif echo "$status_output" | grep -v -E '^[AMRCD]' > /dev/null; then
-      changes=" %F{green}✱"
-    # Otherwise (untracked files only)
-    else
+    # Check for untracked files only (lines starting with ??)
+    if [[ $(echo "$status_output" | grep -v '^??') == "" && $(echo "$status_output" | grep '??') != "" ]]; then
       changes=" %F{yellow}✱"
+    # Check for modified/unstaged files (any line starting with space)
+    elif echo "$status_output" | grep -E '^ ' > /dev/null; then
+      changes=" %F{red}✱"
+    # Otherwise (only staged changes, no unstaged)
+    else
+      changes=" %F{green}✱"
     fi
   fi
   
