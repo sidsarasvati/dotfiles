@@ -124,32 +124,24 @@ function precmd() {
 }
 
 # ------------------------------
-# PROMPT OPTIONS - Choose one by uncommenting
+# PROMPT CONFIGURATION
 # ------------------------------
 
-# === OPTION 1: Minimal Path-Focused with Lambda ===
-# Clean, with focus only on what matters - the path and git status
-# PROMPT='%F{cyan}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{red}$branch%F{yellow})")
-# %F{magenta}λ%f '
-
-# === OPTION 2: Developer Pro Prompt (Default) ===
+# === Developer Pro Prompt ===
 # More compact but super informative, with a dedicated line for commands
-PROMPT=$'%F{blue}╭─%f %F{cyan}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{red}$branch%F{yellow})")
+# Shows git branch and unpushed commits count with an up arrow
+#
+# Examples:
+# ╭─ ~/Code/sid/dotfiles (master)
+# ╰─ ❯
+#
+# ╭─ ~/Code/sid/dotfiles (master ↑2)
+# ╰─ ❯
+PROMPT=$'%F{blue}╭─%f %F{cyan}%~%f$(git_info=$(git_prompt_with_status); [[ -n $git_info ]] && echo " $git_info")
 %F{blue}╰─%f %F{green}❯%f '
 
-# === OPTION 3: AI-Coder Vibe Prompt ===
-# Modern feel with unique symbols, perfect for coding sessions
-# PROMPT=$'%F{magenta}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{cyan}$branch%F{yellow})")
-# %F{green}⟩%f '
-
-# === OPTION 4: Informativity + Style ===
-# Commands on second line with execution time and return status shown at right
-# PROMPT=$'%F{blue}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{red}$branch%F{yellow})")
-# %F{magenta}❯%f '
-
-# === OPTION 5: Classic with Lambda ===
-# Similar to the original style but with lambda and cleaner formatting
-# PROMPT='%F{cyan}%~%f$(branch=$(git_prompt_info); [[ -n $branch ]] && echo "%F{yellow} (%F{red}$branch%F{yellow})") %F{magenta}λ%f '
+# Note: Execution time and command status are shown in RPROMPT
+# Example: 3s ✓
 
 # === Custom Function Loading ===
 #
