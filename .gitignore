@@ -16,3 +16,10 @@ emacs/config.el
 
 # Emacs package metadata
 emacs/.emacs.d/elpa/archives/*/archive-contents
+emacs/.emacs.d/eln-cache/
+emacs/.emacs.d/elpa/
+emacs/.emacs.d/auto-save-list/
+emacs/.emacs.d/transient/
+emacs/.emacs.d/quelpa/
+emacs/.emacs.d/.mc-lists.el
+emacs/.emacs.d/ac-comphist.dat
