@@ -19,7 +19,7 @@ detect_homebrew_path() {
 install_homebrew() {
   echo "Checking for Homebrew, and installing if necessary"
   if ! [[ $( command -v brew ) ]]; then
-    read -p "Install Homebrew? (y/n): " choice
+    read -p "Install Homebrew? (y/N): " choice
     if [[ "$choice" =~ ^[Yy]$ ]]; then
       echo 'Installing homebrew...'
       /bin/bash -c "$(curl -fsSL $HOMEBREW_DOWNLOAD_URL)"
@@ -147,7 +147,7 @@ check_existing_config() {
       echo "   Some files will be overwritten or modified if you proceed."
       
       # Only offer to show diffs if there are files that need updating
-      read -p "Would you like to see diffs between existing and new configurations? (y/n): " show_diff
+      read -p "Would you like to see diffs between existing and new configurations? (y/N): " show_diff
       if [[ "$show_diff" =~ ^[Yy]$ ]]; then
         for file in "${needs_update[@]}"; do
           # Get the relative path from home directory
@@ -232,7 +232,7 @@ install_dotfiles() {
   
   if [[ "$git_already_linked" == "true" ]]; then
     echo "✅ Git configuration is already linked to your dotfiles."
-    read -p "Reinstall anyway? (y/n): " setup_git
+    read -p "Reinstall anyway? (y/N): " setup_git
     [[ "$setup_git" =~ ^[Yy]$ ]] && link_git_config
   else
     # Check for existing git files
@@ -250,7 +250,7 @@ install_dotfiles() {
       done
       
       echo "   - If you proceed, your existing git configuration will be replaced."
-      read -p "Would you like to back up your existing git configurations first? (y/n): " backup_choice
+      read -p "Would you like to back up your existing git configurations first? (y/N): " backup_choice
       if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
         local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d%H%M%S)/git"
         mkdir -p "$backup_dir"
@@ -261,7 +261,7 @@ install_dotfiles() {
       fi
     fi
     
-    read -p "Set up git configuration? (y/n): " setup_git
+    read -p "Set up git configuration? (y/N): " setup_git
     [[ "$setup_git" =~ ^[Yy]$ ]] && link_git_config
   fi
   
@@ -307,7 +307,7 @@ install_dotfiles() {
     echo ""
     echo "   Alternatively, skip the Emacs configuration if you want to keep using Doom."
     
-    read -p "Do you want to continue anyway (not recommended)? (y/n): " continue_with_doom
+    read -p "Do you want to continue anyway (not recommended)? (y/N): " continue_with_doom
     if [[ ! "$continue_with_doom" =~ ^[Yy]$ ]]; then
       echo "Skipping Emacs configuration to avoid conflicts with Doom Emacs."
       return
@@ -331,7 +331,7 @@ install_dotfiles() {
   
   if [[ "$emacs_already_linked" == "true" ]]; then
     echo "✅ Emacs configuration is already linked to your dotfiles."
-    read -p "Reinstall anyway? (y/n): " setup_emacs
+    read -p "Reinstall anyway? (y/N): " setup_emacs
     [[ "$setup_emacs" =~ ^[Yy]$ ]] && link_emacs_config
   else
     # Check for existing emacs files
@@ -350,7 +350,7 @@ install_dotfiles() {
       
       echo "   - If you proceed, your existing emacs configuration will be replaced."
       echo "   - Your existing emacs packages won't be affected, but configuration will change."
-      read -p "Would you like to back up your existing emacs configurations first? (y/n): " backup_choice
+      read -p "Would you like to back up your existing emacs configurations first? (y/N): " backup_choice
       if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
         local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d%H%M%S)/emacs"
         mkdir -p "$backup_dir"
@@ -361,7 +361,7 @@ install_dotfiles() {
       fi
     fi
     
-    read -p "Set up emacs configuration? (y/n): " setup_emacs
+    read -p "Set up emacs configuration? (y/N): " setup_emacs
     [[ "$setup_emacs" =~ ^[Yy]$ ]] && link_emacs_config
   fi
   
@@ -387,7 +387,7 @@ setup_zsh() {
   
   if [[ "$already_setup" == "true" ]]; then
     echo "✅ Zsh configuration is already set up to use your dotfiles."
-    read -p "Reinstall anyway? (y/n): " choice
+    read -p "Reinstall anyway? (y/N): " choice
   else
     # Only show warnings if not already properly set up
     if [[ -e "$HOME/.zshenv" ]]; then
@@ -396,7 +396,7 @@ setup_zsh() {
       echo "   This might affect your existing Zsh configuration."
       
       # Offer to show content
-      read -p "Would you like to see what's in your current .zshenv? (y/n): " show_content
+      read -p "Would you like to see what's in your current .zshenv? (y/N): " show_content
       if [[ "$show_content" =~ ^[Yy]$ ]]; then
         echo ""
         echo "Content of current .zshenv:"
@@ -407,7 +407,7 @@ setup_zsh() {
       fi
       
       # Back up existing .zshenv if user confirms
-      read -p "Would you like to back up your existing .zshenv first? (y/n): " backup_choice
+      read -p "Would you like to back up your existing .zshenv first? (y/N): " backup_choice
       if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
         # Create backup directory
         local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d%H%M%S)/zshenv"
@@ -417,7 +417,7 @@ setup_zsh() {
       fi
     fi
     
-    read -p "Set up Zsh configuration? (y/n): " choice
+    read -p "Set up Zsh configuration? (y/N): " choice
   fi
   
   if [[ "$choice" =~ ^[Yy]$ ]]; then
@@ -454,13 +454,13 @@ setup_claude() {
   
   if [[ "$claude_already_linked" == "true" ]]; then
     echo "✅ Claude configuration is already linked to your dotfiles."
-    read -p "Reinstall anyway? (y/n): " choice
+    read -p "Reinstall anyway? (y/N): " choice
   elif [[ -e "$HOME/.claude/CLAUDE.md" ]]; then
     echo "⚠️  WARNING: Found existing Claude configuration file."
     echo "   Your current Claude configuration will be replaced if you proceed."
     
     # Offer to show diff
-    read -p "Would you like to see the difference between your current and new Claude configuration? (y/n): " show_diff
+    read -p "Would you like to see the difference between your current and new Claude configuration? (y/N): " show_diff
     if [[ "$show_diff" =~ ^[Yy]$ ]]; then
       echo ""
       echo "Diff between existing and new Claude configuration:"
@@ -476,14 +476,14 @@ setup_claude() {
       echo ""
     fi
     
-    read -p "Set up Claude Code configuration? (y/n): " choice
+    read -p "Set up Claude Code configuration? (y/N): " choice
   else
-    read -p "Set up Claude Code configuration? (y/n): " choice
+    read -p "Set up Claude Code configuration? (y/N): " choice
   fi
   if [[ "$choice" =~ ^[Yy]$ ]]; then
     # Only offer backup if it's not already linked (no need to backup our own symlink)
     if [[ "$claude_already_linked" != "true" && -e "$HOME/.claude/CLAUDE.md" ]]; then
-      read -p "Would you like to back up your existing Claude configuration first? (y/n): " backup_choice
+      read -p "Would you like to back up your existing Claude configuration first? (y/N): " backup_choice
       if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
         # Create backup directory
         local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d%H%M%S)/claude"
@@ -535,11 +535,10 @@ setup() {
   # Check for XDG-style configurations
   check_xdg_configs
   
-  # Setup zsh configuration
-  setup_zsh
-  
   # Setup Claude configuration
   setup_claude
+  
+  # Note: zsh setup is already handled in install_dotfiles
   
   # NOTE: The previous org-mode file symlink linking iCloud to ~/.org has been removed for two reasons:
   # 1. It created a hardcoded path dependency that only worked on macOS with iCloud configured
