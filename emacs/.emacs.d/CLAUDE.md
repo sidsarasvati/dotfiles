@@ -1,0 +1,1 @@
+/Users/sid/dotfiles/emacs/CLAUDE.md
