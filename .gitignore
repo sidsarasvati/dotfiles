@@ -2,6 +2,10 @@
 zsh/.zsh_sessions/
 zsh/local.zsh
 
+# macOS system files
+.DS_Store
+**/.DS_Store
+
 # Emacs temporary files
 *~
 \#*\#
