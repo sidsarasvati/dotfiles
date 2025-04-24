@@ -1,0 +1,12 @@
+# local.zsh.example - DO NOT COMMIT THIS FILE
+#
+# This file is for secrets and tokens I don't want in my public GitHub repo.
+# Copy to local.zsh and add your secrets there.
+# I've set up .gitignore to prevent accidentally committing this file.
+
+# GitHub token - needed for GitHub CLI and other tools
+# export GITHUB_TOKEN="my-token-here"
+
+# Add other API keys and secrets below
+# export AWS_ACCESS_KEY_ID="my-key"
+# export AWS_SECRET_ACCESS_KEY="my-secret"

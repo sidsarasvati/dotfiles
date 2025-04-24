@@ -1,5 +1,6 @@
 **/auto-save-list/
 zsh/.zsh_sessions/
+zsh/local.zsh
 
 # Emacs temporary files
 *~
