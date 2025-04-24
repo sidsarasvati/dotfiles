@@ -61,6 +61,7 @@ check_existing_config() {
   
   local has_existing=0
   local existing_files=()
+  # Explicitly initialize as empty arrays to avoid "unbound variable" errors
   local already_linked=()
   local needs_update=()
   
@@ -94,14 +95,14 @@ check_existing_config() {
   
   if [[ $has_existing -eq 1 ]]; then
     # If all existing files are already properly linked to our dotfiles
-    if [[ ${#already_linked[@]} -eq ${#existing_files[@]} ]]; then
+    if [[ ${#already_linked[@]} -gt 0 && ${#already_linked[@]} -eq ${#existing_files[@]} ]]; then
       echo "✅ $config_name configuration is already linked to your dotfiles."
       return 2  # Already configured correctly
     fi
     
     echo "⚠️  WARNING: Found existing $config_name configuration files:"
     for file in "${existing_files[@]}"; do
-      if [[ " ${already_linked[@]} " =~ " $file " ]]; then
+      if [[ ${#already_linked[@]} -gt 0 && " ${already_linked[@]} " =~ " $file " ]]; then
         echo "   - $file (already linked to dotfiles)"
       else
         echo "   - $file (will be replaced)"
@@ -181,7 +182,7 @@ stow_files() {
   
   # Check for existing git configurations
   local git_files=("$HOME/.gitconfig" "$HOME/.gitignore_global")
-  local git_status=$(check_existing_config "git" "git" "${git_files[@]}")
+  check_existing_config "git" "git" "${git_files[@]}"
   local git_result=$?
   
   if [[ $git_result -eq 0 ]]; then
@@ -251,7 +252,7 @@ stow_files() {
   fi
   
   # Check for standard Emacs configurations
-  local emacs_status=$(check_existing_config "emacs" "emacs" "${emacs_files[@]}")
+  check_existing_config "emacs" "emacs" "${emacs_files[@]}"
   local emacs_result=$?
   
   if [[ $emacs_result -eq 0 ]]; then
@@ -276,7 +277,7 @@ stow_files() {
   
   # Check for existing zsh configurations
   local zsh_files=("$HOME/.zshrc" "$HOME/.zprofile" "$HOME/.zshenv")
-  local zsh_status=$(check_existing_config "zsh" "zsh" "${zsh_files[@]}")
+  check_existing_config "zsh" "zsh" "${zsh_files[@]}"
   local zsh_result=$?
   
   if [[ $zsh_result -eq 0 ]]; then
