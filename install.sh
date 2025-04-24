@@ -61,50 +61,86 @@ check_existing_config() {
   
   local has_existing=0
   local existing_files=()
+  local already_linked=()
+  local needs_update=()
+  
+  # Absolute path to the dotfiles directory
+  local dotfiles_dir="$(pwd)"
   
   for file in "${file_paths[@]}"; do
     if [[ -e "$file" || -L "$file" ]]; then
       has_existing=1
       existing_files+=("$file")
+      
+      # Get the relative path from home directory
+      local rel_path="${file/#$HOME\//}"
+      # Find the corresponding file in the dotfiles repo
+      local dotfile_path="$dotfiles_dir/$dir_name/$rel_path"
+      
+      # Check if it's already a symlink to our dotfiles
+      if [[ -L "$file" && "$(readlink "$file")" == "$dotfile_path" ]]; then
+        already_linked+=("$file")
+      elif [[ -f "$file" && -f "$dotfile_path" ]]; then
+        # Check if content differs (only for regular files)
+        if ! diff -q "$file" "$dotfile_path" >/dev/null 2>&1; then
+          needs_update+=("$file")
+        fi
+      else
+        # Either not a symlink to our dotfiles or not identical
+        needs_update+=("$file")
+      fi
     fi
   done
   
   if [[ $has_existing -eq 1 ]]; then
-    echo "⚠️  WARNING: Found existing $config_name configuration files:"
-    for file in "${existing_files[@]}"; do
-      echo "   - $file"
-    done
-    echo "   These files will be overwritten or modified if you proceed."
-    
-    # Offer to show diffs for existing files
-    read -p "Would you like to see diffs between existing and new configurations? (y/n): " show_diff
-    if [[ "$show_diff" =~ ^[Yy]$ ]]; then
-      for file in "${existing_files[@]}"; do
-        # Get the relative path from home directory
-        local rel_path="${file/#$HOME\//}"
-        # Find the corresponding file in the dotfiles repo
-        local dotfile_path="$(pwd)/$dir_name/$rel_path"
-        
-        if [[ -f "$dotfile_path" ]]; then
-          echo ""
-          echo "Diff for $rel_path:"
-          echo "------------------------------------------------------------"
-          if command -v colordiff >/dev/null 2>&1; then
-            # Use colordiff if available
-            colordiff -u "$file" "$dotfile_path"
-          else
-            # Otherwise use regular diff
-            diff -u "$file" "$dotfile_path"
-          fi
-          echo "------------------------------------------------------------"
-          echo ""
-        else
-          echo "Cannot find corresponding file for $file in dotfiles repository."
-        fi
-      done
+    # If all existing files are already properly linked to our dotfiles
+    if [[ ${#already_linked[@]} -eq ${#existing_files[@]} ]]; then
+      echo "✅ $config_name configuration is already linked to your dotfiles."
+      return 2  # Already configured correctly
     fi
     
-    return 0  # True, has existing config
+    echo "⚠️  WARNING: Found existing $config_name configuration files:"
+    for file in "${existing_files[@]}"; do
+      if [[ " ${already_linked[@]} " =~ " $file " ]]; then
+        echo "   - $file (already linked to dotfiles)"
+      else
+        echo "   - $file (will be replaced)"
+      fi
+    done
+    
+    if [[ ${#needs_update[@]} -gt 0 ]]; then
+      echo "   Some files will be overwritten or modified if you proceed."
+      
+      # Only offer to show diffs if there are files that need updating
+      read -p "Would you like to see diffs between existing and new configurations? (y/n): " show_diff
+      if [[ "$show_diff" =~ ^[Yy]$ ]]; then
+        for file in "${needs_update[@]}"; do
+          # Get the relative path from home directory
+          local rel_path="${file/#$HOME\//}"
+          # Find the corresponding file in the dotfiles repo
+          local dotfile_path="$dotfiles_dir/$dir_name/$rel_path"
+          
+          if [[ -f "$dotfile_path" ]]; then
+            echo ""
+            echo "Diff for $rel_path:"
+            echo "------------------------------------------------------------"
+            if command -v colordiff >/dev/null 2>&1; then
+              # Use colordiff if available
+              colordiff -u "$file" "$dotfile_path"
+            else
+              # Otherwise use regular diff
+              diff -u "$file" "$dotfile_path"
+            fi
+            echo "------------------------------------------------------------"
+            echo ""
+          else
+            echo "Cannot find corresponding file for $file in dotfiles repository."
+          fi
+        done
+      fi
+    fi
+    
+    return 0  # True, has existing config that needs updating
   else
     return 1  # False, no existing config
   fi
@@ -145,13 +181,25 @@ stow_files() {
   
   # Check for existing git configurations
   local git_files=("$HOME/.gitconfig" "$HOME/.gitignore_global")
-  if check_existing_config "git" "git" "${git_files[@]}"; then
+  local git_status=$(check_existing_config "git" "git" "${git_files[@]}")
+  local git_result=$?
+  
+  if [[ $git_result -eq 0 ]]; then
+    # Has existing config that needs updating
     echo "   - If you proceed, your existing git configuration will be replaced."
     read -p "Would you like to back up your existing git configurations first? (y/n): " backup_choice
     [[ "$backup_choice" =~ ^[Yy]$ ]] && backup_configs "git" "${git_files[@]}"
+    read -p "Set up git configuration? (y/n): " setup_git
+    [[ "$setup_git" =~ ^[Yy]$ ]] && stow git && echo "Git configuration linked."
+  elif [[ $git_result -eq 2 ]]; then
+    # Already linked to our dotfiles
+    read -p "Git configuration is already linked to dotfiles. Reinstall anyway? (y/n): " setup_git
+    [[ "$setup_git" =~ ^[Yy]$ ]] && stow git && echo "Git configuration re-linked."
+  else
+    # No existing config
+    read -p "Set up git configuration? (y/n): " setup_git
+    [[ "$setup_git" =~ ^[Yy]$ ]] && stow git && echo "Git configuration linked."
   fi
-  read -p "Set up git configuration? (y/n): " setup_git
-  [[ "$setup_git" =~ ^[Yy]$ ]] && stow git && echo "Git configuration linked."
   
   # Check for existing emacs configurations
   local emacs_files=("$HOME/.emacs" "$HOME/.emacs.d/init.el" "$HOME/.emacs.d/config.org")
@@ -203,32 +251,53 @@ stow_files() {
   fi
   
   # Check for standard Emacs configurations
-  if check_existing_config "emacs" "emacs" "${emacs_files[@]}"; then
+  local emacs_status=$(check_existing_config "emacs" "emacs" "${emacs_files[@]}")
+  local emacs_result=$?
+  
+  if [[ $emacs_result -eq 0 ]]; then
+    # Has existing config that needs updating
     echo "   - If you proceed, your existing emacs configuration will be replaced."
     echo "   - Your existing emacs packages won't be affected, but configuration will change."
     read -p "Would you like to back up your existing emacs configurations first? (y/n): " backup_choice
     [[ "$backup_choice" =~ ^[Yy]$ ]] && backup_configs "emacs" "${emacs_files[@]}"
+    read -p "Set up emacs configuration? (y/n): " setup_emacs
+    [[ "$setup_emacs" =~ ^[Yy]$ ]] && stow emacs && echo "Emacs configuration linked."
+  elif [[ $emacs_result -eq 2 ]]; then
+    # Already linked to our dotfiles
+    read -p "Emacs configuration is already linked to dotfiles. Reinstall anyway? (y/n): " setup_emacs
+    [[ "$setup_emacs" =~ ^[Yy]$ ]] && stow emacs && echo "Emacs configuration re-linked."
+  else
+    # No existing config
+    read -p "Set up emacs configuration? (y/n): " setup_emacs
+    [[ "$setup_emacs" =~ ^[Yy]$ ]] && stow emacs && echo "Emacs configuration linked."
   fi
   
-  read -p "Set up emacs configuration? (y/n): " setup_emacs
-  [[ "$setup_emacs" =~ ^[Yy]$ ]] && stow emacs && echo "Emacs configuration linked."
-  
-  # Check for existing misc configurations (add specific files if needed)
-  read -p "Set up misc configurations? (y/n): " setup_misc
-  [[ "$setup_misc" =~ ^[Yy]$ ]] && stow misc && echo "Misc configurations linked."
+  # Misc folder is kept for historical reference but not included in automatic installation
   
   # Check for existing zsh configurations
   local zsh_files=("$HOME/.zshrc" "$HOME/.zprofile" "$HOME/.zshenv")
-  if check_existing_config "zsh" "zsh" "${zsh_files[@]}"; then
+  local zsh_status=$(check_existing_config "zsh" "zsh" "${zsh_files[@]}")
+  local zsh_result=$?
+  
+  if [[ $zsh_result -eq 0 ]]; then
+    # Has existing config that needs updating
     echo "   - If you proceed, your existing zsh configuration will be replaced."
     echo "   - If you're using oh-my-zsh, this will override its configuration."
     echo "   - If using oh-my-zsh, you may want to keep it but adapt your .zshenv"
     echo "     to source these dotfiles as well."
     read -p "Would you like to back up your existing zsh configurations first? (y/n): " backup_choice
     [[ "$backup_choice" =~ ^[Yy]$ ]] && backup_configs "zsh" "${zsh_files[@]}"
+    read -p "Set up zsh configuration? (y/n): " setup_zsh_files
+    [[ "$setup_zsh_files" =~ ^[Yy]$ ]] && stow zsh && echo "Zsh files linked."
+  elif [[ $zsh_result -eq 2 ]]; then
+    # Already linked to our dotfiles
+    read -p "Zsh configuration is already linked to dotfiles. Reinstall anyway? (y/n): " setup_zsh_files
+    [[ "$setup_zsh_files" =~ ^[Yy]$ ]] && stow zsh && echo "Zsh files re-linked."
+  else
+    # No existing config
+    read -p "Set up zsh configuration? (y/n): " setup_zsh_files
+    [[ "$setup_zsh_files" =~ ^[Yy]$ ]] && stow zsh && echo "Zsh files linked."
   fi
-  read -p "Set up zsh configuration? (y/n): " setup_zsh_files
-  [[ "$setup_zsh_files" =~ ^[Yy]$ ]] && stow zsh && echo "Zsh files linked."
   
   # Bash configuration has been removed as macOS now uses zsh by default
 }
