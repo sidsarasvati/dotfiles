@@ -37,20 +37,54 @@ install_homebrew() {
 }
 
 install_packages() {
-  read -p "Install/upgrade essential packages (like stow)? (y/n): " choice
-  if [[ "$choice" =~ ^[Yy]$ ]]; then
-    echo "Installing packages..." 
-    brew install stow > /dev/null ||  brew upgrade stow > /dev/null
-  else
-    echo "Skipping package installation."
-    # Check if stow is available
-    if ! command -v stow &> /dev/null; then
-      echo "WARNING: GNU stow is required but not found."
-      echo "Please install it manually before continuing."
-      read -p "Continue anyway? (y/n): " cont
-      [[ "$cont" =~ ^[Yy]$ ]] || exit 1
-    fi
-  fi
+  echo "No external packages needed for installation."
+}
+
+# Git configuration symlinks
+link_git_config() {
+  echo "Setting up Git configuration..."
+  # Use absolute paths for reliability
+  ln -sf "$(pwd)/git/.gitconfig" "$HOME/.gitconfig"
+  ln -sf "$(pwd)/git/.gitignore_global" "$HOME/.gitignore_global"
+  echo "Git configuration linked."
+}
+
+# Emacs configuration symlinks
+link_emacs_config() {
+  echo "Setting up Emacs configuration..."
+  # Create .emacs.d directory if it doesn't exist
+  mkdir -p "$HOME/.emacs.d"
+  # Link specific files with absolute paths
+  ln -sf "$(pwd)/emacs/config.org" "$HOME/.emacs.d/config.org"
+  ln -sf "$(pwd)/emacs/CLAUDE.md" "$HOME/.emacs.d/CLAUDE.md"
+  echo "Emacs configuration linked."
+}
+
+# Zsh configuration setup
+link_zsh_config() {
+  echo "Setting up Zsh configuration..."
+  
+  # Create .zshenv file that points to the dotfiles directory
+  # This file is generated, not linked from the repo
+  local DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  cat > "$HOME/.zshenv" << EOF
+# This file redirects to the dotfiles-managed zsh configuration
+export ZDOTDIR="${DOTFILES_DIR}/zsh"
+EOF
+
+  echo "Zsh configuration set up successfully."
+  echo "  - Created .zshenv file to point to dotfiles"
+  echo "  - All zsh configuration will be loaded from ${DOTFILES_DIR}/zsh"
+}
+
+# Claude configuration
+link_claude_config() {
+  echo "Setting up Claude Code configuration..."
+  # Create .claude directory if it doesn't exist
+  mkdir -p "$HOME/.claude"
+  # Link Claude config files
+  ln -sf "$(pwd)/claude/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+  echo "Claude configuration linked."
 }
 
 # Check if configuration exists and warn about replacements
@@ -176,30 +210,59 @@ backup_configs() {
   fi
 }
 
-stow_files() {
-  # Ask which configurations to stow
+install_dotfiles() {
+  # Ask which configurations to set up
   echo "Select configurations to set up:"
   
-  # Check for existing git configurations
+  # Check if existing Git symlinks match our dotfiles path
   local git_files=("$HOME/.gitconfig" "$HOME/.gitignore_global")
-  check_existing_config "git" "git" "${git_files[@]}"
-  local git_result=$?
+  local git_already_linked=true
+  local dotfiles_path="$(pwd)"
   
-  if [[ $git_result -eq 0 ]]; then
-    # Has existing config that needs updating
-    echo "   - If you proceed, your existing git configuration will be replaced."
-    read -p "Would you like to back up your existing git configurations first? (y/n): " backup_choice
-    [[ "$backup_choice" =~ ^[Yy]$ ]] && backup_configs "git" "${git_files[@]}"
-    read -p "Set up git configuration? (y/n): " setup_git
-    [[ "$setup_git" =~ ^[Yy]$ ]] && stow git && echo "Git configuration linked."
-  elif [[ $git_result -eq 2 ]]; then
-    # Already linked to our dotfiles
-    read -p "Git configuration is already linked to dotfiles. Reinstall anyway? (y/n): " setup_git
-    [[ "$setup_git" =~ ^[Yy]$ ]] && stow git && echo "Git configuration re-linked."
+  # Check if gitconfig is already linked to our dotfiles with absolute path
+  if [[ -L "$HOME/.gitconfig" ]]; then
+    local link_target=$(readlink "$HOME/.gitconfig")
+    # Only consider it properly linked if using absolute path
+    if [[ "$link_target" != "$dotfiles_path/git/.gitconfig" ]]; then
+      git_already_linked=false
+    fi
   else
-    # No existing config
+    git_already_linked=false
+  fi
+  
+  if [[ "$git_already_linked" == "true" ]]; then
+    echo "✅ Git configuration is already linked to your dotfiles."
+    read -p "Reinstall anyway? (y/n): " setup_git
+    [[ "$setup_git" =~ ^[Yy]$ ]] && link_git_config
+  else
+    # Check for existing git files
+    local existing_files=()
+    for file in "${git_files[@]}"; do
+      if [[ -e "$file" || -L "$file" ]]; then
+        existing_files+=("$file")
+      fi
+    done
+    
+    if [[ ${#existing_files[@]} -gt 0 ]]; then
+      echo "⚠️  WARNING: Found existing Git configuration files:"
+      for file in "${existing_files[@]}"; do
+        echo "   - $file (will be replaced)"
+      done
+      
+      echo "   - If you proceed, your existing git configuration will be replaced."
+      read -p "Would you like to back up your existing git configurations first? (y/n): " backup_choice
+      if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
+        local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d%H%M%S)/git"
+        mkdir -p "$backup_dir"
+        for file in "${existing_files[@]}"; do
+          cp -L "$file" "$backup_dir/$(basename "$file")"
+        done
+        echo "Backed up existing Git configuration to $backup_dir"
+      fi
+    fi
+    
     read -p "Set up git configuration? (y/n): " setup_git
-    [[ "$setup_git" =~ ^[Yy]$ ]] && stow git && echo "Git configuration linked."
+    [[ "$setup_git" =~ ^[Yy]$ ]] && link_git_config
   fi
   
   # Check for existing emacs configurations
@@ -251,68 +314,88 @@ stow_files() {
     fi
   fi
   
-  # Check for standard Emacs configurations
-  check_existing_config "emacs" "emacs" "${emacs_files[@]}"
-  local emacs_result=$?
+  # Check if existing Emacs symlinks match our dotfiles path
+  local emacs_already_linked=true
+  local dotfiles_path="$(pwd)"
   
-  if [[ $emacs_result -eq 0 ]]; then
-    # Has existing config that needs updating
-    echo "   - If you proceed, your existing emacs configuration will be replaced."
-    echo "   - Your existing emacs packages won't be affected, but configuration will change."
-    read -p "Would you like to back up your existing emacs configurations first? (y/n): " backup_choice
-    [[ "$backup_choice" =~ ^[Yy]$ ]] && backup_configs "emacs" "${emacs_files[@]}"
-    read -p "Set up emacs configuration? (y/n): " setup_emacs
-    [[ "$setup_emacs" =~ ^[Yy]$ ]] && stow emacs && echo "Emacs configuration linked."
-  elif [[ $emacs_result -eq 2 ]]; then
-    # Already linked to our dotfiles
-    read -p "Emacs configuration is already linked to dotfiles. Reinstall anyway? (y/n): " setup_emacs
-    [[ "$setup_emacs" =~ ^[Yy]$ ]] && stow emacs && echo "Emacs configuration re-linked."
+  # Check if config.org is already linked to our dotfiles with absolute path
+  if [[ -L "$HOME/.emacs.d/config.org" ]]; then
+    local link_target=$(readlink "$HOME/.emacs.d/config.org")
+    # Only consider it properly linked if using absolute path
+    if [[ "$link_target" != "$dotfiles_path/emacs/config.org" ]]; then
+      emacs_already_linked=false
+    fi
   else
-    # No existing config
+    emacs_already_linked=false
+  fi
+  
+  if [[ "$emacs_already_linked" == "true" ]]; then
+    echo "✅ Emacs configuration is already linked to your dotfiles."
+    read -p "Reinstall anyway? (y/n): " setup_emacs
+    [[ "$setup_emacs" =~ ^[Yy]$ ]] && link_emacs_config
+  else
+    # Check for existing emacs files
+    local existing_files=()
+    for file in "${emacs_files[@]}"; do
+      if [[ -e "$file" || -L "$file" ]]; then
+        existing_files+=("$file")
+      fi
+    done
+    
+    if [[ ${#existing_files[@]} -gt 0 ]]; then
+      echo "⚠️  WARNING: Found existing Emacs configuration files:"
+      for file in "${existing_files[@]}"; do
+        echo "   - $file (will be replaced)"
+      done
+      
+      echo "   - If you proceed, your existing emacs configuration will be replaced."
+      echo "   - Your existing emacs packages won't be affected, but configuration will change."
+      read -p "Would you like to back up your existing emacs configurations first? (y/n): " backup_choice
+      if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
+        local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d%H%M%S)/emacs"
+        mkdir -p "$backup_dir"
+        for file in "${existing_files[@]}"; do
+          cp -L "$file" "$backup_dir/$(basename "$file")"
+        done
+        echo "Backed up existing Emacs configuration to $backup_dir"
+      fi
+    fi
+    
     read -p "Set up emacs configuration? (y/n): " setup_emacs
-    [[ "$setup_emacs" =~ ^[Yy]$ ]] && stow emacs && echo "Emacs configuration linked."
+    [[ "$setup_emacs" =~ ^[Yy]$ ]] && link_emacs_config
   fi
   
   # Misc folder is kept for historical reference but not included in automatic installation
   
-  # Check for existing zsh configurations
-  local zsh_files=("$HOME/.zshrc" "$HOME/.zprofile" "$HOME/.zshenv")
-  check_existing_config "zsh" "zsh" "${zsh_files[@]}"
-  local zsh_result=$?
-  
-  if [[ $zsh_result -eq 0 ]]; then
-    # Has existing config that needs updating
-    echo "   - If you proceed, your existing zsh configuration will be replaced."
-    echo "   - If you're using oh-my-zsh, this will override its configuration."
-    echo "   - If using oh-my-zsh, you may want to keep it but adapt your .zshenv"
-    echo "     to source these dotfiles as well."
-    read -p "Would you like to back up your existing zsh configurations first? (y/n): " backup_choice
-    [[ "$backup_choice" =~ ^[Yy]$ ]] && backup_configs "zsh" "${zsh_files[@]}"
-    read -p "Set up zsh configuration? (y/n): " setup_zsh_files
-    [[ "$setup_zsh_files" =~ ^[Yy]$ ]] && stow zsh && echo "Zsh files linked."
-  elif [[ $zsh_result -eq 2 ]]; then
-    # Already linked to our dotfiles
-    read -p "Zsh configuration is already linked to dotfiles. Reinstall anyway? (y/n): " setup_zsh_files
-    [[ "$setup_zsh_files" =~ ^[Yy]$ ]] && stow zsh && echo "Zsh files re-linked."
-  else
-    # No existing config
-    read -p "Set up zsh configuration? (y/n): " setup_zsh_files
-    [[ "$setup_zsh_files" =~ ^[Yy]$ ]] && stow zsh && echo "Zsh files linked."
-  fi
+  # Directly call setup_zsh which handles its own checking for existing files
+  setup_zsh
   
   # Bash configuration has been removed as macOS now uses zsh by default
 }
 
 setup_zsh() {
-  # Check for existing .zshenv file
+  # First check if existing .zshenv already points to our dotfiles
+  local already_setup=false
+  local dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  
   if [[ -e "$HOME/.zshenv" ]]; then
-    echo "⚠️  WARNING: Found existing .zshenv file."
-    echo "   Your current .zshenv will be replaced if you proceed."
-    echo "   This might affect your existing Zsh configuration."
-    echo "   If you're using oh-my-zsh, this will override part of its setup."
-    
-    # Offer to show diff
+    # Check for any string that points ZDOTDIR to our zsh directory
+    if grep -q "ZDOTDIR=.*${dotfiles_dir}/zsh" "$HOME/.zshenv"; then
+      already_setup=true
+    fi
+  fi
+  
+  if [[ "$already_setup" == "true" ]]; then
+    echo "✅ Zsh configuration is already set up to use your dotfiles."
+    read -p "Reinstall anyway? (y/n): " choice
+  else
+    # Only show warnings if not already properly set up
     if [[ -e "$HOME/.zshenv" ]]; then
+      echo "⚠️  WARNING: Found existing .zshenv file."
+      echo "   Your current .zshenv will be replaced if you proceed."
+      echo "   This might affect your existing Zsh configuration."
+      
+      # Offer to show content
       read -p "Would you like to see what's in your current .zshenv? (y/n): " show_content
       if [[ "$show_content" =~ ^[Yy]$ ]]; then
         echo ""
@@ -322,18 +405,8 @@ setup_zsh() {
         echo "------------------------------------------------------------"
         echo ""
       fi
-    fi
-  fi
-  
-  read -p "Set up Zsh environment pointing to dotfiles? (y/n): " choice
-  if [[ "$choice" =~ ^[Yy]$ ]]; then
-    echo "Setting up Zsh configuration..."
-    
-    # Get the absolute path to the dotfiles directory
-    DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    
-    # Back up existing .zshenv if it exists and user confirms
-    if [[ -e "$HOME/.zshenv" ]]; then
+      
+      # Back up existing .zshenv if user confirms
       read -p "Would you like to back up your existing .zshenv first? (y/n): " backup_choice
       if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
         # Create backup directory
@@ -344,42 +417,45 @@ setup_zsh() {
       fi
     fi
     
-    # Create .zshenv file in home directory to point to dotfiles
-    cat > ~/.zshenv << EOF
-# This file redirects to the dotfiles-managed zsh configuration
-export ZDOTDIR="${DOTFILES_DIR}/zsh"
-EOF
-    
-    echo "Zsh configuration linked via ~/.zshenv"
+    read -p "Set up Zsh configuration? (y/n): " choice
+  fi
+  
+  if [[ "$choice" =~ ^[Yy]$ ]]; then
+    # Use dedicated function to create .zshenv
+    link_zsh_config
     
     # Guide for oh-my-zsh users
     if [[ -d "$HOME/.oh-my-zsh" ]]; then
       echo ""
       echo "📝 IMPORTANT NOTE FOR OH-MY-ZSH USERS:"
       echo "   Detected existing oh-my-zsh installation."
-      echo "   To use both oh-my-zsh and these dotfiles, you may need to:"
-      echo "   1. Edit your ~/.zshenv to source both configurations"
-      echo "   2. Or move your oh-my-zsh customizations into the dotfiles structure"
-      echo "   3. Or consider using just one of the configurations"
+      echo "   This setup replaces oh-my-zsh with a custom zsh configuration."
+      echo "   Your previous oh-my-zsh settings will not be used."
       echo ""
-      echo "   If you want to keep oh-my-zsh, you can modify your ~/.zshenv:"
-      echo ""
-      echo "   # First load dotfiles zsh configuration"
-      echo "   export ZDOTDIR=\"${DOTFILES_DIR}/zsh\""
-      echo "   source \"\$ZDOTDIR/.zshrc\""
-      echo ""
-      echo "   # Then load oh-my-zsh configuration"
-      echo "   export ZSH=\"\$HOME/.oh-my-zsh\""
-      echo "   source \"\$ZSH/oh-my-zsh.sh\""
+      echo "   To remove oh-my-zsh completely, run: uninstall_oh_my_zsh"
     fi
   else
-    echo "Skipping Zsh environment setup."
+    echo "Skipping Zsh configuration."
   fi
 }
 
 setup_claude() {
-  # Check for existing Claude configuration
-  if [[ -e "$HOME/.claude/CLAUDE.md" ]]; then
+  # Check if Claude configuration is already linked to our dotfiles
+  local claude_already_linked=false
+  local dotfiles_path="$(pwd)"
+  
+  # Check if CLAUDE.md is already linked to our dotfiles
+  if [[ -L "$HOME/.claude/CLAUDE.md" ]]; then
+    local link_target=$(readlink "$HOME/.claude/CLAUDE.md")
+    if [[ "$link_target" == "$dotfiles_path/claude/.claude/CLAUDE.md" ]]; then
+      claude_already_linked=true
+    fi
+  fi
+  
+  if [[ "$claude_already_linked" == "true" ]]; then
+    echo "✅ Claude configuration is already linked to your dotfiles."
+    read -p "Reinstall anyway? (y/n): " choice
+  elif [[ -e "$HOME/.claude/CLAUDE.md" ]]; then
     echo "⚠️  WARNING: Found existing Claude configuration file."
     echo "   Your current Claude configuration will be replaced if you proceed."
     
@@ -399,14 +475,14 @@ setup_claude() {
       echo "------------------------------------------------------------"
       echo ""
     fi
-  fi
-  
-  read -p "Set up Claude Code configuration? (y/n): " choice
-  if [[ "$choice" =~ ^[Yy]$ ]]; then
-    echo "Setting up Claude Code configuration..."
     
-    # Back up existing Claude config if it exists and user confirms
-    if [[ -e "$HOME/.claude/CLAUDE.md" ]]; then
+    read -p "Set up Claude Code configuration? (y/n): " choice
+  else
+    read -p "Set up Claude Code configuration? (y/n): " choice
+  fi
+  if [[ "$choice" =~ ^[Yy]$ ]]; then
+    # Only offer backup if it's not already linked (no need to backup our own symlink)
+    if [[ "$claude_already_linked" != "true" && -e "$HOME/.claude/CLAUDE.md" ]]; then
       read -p "Would you like to back up your existing Claude configuration first? (y/n): " backup_choice
       if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
         # Create backup directory
@@ -417,13 +493,8 @@ setup_claude() {
       fi
     fi
     
-    # Ensure .claude directory exists
-    mkdir -p ~/.claude
-    
-    # Create symlink for Claude config file
-    ln -sf "$(pwd)/claude/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
-    
-    echo "Claude configuration linked to ~/.claude/CLAUDE.md"
+    # Use the dedicated function to link Claude configuration
+    link_claude_config
   else
     echo "Skipping Claude configuration."
   fi
@@ -480,22 +551,11 @@ main() {
   # Try to install homebrew, but continue if user chooses to skip
   install_homebrew || echo "Continuing without Homebrew installation."
   
-  # Install essential packages if homebrew is available
-  if command -v brew &> /dev/null; then
-    install_packages
-  else
-    echo "Homebrew not available, skipping package installation."
-    # Check if stow is available
-    if ! command -v stow &> /dev/null; then
-      echo "WARNING: GNU stow is required but not found."
-      echo "Please install it manually before continuing."
-      read -p "Continue anyway? (y/n): " cont
-      [[ "$cont" =~ ^[Yy]$ ]] || exit 1
-    fi
-  fi
+  # Install packages if needed (no external dependencies now)
+  install_packages
   
-  # Continue with stow and setup
-  stow_files
+  # Continue with dotfiles installation and setup
+  install_dotfiles
   setup
 }
 
