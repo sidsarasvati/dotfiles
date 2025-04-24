@@ -19,7 +19,20 @@ alias ....='cd ../../..'          # Go up three directories
 # Enhanced directory listing
 alias la='ls -A'                  # List all files (including hidden)
 alias ll='ls -Alh'                # Long listing with human-readable sizes
-alias l='ls -Alh'                 # Same as ll (convenient shorthand)
+
+# Smart 'l' command - acts as less for files, ls -Alh otherwise
+function l() {
+  if [[ $# -eq 0 ]]; then
+    # No arguments, use ls
+    ls -Alh
+  elif [[ -f "$1" ]]; then
+    # First argument is a file, use less
+    less "$1"
+  else
+    # Use ls for directories or multiple arguments
+    ls -Alh "$@"
+  fi
+}
 
 # Specialized directory views
 alias lsd="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'" # Directory tree using ls
