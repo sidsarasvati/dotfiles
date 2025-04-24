@@ -4,18 +4,27 @@
 - Personal dotfiles collection maintained for over 12 years
 - Primary focus on macOS configuration (last 10 years)
 - No active maintenance for Windows or other Unix configurations
-- Primarily manages bash/zsh and Emacs configurations
+- Primarily manages zsh and Emacs configurations
 - Collection of useful tools and settings accumulated over time
 - Designed to be portable to any new Mac or Unix-based environment
 - Custom zsh configuration with literate programming approach (no external dependencies)
 - Multiple prompt styles with git integration and Emacs-style keybindings
 
 ## Build & Install Commands
-- `./install.sh` - Main setup script (installs homebrew, packages, links configs)
-- `brew bundle` - Install packages from Brewfile
-- `stow <dir>` - Link configs from specific directory (bash, git, emacs, zsh, misc)
+- `./install.sh` - Interactive setup script that manages all configurations without external dependencies
+- `brew bundle` - Install packages from Brewfile (optional)
 - `brew bundle check` - Verify all Brewfile dependencies are installed
 - `brew bundle cleanup` - Remove packages not in Brewfile
+
+## Installation Features
+- Fully interactive prompts with "No" as the safe default
+- Smart detection of already-installed configurations
+- Backup functionality for existing configurations
+- Diff display between existing and new configurations
+- No external dependencies (formerly used GNU stow)
+- Special handling for Doom Emacs detection
+- Warning system for XDG-style configurations in ~/.config
+- Automatic detection of oh-my-zsh installations
 
 ## Code Style Guidelines
 - **Shell Scripts**: Use bash with `set -eu` for strict error handling
@@ -40,23 +49,32 @@
 - Create GitHub issues for tracking work items (see `docs/workflow.md`)
 
 ## Repository Organization
-- Organized by tool/category (bash, git, emacs, misc)
-- Uses GNU stow for symlink management
+- Organized by tool/category (git, emacs, zsh, claude)
+- Uses direct symlinks with absolute paths for reliability
 - Primary focus on macOS, limited support for Linux
 - Brewfile contains all package dependencies organized by category
 - Educational documentation in org-mode format under docs/emacs/
 
-## Recent Updates (2025-03-23)
+## Recent Updates (2025-04-24)
+- Completely rebuilt the installation system:
+  - Removed dependency on GNU stow
+  - Added direct symlink approach with absolute paths
+  - Made script fully interactive with safe defaults
+  - Added smart detection of already-installed configurations
+  - Added diff and backup functionality
+  - Added Doom Emacs detection and guidance
+  - Added XDG configuration detection
+- Added support for Claude configurations with separate handling
+- Improved zsh setup with better .zshenv integration
+- Added local.zsh.example template for private tokens and secrets 
+- Made all configurations primary tools with no "misc" category
 - Updated PATH configuration for Homebrew on Apple Silicon Macs
-- Removed Doom Emacs path configuration (using vanilla Emacs now)
 - Converted Emacs configuration to literate programming style with org-mode
 - Fixed config.org path resolution and theme loading in Emacs
 - Centralized backup/auto-save files and disabled lock files in Emacs
-- Updated .gitignore to exclude Emacs temporary files
 - Improved Emacs launch commands:
   - `em` launches GUI Emacs properly detached from terminal
   - `emacs` launches terminal Emacs with -nw option
-- Created org-mode educational documentation (version-control.org)
 - Established GitHub issue-based workflow with 8 planned enhancements
 - Added architecture detection for cross-platform compatibility
 

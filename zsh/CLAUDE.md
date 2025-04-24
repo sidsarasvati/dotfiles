@@ -24,13 +24,25 @@ The configuration includes multiple prompt styles that can be switched by editin
 
 ## Installation
 - The main `install.sh` script creates a `.zshenv` file in the home directory
-- This file points to this zsh configuration using the actual dotfiles location
-- No need for stow or other symlink management
+- This file points to this zsh configuration using the absolute path to the dotfiles location
+- No external dependencies needed (no stow or other symlink management)
+- Smart detection of existing configurations with proper backup options
+- Automatic detection and guidance for oh-my-zsh users
 
 ## Customization
-- Machine-specific settings can be added to `local.zsh` (gitignored)
+- Machine-specific settings and secrets should be added to `local.zsh` (gitignored)
+- Use `local.zsh.example` as a template for your private tokens
 - Additional functions can be added to `functions/` directory
 - Prompt styles can be switched by commenting/uncommenting in `.zshrc`
+
+## oh-my-zsh Migration
+If migrating from oh-my-zsh, this configuration replaces it entirely. The following approaches are possible:
+
+1. Completely replace oh-my-zsh (recommended)
+2. Use both by modifying `.zshenv` to source both configurations
+3. Move your oh-my-zsh customizations to this structure
+
+To remove oh-my-zsh completely, run: `uninstall_oh_my_zsh`
 
 ## Keybindings
 The configuration uses Emacs-style keybindings with common shortcuts like:
