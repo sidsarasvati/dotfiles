@@ -20,14 +20,20 @@ alias ....='cd ../../..'          # Go up three directories
 alias la='ls -A'                  # List all files (including hidden)
 alias ll='ls -Alh'                # Long listing with human-readable sizes
 
-# Smart 'l' command - acts as less for files, ls -Alh otherwise
+# Smart 'l' command - acts as less for regular files, glow for markdown files, ls -Alh otherwise
 function l() {
   if [[ $# -eq 0 ]]; then
     # No arguments, use ls
     ls -Alh
   elif [[ -f "$1" ]]; then
-    # First argument is a file, use less
-    less "$1"
+    # First argument is a file
+    if [[ "$1" == *.md ]]; then
+      # Markdown file, use glow
+      glow -p "$1"
+    else
+      # Regular file, use less
+      less "$1"
+    fi
   else
     # Use ls for directories or multiple arguments
     ls -Alh "$@"
