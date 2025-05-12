@@ -50,3 +50,8 @@ The configuration uses Emacs-style keybindings with common shortcuts like:
 - Line navigation with Ctrl+A/E
 - Word deletion with Alt+Backspace and Alt+D
 - History search with Ctrl+R and Ctrl+P/N
+
+Path components are treated as separate words for navigation and deletion. This means:
+- Alt+Backspace deletes just the last path component (e.g., in `~/Code/sid/dotfiles`, it deletes only `dotfiles`)
+- Alt+F/B jumps between path components
+This behavior is implemented via `select-word-style bash`, which makes zsh use bash-style word definitions.

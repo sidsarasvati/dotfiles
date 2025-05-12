@@ -82,8 +82,14 @@ bindkey "^[f" forward-word       # Alt + F → Move cursor forward one word
 bindkey "^A" beginning-of-line   # Ctrl + A → Beginning of line
 bindkey "^E" end-of-line         # Ctrl + E → End of line
 
+# Use bash-style word definitions which handle path components correctly
+# This makes Alt+Backspace delete just the last path component in paths like ~/Code/sid/dotfiles
+# instead of deleting the entire path. It also affects Alt+F/B for navigation between path components.
+autoload -U select-word-style
+select-word-style bash
+
 # Editing - delete words backward/forward
-bindkey "^[^H" backward-kill-word  # Alt + Backspace → Delete previous word
+bindkey "^[^H" backward-kill-word  # Alt + Backspace → Delete previous path component/word
 bindkey "^[d" kill-word            # Alt + D → Delete next word
 
 # History searching - find commands as you type
