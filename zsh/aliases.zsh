@@ -124,6 +124,12 @@ alias d='docker'                  # Docker commands
 alias dc='docker-compose'         # Docker Compose
 alias kb='kubectl'                # Kubernetes control
 
+# === Claude & AI Tools ===
+#
+# Tools for AI development and usage tracking.
+
+alias ccu='npx ccusage@latest'    # Claude Code usage tracker
+
 # === Node.js Development ===
 #
 # NPM package management and development shortcuts.
