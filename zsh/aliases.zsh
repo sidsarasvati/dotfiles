@@ -113,8 +113,8 @@ alias emacs='emacs -nw'          # Launch Emacs in terminal mode
 
 alias e=$EDITOR                   # Use the default editor
 alias nv="nvim"                   # Launch Neovim
-alias claude="~/.claude/local/claude"  # Claude AI assistant
-alias c="~/.claude/local/claude"      # Short alias for Claude AI assistant
+alias claude="~/.local/bin/claude"  # Claude AI assistant
+alias c="~/.local/bin/claude"      # Short alias for Claude AI assistant
 
 # === Containers & Orchestration ===
 #
