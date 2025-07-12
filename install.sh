@@ -87,6 +87,22 @@ link_claude_config() {
   echo "Claude configuration linked."
 }
 
+# Bin scripts
+link_bin_scripts() {
+  echo "Setting up bin scripts..."
+  # Create bin directory if it doesn't exist
+  mkdir -p "$HOME/bin"
+  # Link all executable files from bin directory
+  for script in "$(pwd)"/bin/*; do
+    if [[ -x "$script" && -f "$script" ]]; then
+      script_name=$(basename "$script")
+      ln -sf "$script" "$HOME/bin/$script_name"
+      echo "  Linked $script_name"
+    fi
+  done
+  echo "Bin scripts linked."
+}
+
 # Check if configuration exists and warn about replacements
 check_existing_config() {
   local config_name="$1"
@@ -500,6 +516,53 @@ setup_claude() {
   fi
 }
 
+# Setup bin scripts
+setup_bin() {
+  echo ""
+  echo "=========================================="
+  echo "Bin Scripts Setup"
+  echo "=========================================="
+  
+  # Check for existing scripts in ~/bin
+  local existing_scripts=()
+  local our_scripts=()
+  
+  # Get list of our scripts
+  for script in "$(pwd)"/bin/*; do
+    if [[ -x "$script" && -f "$script" ]]; then
+      our_scripts+=($(basename "$script"))
+    fi
+  done
+  
+  # Check which ones already exist
+  for script_name in "${our_scripts[@]}"; do
+    if [[ -e "$HOME/bin/$script_name" ]]; then
+      existing_scripts+=("$script_name")
+    fi
+  done
+  
+  if [[ ${#existing_scripts[@]} -gt 0 ]]; then
+    echo "⚠️  Found existing scripts in ~/bin:"
+    for script in "${existing_scripts[@]}"; do
+      echo "  - $script"
+    done
+    echo ""
+  fi
+  
+  echo "Available scripts to install:"
+  for script in "${our_scripts[@]}"; do
+    echo "  - $script"
+  done
+  echo ""
+  
+  read -p "Set up bin scripts? (y/N): " choice
+  if [[ "$choice" =~ ^[Yy]$ ]]; then
+    link_bin_scripts
+  else
+    echo "Skipping bin scripts."
+  fi
+}
+
 # Check if there are any XDG-style configurations that might conflict
 check_xdg_configs() {
   echo "Checking for XDG-style configurations in ~/.config that might need special handling..."
@@ -537,6 +600,9 @@ setup() {
   
   # Setup Claude configuration
   setup_claude
+  
+  # Setup bin scripts
+  setup_bin
   
   # Note: zsh setup is already handled in install_dotfiles
   
