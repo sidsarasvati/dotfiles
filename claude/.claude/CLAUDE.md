@@ -109,6 +109,35 @@
    - Makes sense in future
    - Is easy to debug
    - Helps me learn from it
+3. **Server Management**: NEVER start servers directly - Sid will always run them to pipe logs and control execution
+   - Don't use `npm run dev`, `npm run mission`, or similar commands
+   - Ask Sid to start servers when needed
+   - This allows proper log piping and debugging visibility
+
+## Claude Code Configuration
+- **Custom Commands**: Check `.claude/commands/` for slash commands
+- **Hook System**: PreToolUse/PostToolUse in `.claude/hooks/`
+- **Permissions**: Use `/permissions` to manage tool access
+- **Settings**: Configure in `.claude/settings.json`
+
+## Subagents
+- **Location**: `.claude/agents/` directory  
+- **When to use**: Complex multi-step tasks, parallel analysis, heavy research
+- **Preserve context**: Delegate to subagents when main context is precious
+- **Create as needed**: Not all projects have subagents - create when patterns emerge
+- **Usage**: Use `Task` tool with `subagent_type` parameter
+
+## GitHub Integration
+- **`gh` CLI**: Use for PRs, issues, and GitHub operations
+- **PR Creation**: `gh pr create` with proper formatting
+- **Never use CANCELLED**: Mark as Done with resolution comment
+
+## Performance Reminders for Claude
+- **Long sessions**: Consider using `/clear` if context gets cluttered
+- **Complex tasks**: Use subagents to preserve main context
+- **Visual feedback**: Ask Sid for screenshots when iterating UI
+- **Think mode**: Add "think" when you need deeper analysis
+- **Test incrementally**: Run code frequently, don't wait
 
 ## Python Development
 - **ALWAYS create a virtual environment** (.venv) for Python projects before installing dependencies
