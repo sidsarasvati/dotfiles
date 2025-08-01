@@ -129,6 +129,7 @@ alias kb='kubectl'                # Kubernetes control
 # Tools for AI development and usage tracking.
 
 alias ccu='npx ccusage@latest'    # Claude Code usage tracker
+alias kp='killport'               # Kill process on port
 
 # === Node.js Development ===
 #

@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# killport - Find and kill process running on a specific port
+
+set -eu
+
+if [ $# -eq 0 ]; then
+  echo "Active listening ports:"
+  echo ""
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS - show listening ports with process info
+    lsof -iTCP -sTCP:LISTEN -P -n | grep -v "^COMMAND" | awk '{printf "%-6s %-15s %-20s %s\n", $2, $1, $3, $9}' | sort -u | column -t
+  else
+    # Linux - show listening ports
+    ss -tlnp 2>/dev/null | grep LISTEN | awk '{print $4, $6}' | column -t
+  fi
+  echo ""
+  echo "Usage: killport <port>"
+  echo "Example: killport 3000"
+  exit 0
+fi
+
+PORT=$1
+
+# Find process using the port
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS
+  PID=$(lsof -ti:$PORT 2>/dev/null || true)
+else
+  # Linux
+  PID=$(lsof -ti:$PORT 2>/dev/null || fuser -n tcp $PORT 2>/dev/null | awk '{print $1}' || true)
+fi
+
+if [ -z "$PID" ]; then
+  echo "No process found on port $PORT"
+  exit 0
+fi
+
+# Get process info
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  PROCESS_INFO=$(ps -p $PID -o comm=,pid=,user= | head -1)
+else
+  PROCESS_INFO=$(ps -p $PID -o comm,pid,user --no-headers | head -1)
+fi
+
+echo "Found process on port $PORT:"
+echo "  $PROCESS_INFO"
+echo ""
+read -p "Kill this process? [Y/n] " -n 1 -r
+echo ""
+
+# Default to Yes if user just presses Enter
+if [[ -z "$REPLY" || $REPLY =~ ^[Yy]$ ]]; then
+  kill -9 $PID
+  echo "Process killed"
+else
+  echo "Process not killed"
+fi
