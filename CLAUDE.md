@@ -78,6 +78,15 @@
 - Established GitHub issue-based workflow with 8 planned enhancements
 - Added architecture detection for cross-platform compatibility
 
+## Recent Updates (2025-08-01)
+- Added `bin/` directory for custom command-line tools
+- Created `killport` utility:
+  - Lists all listening ports when run without arguments
+  - Kills process on specified port with confirmation prompt
+  - Shows process details (PID, name, user) before killing
+  - Defaults to Yes when user presses Enter for quick workflow
+- Added `kp` alias as shorthand for killport
+
 ## Active Issues and Roadmap
 The following issues have been created for ongoing improvements:
 - #9: Add GitHub Copilot Integration for Emacs
