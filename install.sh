@@ -82,9 +82,21 @@ link_claude_config() {
   echo "Setting up Claude Code configuration..."
   # Create .claude directory if it doesn't exist
   mkdir -p "$HOME/.claude"
-  # Link Claude config files
-  ln -sf "$(pwd)/claude/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-  echo "Claude configuration linked."
+  
+  # Link CLAUDE.md (fixing path - it's at root of claude dir, not in .claude subdir)
+  ln -sf "$(pwd)/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+  
+  # Link settings.json
+  ln -sf "$(pwd)/claude/settings.json" "$HOME/.claude/settings.json"
+  
+  # Link hooks directory
+  # Remove existing hooks symlink/directory if it exists
+  if [[ -e "$HOME/.claude/hooks" || -L "$HOME/.claude/hooks" ]]; then
+    rm -rf "$HOME/.claude/hooks"
+  fi
+  ln -sf "$(pwd)/claude/hooks" "$HOME/.claude/hooks"
+  
+  echo "Claude configuration linked (CLAUDE.md, settings.json, hooks)."
 }
 
 # Bin scripts
@@ -460,10 +472,17 @@ setup_claude() {
   local claude_already_linked=false
   local dotfiles_path="$(pwd)"
   
-  # Check if CLAUDE.md is already linked to our dotfiles
-  if [[ -L "$HOME/.claude/CLAUDE.md" ]]; then
-    local link_target=$(readlink "$HOME/.claude/CLAUDE.md")
-    if [[ "$link_target" == "$dotfiles_path/claude/.claude/CLAUDE.md" ]]; then
+  # Check if all Claude configs are already linked to our dotfiles
+  # Need to check CLAUDE.md, settings.json, and hooks
+  if [[ -L "$HOME/.claude/CLAUDE.md" && -L "$HOME/.claude/settings.json" && -L "$HOME/.claude/hooks" ]]; then
+    local claude_target=$(readlink "$HOME/.claude/CLAUDE.md")
+    local settings_target=$(readlink "$HOME/.claude/settings.json")
+    local hooks_target=$(readlink "$HOME/.claude/hooks")
+    
+    # Fixed path check - CLAUDE.md is in claude/ not claude/.claude/
+    if [[ "$claude_target" == "$dotfiles_path/claude/CLAUDE.md" && \
+          "$settings_target" == "$dotfiles_path/claude/settings.json" && \
+          "$hooks_target" == "$dotfiles_path/claude/hooks" ]]; then
       claude_already_linked=true
     fi
   fi
@@ -471,41 +490,89 @@ setup_claude() {
   if [[ "$claude_already_linked" == "true" ]]; then
     echo "✅ Claude configuration is already linked to your dotfiles."
     read -p "Reinstall anyway? (y/N): " choice
-  elif [[ -e "$HOME/.claude/CLAUDE.md" ]]; then
-    echo "⚠️  WARNING: Found existing Claude configuration file."
-    echo "   Your current Claude configuration will be replaced if you proceed."
+  else
+    # Check for existing Claude configuration files
+    local existing_files=()
+    [[ -e "$HOME/.claude/CLAUDE.md" ]] && existing_files+=("CLAUDE.md")
+    [[ -e "$HOME/.claude/settings.json" ]] && existing_files+=("settings.json")
+    [[ -e "$HOME/.claude/hooks" ]] && existing_files+=("hooks directory")
     
-    # Offer to show diff
-    read -p "Would you like to see the difference between your current and new Claude configuration? (y/N): " show_diff
-    if [[ "$show_diff" =~ ^[Yy]$ ]]; then
-      echo ""
-      echo "Diff between existing and new Claude configuration:"
-      echo "------------------------------------------------------------"
-      if command -v colordiff >/dev/null 2>&1; then
-        # Use colordiff if available
-        colordiff -u "$HOME/.claude/CLAUDE.md" "$(pwd)/claude/.claude/CLAUDE.md"
-      else
-        # Otherwise use regular diff
-        diff -u "$HOME/.claude/CLAUDE.md" "$(pwd)/claude/.claude/CLAUDE.md"
+    if [[ ${#existing_files[@]} -gt 0 ]]; then
+      echo "⚠️  WARNING: Found existing Claude configuration files:"
+      for file in "${existing_files[@]}"; do
+        echo "   - $file"
+      done
+      echo "   Your current Claude configuration will be replaced if you proceed."
+      
+      # Offer to show diff for CLAUDE.md
+      if [[ -e "$HOME/.claude/CLAUDE.md" ]]; then
+        read -p "Would you like to see the difference between your current and new CLAUDE.md? (y/N): " show_diff
+        if [[ "$show_diff" =~ ^[Yy]$ ]]; then
+          echo ""
+          echo "Diff between existing and new CLAUDE.md:"
+          echo "------------------------------------------------------------"
+          if command -v colordiff >/dev/null 2>&1; then
+            # Use colordiff if available
+            colordiff -u "$HOME/.claude/CLAUDE.md" "$(pwd)/claude/CLAUDE.md"
+          else
+            # Otherwise use regular diff
+            diff -u "$HOME/.claude/CLAUDE.md" "$(pwd)/claude/CLAUDE.md"
+          fi
+          echo "------------------------------------------------------------"
+          echo ""
+        fi
       fi
-      echo "------------------------------------------------------------"
-      echo ""
+      
+      # Offer to show diff for settings.json
+      if [[ -e "$HOME/.claude/settings.json" ]]; then
+        read -p "Would you like to see the difference between your current and new settings.json? (y/N): " show_diff
+        if [[ "$show_diff" =~ ^[Yy]$ ]]; then
+          echo ""
+          echo "Diff between existing and new settings.json:"
+          echo "------------------------------------------------------------"
+          if command -v colordiff >/dev/null 2>&1; then
+            # Use colordiff if available
+            colordiff -u "$HOME/.claude/settings.json" "$(pwd)/claude/settings.json"
+          else
+            # Otherwise use regular diff
+            diff -u "$HOME/.claude/settings.json" "$(pwd)/claude/settings.json"
+          fi
+          echo "------------------------------------------------------------"
+          echo ""
+        fi
+      fi
     fi
     
     read -p "Set up Claude Code configuration? (y/N): " choice
-  else
-    read -p "Set up Claude Code configuration? (y/N): " choice
   fi
+  
   if [[ "$choice" =~ ^[Yy]$ ]]; then
-    # Only offer backup if it's not already linked (no need to backup our own symlink)
-    if [[ "$claude_already_linked" != "true" && -e "$HOME/.claude/CLAUDE.md" ]]; then
-      read -p "Would you like to back up your existing Claude configuration first? (y/N): " backup_choice
-      if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
-        # Create backup directory
-        local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d%H%M%S)/claude"
-        mkdir -p "$backup_dir"
-        cp "$HOME/.claude/CLAUDE.md" "$backup_dir/CLAUDE.md"
-        echo "Backed up existing Claude configuration to $backup_dir/CLAUDE.md"
+    # Offer backup if not already linked and files exist
+    if [[ "$claude_already_linked" != "true" ]]; then
+      local files_to_backup=()
+      [[ -e "$HOME/.claude/CLAUDE.md" ]] && files_to_backup+=("CLAUDE.md")
+      [[ -e "$HOME/.claude/settings.json" ]] && files_to_backup+=("settings.json")
+      [[ -e "$HOME/.claude/hooks" ]] && files_to_backup+=("hooks")
+      
+      if [[ ${#files_to_backup[@]} -gt 0 ]]; then
+        read -p "Would you like to back up your existing Claude configuration first? (y/N): " backup_choice
+        if [[ "$backup_choice" =~ ^[Yy]$ ]]; then
+          # Create backup directory
+          local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d%H%M%S)/claude"
+          mkdir -p "$backup_dir"
+          
+          # Backup each file/directory
+          for item in "${files_to_backup[@]}"; do
+            if [[ "$item" == "hooks" && -d "$HOME/.claude/hooks" ]]; then
+              # Copy directory recursively
+              cp -r "$HOME/.claude/hooks" "$backup_dir/hooks"
+              echo "Backed up hooks directory to $backup_dir/hooks"
+            elif [[ -f "$HOME/.claude/$item" ]]; then
+              cp "$HOME/.claude/$item" "$backup_dir/$item"
+              echo "Backed up $item to $backup_dir/$item"
+            fi
+          done
+        fi
       fi
     fi
     
