@@ -156,6 +156,41 @@ Created `bin/killport` command-line tool:
 
 ---
 
+## Memory Protocol Migration (Session: Oct 19-20, 2025)
+
+### What We Discovered
+Successfully migrated dotfiles repository to Memory Protocol - demonstrating the pattern in action.
+
+### Migration Pattern Applied
+1. **Commit first** - Clean separation: existing work committed before migration
+2. **Extract intelligence** - Historical learnings from NEXT_SESSION.md → MEMORY.md
+3. **Create lean state** - Current ephemeral state → NOW.md
+4. **Delete legacy** - Remove NEXT_SESSION.md after extraction
+5. **Single migration commit** - All changes together (create MEMORY.md, create NOW.md, delete NEXT_SESSION.md)
+
+### Key Commits
+- `9204067` - Add Memory Protocol and protocol evolution to Claude configuration
+- `1c2c4a9` - Migrate to Memory Protocol (MEMORY.md + NOW.md)
+
+### Pattern: Dogfooding Protocols
+The dotfiles repository now:
+- Documents Memory Protocol in `claude/CLAUDE.md`
+- Uses Memory Protocol itself (MEMORY.md + NOW.md)
+- Demonstrates the pattern for other projects
+
+### Technical Decisions
+- **MEMORY.md structure**: Organized by session/topic (organic growth)
+- **NOW.md format**: Lean state handoff (overwritten each close)
+- **Migration timing**: After committing other work (clean git history)
+
+### Lessons Learned
+- Migration is straightforward: extract → create → delete
+- Organic structure > rigid templates (let sections emerge)
+- Repository using its own protocols = validation
+- Clean commits tell the migration story
+
+---
+
 ## Intelligence Compounds Here
 
 **What gets referenced = what matters**
