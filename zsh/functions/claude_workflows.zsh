@@ -4,7 +4,7 @@
 # Smart launcher for Claude Code that handles both main atlas
 # wake and project-specific wakes.
 #
-# The main atlas wake requires navigating to the logseq-secondbrain
+# The main atlas wake requires navigating to the secondbrain-logseq
 # repository, while project wakes use /wake-project which handles
 # navigation automatically.
 #
@@ -16,7 +16,7 @@
 function atlas() {
   if [ $# -eq 0 ]; then
     # No arguments: cd to secondbrain and invoke /wake for main atlas
-    cd ~/Code/sid/logseq-secondbrain && ~/.local/bin/claude "/wake"
+    cd ~/Code/sid/secondbrain-logseq && ~/.local/bin/claude "/wake"
   else
     # With argument: invoke /wake-project with project name
     # (wake-project handles navigation automatically)
