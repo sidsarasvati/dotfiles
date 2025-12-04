@@ -89,6 +89,41 @@ Test-driven development for AI behavior:
 - Structural changes: Propose to Sid
 - New protocols: Emerge from repeated patterns
 
+### Protocol Debugging - When Protocols Fail
+
+**Protocols fail when desired behavior doesn't emerge.**
+
+**The 6-Step Debugging Process:**
+1. **Identify failure** - What behavior was expected but didn't happen?
+2. **Find ambiguous language** - What words allowed the wrong interpretation?
+3. **Question the constraint** - Is there redundant qualification?
+4. **Realize structure enforces it** - Does architecture already prevent the issue?
+5. **Remove redundant qualifier** - Simplify to what structure actually needs
+6. **Verify emergence** - Does correct behavior now emerge naturally?
+
+**The principle:**
+> "When protocol fails, debug the words that allowed the failure."
+
+**Common Anti-Patterns:**
+
+**Silent Context Anti-Pattern:**
+- **Problem**: AI loads files but doesn't show understanding
+- **Symptom**: User asks "Did you see X?" after file was already loaded
+- **Impact**: Wasteful re-reading, unclear if context was understood
+- **Fix**: Behavioral condition "Show understanding immediately after loading context"
+- **Example**: After loading course notes, say "I see Module 5 on substrate independence..." not silence
+
+**Redundant Qualifiers:**
+- **Problem**: Adding conditionals already enforced by structure
+- **Example**: "Write field report (if logseq project)" when command only runs for logseq projects
+- **Impact**: Creates ambiguity, allows misinterpretation
+- **Fix**: Trust the structure, remove the qualifier
+
+**The test:**
+> "Can this instruction be misunderstood to skip desired behavior?"
+
+If YES → Debug it. Simpler language + structural constraints > complex conditionals.
+
 ### Designing Protocols - Meta Rule
 
 **When creating or modifying protocols:**
@@ -353,6 +388,69 @@ See: [[Context Engineering Breakthrough]] for full treatment
 - Don't live with broken windows (fix small issues before compound)
 - Provide options, not excuses (when blocked, present alternatives)
 
+### Strategic Analysis Protocol
+
+**When to use**: Partnership proposals, investment decisions, complex tradeoffs
+
+**Phase 0: Verify Critical Inputs** (BEFORE Analysis)
+
+Questions that prevent wrong assumptions:
+- **Implementation cost**: "How long will this actually take?" (ask engineer/Sid, don't assume)
+- **Existing assets**: "What do we already have that applies?" (reusable code, infrastructure)
+- **Team capacity**: "Who's available and when?" (not just hours, but timing)
+- **Strategic context**: "Does this fit current priorities?" (opportunity cost awareness)
+
+**The trap**: Good analysis + Wrong inputs = Wrong decision
+**The fix**: Verify inputs take 2 minutes, wrong framework wastes 45 minutes
+
+**Phase 1: Choose Framework Based on Investment**
+
+Investment size determines which lens to use:
+- **Low investment** (2-7 days) → **Strategic lens**
+  - Question: "Will this unlock future category?"
+  - Focus: Thesis validation, relationship building, learning
+  - Decision gate: Thesis fit, not traction proof
+
+- **Medium investment** (2-4 weeks) → **Hybrid lens**
+  - Question: "Strategic value + ROI validation?"
+  - Focus: Both learning AND revenue potential
+  - Decision gate: Thesis fit + reasonable traction
+
+- **High investment** (1+ months) → **Tactical lens**
+  - Question: "Will this make money Year 1?"
+  - Focus: ROI, CREDITOR test, opportunity cost
+  - Decision gate: Traction data, risk mitigation
+
+**The principle**: Match framework to investment size (not all deals need same rigor)
+
+**Phase 2: Run Analysis with Real Numbers**
+
+Now proceed with research, but using verified inputs:
+- Legitimacy research (if external partner)
+- Strategic fit assessment
+- ROI calculation **with actual costs**
+- CREDITOR test (does this make us feel RICH or POOR?)
+- Opportunity cost (what are we NOT doing?)
+
+**Phase 3: Sanity Check**
+
+Questions that catch framework errors:
+- **If Sid says "don't overthink"** → Wrong framework for investment size
+- **If answer feels wrong** → Check inputs first, then logic
+- **If frameworks conflict** → Investment size probably wrong
+- **Would B2B Atlas agree?** → If no, inputs likely wrong
+
+**Key Truths:**
+- Simple question + Right inputs > Complex analysis + Wrong inputs
+- Don't ask questions whose answers don't change your decision
+- Investment size determines framework (not all deals equal)
+- Verify before analyze (assumptions are invisible until wrong)
+
+**Example (Nov 18, 2025 - Revlend):**
+- ❌ Assumed 3 weeks dev time → Applied tactical lens → Recommended PARK
+- ✅ Verified 2 days dev time → Applied strategic lens → Recommended PILOT
+- **Learning**: 2-minute input verification changed entire decision
+
 ### Code Quality Protocol
 
 **For every significant change:**
@@ -509,6 +607,20 @@ When presenting code to Sid:
 3. THEN install dependencies
 
 **Never install globally. Virtual env is not optional.**
+
+### CLI Authentication Protocol
+**When CLI tools need authentication (wrangler, firebase, gh, etc.):**
+
+1. **IMMEDIATELY ask Sid to login** - Don't waste time trying workarounds
+2. **State what's needed**: "Need wrangler login for Cloudflare" or "Need firebase login"
+3. **Wait for confirmation** before proceeding
+4. **For multi-account tools**: Always confirm which account (e.g., Ercan's for H1Founders/RenovateAI)
+
+**Key accounts:**
+- **Cloudflare (Ercan)**: `40ad419de279f41e9626e2faf500b6b4` - H1Founders, RenovateAI
+- **Firebase**: Project-specific auth
+
+**Why this matters:** Wasting 5+ minutes trying to diagnose auth issues when Sid can login in 10 seconds.
 
 ### Web Development Protocol
 

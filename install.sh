@@ -82,21 +82,42 @@ link_claude_config() {
   echo "Setting up Claude Code configuration..."
   # Create .claude directory if it doesn't exist
   mkdir -p "$HOME/.claude"
-  
+
   # Link CLAUDE.md (fixing path - it's at root of claude dir, not in .claude subdir)
   ln -sf "$(pwd)/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-  
+
   # Link settings.json
   ln -sf "$(pwd)/claude/settings.json" "$HOME/.claude/settings.json"
-  
+
   # Link hooks directory
   # Remove existing hooks symlink/directory if it exists
   if [[ -e "$HOME/.claude/hooks" || -L "$HOME/.claude/hooks" ]]; then
     rm -rf "$HOME/.claude/hooks"
   fi
   ln -sf "$(pwd)/claude/hooks" "$HOME/.claude/hooks"
-  
-  echo "Claude configuration linked (CLAUDE.md, settings.json, hooks)."
+
+  # Link commands directory
+  if [[ -e "$HOME/.claude/commands" || -L "$HOME/.claude/commands" ]]; then
+    rm -rf "$HOME/.claude/commands"
+  fi
+  ln -sf "$(pwd)/claude/commands" "$HOME/.claude/commands"
+
+  # Link agents directory
+  if [[ -e "$HOME/.claude/agents" || -L "$HOME/.claude/agents" ]]; then
+    rm -rf "$HOME/.claude/agents"
+  fi
+  ln -sf "$(pwd)/claude/agents" "$HOME/.claude/agents"
+
+  # Link skills directory
+  if [[ -e "$HOME/.claude/skills" || -L "$HOME/.claude/skills" ]]; then
+    rm -rf "$HOME/.claude/skills"
+  fi
+  ln -sf "$(pwd)/claude/skills" "$HOME/.claude/skills"
+
+  # Link awesome-statusline.sh
+  ln -sf "$(pwd)/claude/awesome-statusline.sh" "$HOME/.claude/awesome-statusline.sh"
+
+  echo "Claude configuration linked (CLAUDE.md, settings.json, hooks, commands, agents, skills, statusline)."
 }
 
 # Bin scripts
@@ -471,18 +492,29 @@ setup_claude() {
   # Check if Claude configuration is already linked to our dotfiles
   local claude_already_linked=false
   local dotfiles_path="$(pwd)"
-  
+
   # Check if all Claude configs are already linked to our dotfiles
-  # Need to check CLAUDE.md, settings.json, and hooks
-  if [[ -L "$HOME/.claude/CLAUDE.md" && -L "$HOME/.claude/settings.json" && -L "$HOME/.claude/hooks" ]]; then
+  # Need to check CLAUDE.md, settings.json, hooks, commands, agents, skills, statusline
+  if [[ -L "$HOME/.claude/CLAUDE.md" && -L "$HOME/.claude/settings.json" && \
+        -L "$HOME/.claude/hooks" && -L "$HOME/.claude/commands" && \
+        -L "$HOME/.claude/agents" && -L "$HOME/.claude/skills" && \
+        -L "$HOME/.claude/awesome-statusline.sh" ]]; then
     local claude_target=$(readlink "$HOME/.claude/CLAUDE.md")
     local settings_target=$(readlink "$HOME/.claude/settings.json")
     local hooks_target=$(readlink "$HOME/.claude/hooks")
-    
+    local commands_target=$(readlink "$HOME/.claude/commands")
+    local agents_target=$(readlink "$HOME/.claude/agents")
+    local skills_target=$(readlink "$HOME/.claude/skills")
+    local statusline_target=$(readlink "$HOME/.claude/awesome-statusline.sh")
+
     # Fixed path check - CLAUDE.md is in claude/ not claude/.claude/
     if [[ "$claude_target" == "$dotfiles_path/claude/CLAUDE.md" && \
           "$settings_target" == "$dotfiles_path/claude/settings.json" && \
-          "$hooks_target" == "$dotfiles_path/claude/hooks" ]]; then
+          "$hooks_target" == "$dotfiles_path/claude/hooks" && \
+          "$commands_target" == "$dotfiles_path/claude/commands" && \
+          "$agents_target" == "$dotfiles_path/claude/agents" && \
+          "$skills_target" == "$dotfiles_path/claude/skills" && \
+          "$statusline_target" == "$dotfiles_path/claude/awesome-statusline.sh" ]]; then
       claude_already_linked=true
     fi
   fi
@@ -496,6 +528,10 @@ setup_claude() {
     [[ -e "$HOME/.claude/CLAUDE.md" ]] && existing_files+=("CLAUDE.md")
     [[ -e "$HOME/.claude/settings.json" ]] && existing_files+=("settings.json")
     [[ -e "$HOME/.claude/hooks" ]] && existing_files+=("hooks directory")
+    [[ -e "$HOME/.claude/commands" ]] && existing_files+=("commands directory")
+    [[ -e "$HOME/.claude/agents" ]] && existing_files+=("agents directory")
+    [[ -e "$HOME/.claude/skills" ]] && existing_files+=("skills directory")
+    [[ -e "$HOME/.claude/awesome-statusline.sh" ]] && existing_files+=("awesome-statusline.sh")
     
     if [[ ${#existing_files[@]} -gt 0 ]]; then
       echo "⚠️  WARNING: Found existing Claude configuration files:"
@@ -553,6 +589,10 @@ setup_claude() {
       [[ -e "$HOME/.claude/CLAUDE.md" ]] && files_to_backup+=("CLAUDE.md")
       [[ -e "$HOME/.claude/settings.json" ]] && files_to_backup+=("settings.json")
       [[ -e "$HOME/.claude/hooks" ]] && files_to_backup+=("hooks")
+      [[ -e "$HOME/.claude/commands" ]] && files_to_backup+=("commands")
+      [[ -e "$HOME/.claude/agents" ]] && files_to_backup+=("agents")
+      [[ -e "$HOME/.claude/skills" ]] && files_to_backup+=("skills")
+      [[ -e "$HOME/.claude/awesome-statusline.sh" ]] && files_to_backup+=("awesome-statusline.sh")
       
       if [[ ${#files_to_backup[@]} -gt 0 ]]; then
         read -p "Would you like to back up your existing Claude configuration first? (y/N): " backup_choice
@@ -563,10 +603,10 @@ setup_claude() {
           
           # Backup each file/directory
           for item in "${files_to_backup[@]}"; do
-            if [[ "$item" == "hooks" && -d "$HOME/.claude/hooks" ]]; then
+            if [[ -d "$HOME/.claude/$item" ]]; then
               # Copy directory recursively
-              cp -r "$HOME/.claude/hooks" "$backup_dir/hooks"
-              echo "Backed up hooks directory to $backup_dir/hooks"
+              cp -r "$HOME/.claude/$item" "$backup_dir/$item"
+              echo "Backed up $item directory to $backup_dir/$item"
             elif [[ -f "$HOME/.claude/$item" ]]; then
               cp "$HOME/.claude/$item" "$backup_dir/$item"
               echo "Backed up $item to $backup_dir/$item"
