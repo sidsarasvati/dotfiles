@@ -27,6 +27,21 @@ programming style using org-mode. The configuration has been maintained since
   - Grammars: tsx, typescript, javascript, json, css
   - Auto-install on first launch (~30sec compile)
   - .ts/.tsx/.js/.jsx/.json/.css now use tree-sitter modes
+- Added LSP via eglot (Dec 2025):
+  - Auto-starts for TypeScript/React modes
+  - M-. go-to-def, M-? find-refs, C-c r rename, C-c a code-actions
+  - Requires: `npm install -g typescript-language-server typescript`
+- Added modern completion UI (Dec 2025):
+  - Corfu: Popup completions (auto-shows after 2 chars)
+  - Cape: Extra backends (file paths, dabbrev)
+  - kind-icon: Visual type indicators in popup
+- Added GitHub Copilot (Dec 2025):
+  - Ghost text predictions via copilot.el
+  - TAB accepts, M-f accepts word, M-n/M-p cycles
+  - First-time: `M-x copilot-install-server`, `M-x copilot-login`
+  - Requires Node 22+
+- Added gptel for Claude chat (Dec 2025):
+  - Requires ANTHROPIC_API_KEY in shell (see zsh/local.zsh)
 
 ## Technical Details
 1. **Path Resolution**: Uses file-truename to resolve the actual path of the .emacs symlink
@@ -50,13 +65,18 @@ programming style using org-mode. The configuration has been maintained since
 
 ## Key Packages
 - dracula-theme: Dark color theme
-- smart-mode-line: Improved mode line (conditionally loaded if available)
-- flycheck: Syntax checking
-- web-mode: HTML templates
-- go-mode: Go programming language support
+- tree-sitter (built-in): Modern syntax for TypeScript/React/JS/CSS
+- eglot (built-in): LSP client for intellisense
+- corfu + cape + kind-icon: Modern completion UI
+- copilot.el: GitHub Copilot ghost text
+- gptel: LLM chat (Claude, GPT, etc.)
 - org-mode: Organization, notes, TODOs
 - magit: Git interface for Emacs
-- tree-sitter (built-in): Modern syntax for TypeScript/React/JS/CSS
+- flycheck: Syntax checking (legacy, consider removing)
+- web-mode: HTML templates (legacy, tree-sitter approach preferred)
+- go-mode: Go programming language support
 
 ## Roadmap
-- LSP integration (eglot) for TypeScript/React intellisense
+- Modernize Go config (gopls + eglot like TypeScript)
+- Consider removing legacy cruft: flycheck, web-mode, autopair
+- Explore vertico/consult for minibuffer completion

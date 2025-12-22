@@ -10,3 +10,9 @@
 # Add other API keys and secrets below
 # export AWS_ACCESS_KEY_ID="my-key"
 # export AWS_SECRET_ACCESS_KEY="my-secret"
+
+# Anthropic API key - for gptel (Claude chat in Emacs)
+# export ANTHROPIC_API_KEY="sk-ant-..."
+
+# Gemini API key - for image generation skill
+# export GEMINI_API_KEY="AIza..."
