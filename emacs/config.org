@@ -48,12 +48,10 @@ First, we need to set up the package system and initialize the package repositor
   ; list the packages you want
   (setq package-list '(yaml-mode cmake-mode))
 
-  ; list the repositories containing them
-  (setq package-archives '(("elpa" . "http://tromey.com/elpa/")
-                           ("gnu" . "http://elpa.gnu.org/packages/")
-                           ("melpa-stable" . "https://stable.melpa.org/packages/")
-                           ("melpa" . "http://melpa.org/packages/")
-                           ("marmalade" . "http://marmalade-repo.org/packages/")))
+  ; list the repositories containing them (updated Dec 2025)
+  (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                           ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                           ("melpa" . "https://melpa.org/packages/")))
 
   ; activate all the packages (in particular autoloads)
   (package-initialize)
@@ -68,6 +66,7 @@ First, we need to set up the package system and initialize the package repositor
       (package-install package)))
 #+end_src
 
+
 ** Load Path Configuration
 
 Set the load path for custom libraries and packages.
@@ -80,6 +79,19 @@ Set the load path for custom libraries and packages.
 
   (let ((default-directory  "~/.emacs.d/elpa/"))
     (normal-top-level-add-subdirs-to-load-path))
+#+end_src
+
+** Shell Path Integration (macOS)
+
+On macOS, GUI Emacs doesn't inherit shell PATH. This fixes it.
+
+#+begin_src emacs-lisp :results silent
+  ;; Copy PATH from shell so npm, node, etc. are found
+  (when (memq window-system '(mac ns x))
+    (use-package exec-path-from-shell
+      :ensure t
+      :config
+      (exec-path-from-shell-initialize)))
 #+end_src
 
 ** Basic Editor Configuration
@@ -231,7 +243,6 @@ Configure visual enhancements like line highlighting and parenthesis matching.
 * Programming Modes
 
 ** Modern Development Stack (Tree-sitter + LSP)
-#+end_src
 
 /Added: Dec 22, 2025/ - Part of "Real VibeCoding" project.
 
@@ -287,7 +298,7 @@ All executable config lives here. Eval with =C-c C-c=.
 
 **** Tree-sitter Setup
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   ;; ============================================================
   ;; TREE-SITTER: Syntax highlighting + structural navigation
   ;; ============================================================
@@ -321,7 +332,7 @@ All executable config lives here. Eval with =C-c C-c=.
 
 **** LSP (Eglot) Setup
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   ;; ============================================================
   ;; LSP (EGLOT): Autocomplete, go-to-def, errors, rename
   ;; ============================================================
@@ -339,6 +350,162 @@ All executable config lives here. Eval with =C-c C-c=.
   (global-set-key (kbd "C-c r") #'eglot-rename)        ;; Rename symbol
   (global-set-key (kbd "C-c a") #'eglot-code-actions)  ;; Code actions (quick fixes)
 #+end_src
+
+**** Completion UI (Corfu + Cape)
+
+#+begin_src emacs-lisp :results silent
+  ;; ============================================================
+  ;; COMPLETION UI: Corfu popup + Cape backends
+  ;; ============================================================
+  ;; STATUS: ACTIVE - provides autocomplete popup for LSP completions
+  ;; WHAT YOU SEE: Popup appears as you type with LSP suggestions
+  ;; TRIGGER: Automatic (corfu-auto t) after 0.2s delay
+
+  (use-package corfu
+    :ensure t
+    :init
+    (global-corfu-mode)                    ;; Enable globally
+    :custom
+    (corfu-auto t)                         ;; Auto-show popup (no C-M-i needed)
+    (corfu-auto-delay 0.2)                 ;; Show after 0.2s pause
+    (corfu-auto-prefix 2)                  ;; Show after 2 chars typed
+    (corfu-cycle t)                        ;; Cycle through candidates
+    (corfu-preselect 'prompt)              ;; Don't auto-select first
+    :bind
+    (:map corfu-map
+          ("TAB" . corfu-next)             ;; TAB cycles forward
+          ([tab] . corfu-next)
+          ("S-TAB" . corfu-previous)       ;; Shift-TAB cycles back
+          ([backtab] . corfu-previous)
+          ("RET" . corfu-insert)))         ;; Enter confirms selection
+
+  ;; Cape - extra completion backends (file paths, dabbrev, etc.)
+  (use-package cape
+    :ensure t
+    :init
+    ;; Add Cape backends to completion-at-point-functions
+    ;; These work alongside LSP completions from Eglot
+    (add-to-list 'completion-at-point-functions #'cape-file)     ;; File paths
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)) ;; Words in buffer
+
+  ;; Kind-icon - visual icons showing completion type (function, variable, etc.)
+  (use-package kind-icon
+    :ensure t
+    :after corfu
+    :custom
+    (kind-icon-default-face 'corfu-default)
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+end_src
+
+*** AI Code Assistance
+
+/Added: Dec 22, 2025/ - AI-powered code predictions and chat.
+
+**** Understanding AI Assistance
+
+**AI Prediction:**
+
+| Type | Package | What It Does | Visual |
+|------+---------+--------------+--------|
+| Prediction | copilot.el | Guesses what you'll type next | Gray ghost text |
+
+**How Copilot Works:**
+
+#+begin_example
+┌─────────────┐     stdin/stdout      ┌─────────────────────────┐
+│   Emacs     │ ◄───────────────────► │ copilot-language-server │
+│ (copilot.el)│   JSON-RPC messages   │   (Node.js subprocess)  │
+└─────────────┘                       └─────────────────────────┘
+                                              │
+                                              ▼
+                                      GitHub AI Backend
+#+end_example
+
+Same architecture as LSP - subprocess speaking JSON-RPC.
+
+**First-time setup:**
+1. =M-x copilot-install-server= - Downloads @github/copilot-language-server
+2. =M-x copilot-login= - GitHub OAuth authentication
+3. Server lives in =~/.emacs.d/copilot/=
+
+**LSP vs Copilot - Different purposes:**
+
+| LSP (Eglot) | Copilot |
+|-------------+---------|
+| Valid code (what CAN you write) | Likely code (what WILL you write) |
+| Type-aware completions | Pattern-based predictions |
+| Popup menu | Ghost text overlay |
+
+**** copilot.el Configuration
+
+#+begin_src emacs-lisp :results silent
+  ;; ============================================================
+  ;; COPILOT.EL: GitHub Copilot ghost text predictions
+  ;; ============================================================
+  ;; STATUS: ACTIVE - shows AI predictions as gray ghost text
+  ;; WHAT YOU SEE: Gray text appears ahead of cursor showing predictions
+  ;; TRIGGER: Automatic as you type
+  ;; ACCEPT: TAB accepts, M-f accepts word, M-n/M-p cycles, C-g cancels
+  ;; COST: FREE tier available (early 2025)
+  ;;
+  ;; NOTE: Using package-vc to get latest from GitHub (MELPA version is stale)
+  ;; First-time setup: M-x copilot-install-server, then M-x copilot-login
+
+  ;; Install from GitHub if not present (Emacs 29+ built-in)
+  (unless (package-installed-p 'copilot)
+    (package-vc-install "https://github.com/copilot-emacs/copilot.el"))
+
+  (use-package copilot
+    :hook ((tsx-ts-mode . copilot-mode)
+           (typescript-ts-mode . copilot-mode)
+           (js-ts-mode . copilot-mode)
+           (python-mode . copilot-mode)
+           (emacs-lisp-mode . copilot-mode))
+    :bind (:map copilot-completion-map
+                ("TAB" . copilot-accept-completion)
+                ([tab] . copilot-accept-completion)
+                ("M-f" . copilot-accept-completion-by-word)
+                ("M-n" . copilot-next-completion)
+                ("M-p" . copilot-previous-completion)
+                ("C-g" . copilot-clear-overlay))
+    :config
+    (setq copilot-idle-delay 0.1))
+#+end_src
+
+*** Quick Reference
+
+**** All Keybindings Added
+
+| Key | Command | What It Does |
+|-----+---------+--------------|
+| =C-M-a= | beginning-of-defun | Jump to function start (tree-sitter) |
+| =C-M-e= | end-of-defun | Jump to function end (tree-sitter) |
+| =C-M-u= | backward-up-list | Jump to parent block (tree-sitter) |
+| =M-.= | xref-find-definitions | Go to definition (LSP) |
+| =M-?= | xref-find-references | Find all references (LSP) |
+| =C-c d= | eldoc-doc-buffer | Show docs in buffer |
+| =C-c r= | eglot-rename | Rename symbol across project |
+| =C-c a= | eglot-code-actions | Quick fixes, imports |
+| =TAB= | corfu-next / copilot-accept | Cycle completions / Accept AI suggestion |
+| =M-f= | copilot-accept-by-word | Accept AI word-by-word |
+| =M-n/M-p= | copilot-next/prev | Cycle AI suggestions |
+
+**** First-Time Setup Checklist
+
+- [ ] =npm install -g typescript-language-server typescript= (for TS/JS LSP)
+- [ ] =M-x copilot-install-server= (one-time)
+- [ ] =M-x copilot-login= (GitHub OAuth)
+
+**** Troubleshooting
+
+| Problem | Solution |
+|---------+----------|
+| npm not found | Restart Emacs (exec-path-from-shell needs shell restart) |
+| Copilot server dies | Check Node version: needs 22+ (=node --version=) |
+| No completions | Verify eglot connected: =M-x eglot-events-buffer= |
+| Tree-sitter mode not loading | Check grammar: =M-: (treesit-language-available-p 'tsx)= |
+
 ** Global Development Settings
 
 Set up common development tools and settings that apply to all programming modes.
