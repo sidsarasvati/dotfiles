@@ -230,6 +230,115 @@ Configure visual enhancements like line highlighting and parenthesis matching.
 
 * Programming Modes
 
+** Modern Development Stack (Tree-sitter + LSP)
+#+end_src
+
+/Added: Dec 22, 2025/ - Part of "Real VibeCoding" project.
+
+*** Understanding
+
+**** What This Section Does
+
+| Component   | What It Does | Key Commands |
+|-------------+--------------+--------------|
+| Tree-sitter | Syntax highlighting, structural navigation | =C-M-a=, =C-M-e=, =C-M-u= |
+| LSP (Eglot) | Autocomplete, go-to-def, errors, rename | =M-.=, =M-?=, =C-M-i=, =C-c d= |
+
+Tree-sitter = How code LOOKS (syntax)
+LSP = What code MEANS (semantics)
+
+**** How Tree-sitter Works
+
+1. =treesit-language-source-alist= - WHERE to download grammar source (Git repos)
+2. =treesit-install-language-grammar= - Compiles grammar ONCE (creates .dylib)
+3. Grammars stored in =~/.emacs.d/tree-sitter/=
+
+Manual commands:
+- Check grammar: =M-: (treesit-language-available-p 'tsx)=
+- Install one: =M-x treesit-install-language-grammar RET tsx=
+
+**** How LSP Works
+
+#+begin_example
+┌─────────────┐     stdin/stdout      ┌──────────────────┐
+│   Emacs     │ ◄───────────────────► │ Language Server  │
+│  (eglot)    │   JSON-RPC messages   │  (subprocess)    │
+└─────────────┘                       └──────────────────┘
+#+end_example
+
+*Not a network server* - just a subprocess (like git). Spawns on file open, dies on close.
+
+Project detection - walks UP from file, finds marker:
+- TS/JS: =tsconfig.json=, =package.json=
+- Python: =pyproject.toml= | Go: =go.mod= | C++: =compile_commands.json=
+
+**** Language Servers to Install
+
+| Language | Install Command |
+|----------+-----------------------------------------|
+| TS/JS    | =npm install -g typescript-language-server typescript= |
+| Python   | =npm install -g pyright= |
+| Go       | =go install golang.org/x/tools/gopls@latest= |
+| C++      | =brew install llvm= (includes clangd) |
+
+*** Configuration
+
+All executable config lives here. Eval with =C-c C-c=.
+
+**** Tree-sitter Setup
+
+#+begin_src emacs-lisp
+  ;; ============================================================
+  ;; TREE-SITTER: Syntax highlighting + structural navigation
+  ;; ============================================================
+
+  ;; Grammar sources (Git repos with C code → compiled to .dylib)
+  (setq treesit-language-source-alist
+        '((tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
+          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
+          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "master" "src"))
+          (json . ("https://github.com/tree-sitter/tree-sitter-json" "master" "src"))
+          (css . ("https://github.com/tree-sitter/tree-sitter-css" "master" "src"))))
+
+  ;; Auto-install missing grammars on startup
+  (dolist (grammar '(tsx typescript javascript json css))
+    (unless (treesit-language-available-p grammar)
+      (treesit-install-language-grammar grammar)))
+
+  ;; File extensions → tree-sitter modes
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.css\\'" . css-ts-mode))
+
+  ;; Indentation (2 spaces, no tabs)
+  (setq-default indent-tabs-mode nil)
+  (setq js-indent-level 2)
+  (setq typescript-ts-mode-indent-offset 2)
+#+end_src
+
+**** LSP (Eglot) Setup
+
+#+begin_src emacs-lisp
+  ;; ============================================================
+  ;; LSP (EGLOT): Autocomplete, go-to-def, errors, rename
+  ;; ============================================================
+
+  ;; Auto-start eglot for these modes
+  (add-hook 'tsx-ts-mode-hook 'eglot-ensure)
+  (add-hook 'typescript-ts-mode-hook 'eglot-ensure)
+  (add-hook 'js-ts-mode-hook 'eglot-ensure)
+
+  ;; Enable eldoc (shows type info in minibuffer)
+  (add-hook 'eglot-managed-mode-hook #'eldoc-mode)
+
+  ;; Keybindings
+  (global-set-key (kbd "C-c d") #'eldoc-doc-buffer)    ;; Show docs in buffer
+  (global-set-key (kbd "C-c r") #'eglot-rename)        ;; Rename symbol
+  (global-set-key (kbd "C-c a") #'eglot-code-actions)  ;; Code actions (quick fixes)
+#+end_src
 ** Global Development Settings
 
 Set up common development tools and settings that apply to all programming modes.
@@ -340,117 +449,8 @@ Setup for the Go programming language.
   ;;----------------------------------------------------------
   ;; } END GOLANG DEV ----------------------------------------
   ;;----------------------------------------------------------
-#+end_src
-** Modern Development Stack (Tree-sitter + LSP)
-
-/Added: Dec 22, 2025/ - Part of "Real VibeCoding" project.
-
-*** Understanding
-
-**** What This Section Does
-
-| Component   | What It Does | Key Commands |
-|-------------+--------------+--------------|
-| Tree-sitter | Syntax highlighting, structural navigation | =C-M-a=, =C-M-e=, =C-M-u= |
-| LSP (Eglot) | Autocomplete, go-to-def, errors, rename | =M-.=, =M-?=, =C-M-i=, =C-c d= |
-
-Tree-sitter = How code LOOKS (syntax)
-LSP = What code MEANS (semantics)
-
-**** How Tree-sitter Works
-
-1. =treesit-language-source-alist= - WHERE to download grammar source (Git repos)
-2. =treesit-install-language-grammar= - Compiles grammar ONCE (creates .dylib)
-3. Grammars stored in =~/.emacs.d/tree-sitter/=
-
-Manual commands:
-- Check grammar: =M-: (treesit-language-available-p 'tsx)=
-- Install one: =M-x treesit-install-language-grammar RET tsx=
-
-**** How LSP Works
-
-#+begin_example
-┌─────────────┐     stdin/stdout      ┌──────────────────┐
-│   Emacs     │ ◄───────────────────► │ Language Server  │
-│  (eglot)    │   JSON-RPC messages   │  (subprocess)    │
-└─────────────┘                       └──────────────────┘
-#+end_example
-
-*Not a network server* - just a subprocess (like git). Spawns on file open, dies on close.
-
-Project detection - walks UP from file, finds marker:
-- TS/JS: =tsconfig.json=, =package.json=
-- Python: =pyproject.toml= | Go: =go.mod= | C++: =compile_commands.json=
-
-**** Language Servers to Install
-
-| Language | Install Command |
-|----------+-----------------------------------------|
-| TS/JS    | =npm install -g typescript-language-server typescript= |
-| Python   | =npm install -g pyright= |
-| Go       | =go install golang.org/x/tools/gopls@latest= |
-| C++      | =brew install llvm= (includes clangd) |
-
-*** Configuration
-
-All executable config lives here. Eval with =C-c C-c=.
-
-**** Tree-sitter Setup
-
-#+begin_src emacs-lisp
-  ;; ============================================================
-  ;; TREE-SITTER: Syntax highlighting + structural navigation
-  ;; ============================================================
-
-  ;; Grammar sources (Git repos with C code → compiled to .dylib)
-  (setq treesit-language-source-alist
-        '((tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
-          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
-          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "master" "src"))
-          (json . ("https://github.com/tree-sitter/tree-sitter-json" "master" "src"))
-          (css . ("https://github.com/tree-sitter/tree-sitter-css" "master" "src"))))
-
-  ;; Auto-install missing grammars on startup
-  (dolist (grammar '(tsx typescript javascript json css))
-    (unless (treesit-language-available-p grammar)
-      (treesit-install-language-grammar grammar)))
-
-  ;; File extensions → tree-sitter modes
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.css\\'" . css-ts-mode))
-
-  ;; Indentation (2 spaces, no tabs)
-  (setq-default indent-tabs-mode nil)
-  (setq js-indent-level 2)
-  (setq typescript-ts-mode-indent-offset 2)
-#+end_src
-
-**** LSP (Eglot) Setup
-
-#+begin_src emacs-lisp
-  ;; ============================================================
-  ;; LSP (EGLOT): Autocomplete, go-to-def, errors, rename
-  ;; ============================================================
-
-  ;; Auto-start eglot for these modes
-  (add-hook 'tsx-ts-mode-hook 'eglot-ensure)
-  (add-hook 'typescript-ts-mode-hook 'eglot-ensure)
-  (add-hook 'js-ts-mode-hook 'eglot-ensure)
-
-  ;; Enable eldoc (shows type info in minibuffer)
-  (add-hook 'eglot-managed-mode-hook #'eldoc-mode)
-
-  ;; Keybindings
-  (global-set-key (kbd "C-c d") #'eldoc-doc-buffer)    ;; Show docs in buffer
-  (global-set-key (kbd "C-c r") #'eglot-rename)        ;; Rename symbol
-  (global-set-key (kbd "C-c a") #'eglot-code-actions)  ;; Code actions (quick fixes)
-#+end_src
-
 ** Web Development
+
 
 Configure settings for web development, including JavaScript, HTML, CSS, and JSX.
 
