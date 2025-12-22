@@ -21,8 +21,7 @@
 (global-set-key "\M-=" 'next-buffer)
 
 ;;window management
-;;using meta as modifier for windmove
-(windmove-default-keybindings 'meta)
+;; M-p/M-n/M-1/M-0 for windmove (frees M-<arrows> for org-mode)
 (global-set-key "\M-p" 'windmove-up)
 (global-set-key "\M-n" 'windmove-down)
 (global-set-key "\M-1" 'windmove-left)
