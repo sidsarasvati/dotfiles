@@ -307,4 +307,148 @@ Universal fix for lower back pressure:
 
 ---
 
+## PRE-WORKOUT CRAVING PROTOCOL (Dec 19, 2025)
+
+**Situation**: Light fuel in system, craving more food before workout
+
+**The Protocol**:
+1. Light fuel sufficient (banana + protein bar = ~20g protein) → GO
+2. Craving = post-workout REWARD, not delay excuse
+3. "Walk in hungry, walk out earned"
+
+**Why This Works**:
+- Craving energy fades if you delay
+- Frustration/momentum energy fades too
+- Food tastes better as reward (earned, not craved)
+- Prevents the delay spiral: eat → digest → "now I'm tired" → skip
+
+**The Test**: "Which Sid shows up?"
+
+---
+
+## POST-WORKOUT REWARD STACK PROTOCOL (Dec 19, 2025)
+
+**The Stack**:
+1. **Food reward AFTER workout** - Earned, not craved
+2. **Delivery pickup** - Order arrives while working out
+3. **Already downstairs** - Gym in building, pick up delivery on way back
+4. **Might as well workout** - Going down anyway for delivery
+
+**Behavioral Stratum**:
+- Stack habit (workout) with logistics (delivery, errands)
+- Use "already there" momentum
+- Reward immediately post-workout (bagel + eggs, DoorDash)
+
+**Why This Works**:
+- Removes "separate trip" friction
+- Immediate reward reinforces habit
+- Delivery timing creates natural workout window
+
+---
+
+## CLEAN BURN / LIGHT FUEL PROTOCOL (Dec 19, 2025)
+
+**Situation**: Morning caffeine flowing, enjoying fasted/light state
+
+**Light Fuel Stack** (NOT full pre-workout):
+- Banana + protein bar (13-20g protein)
+- Coffee already consumed
+- Total: ~200-300 calories
+
+**When to Use**:
+- Short sessions (20-30 min)
+- "Wing it" / freestyle days
+- Momentum more important than optimization
+- Preserving the "clean burn" mental state
+
+**NOT for**:
+- Heavy lifting sessions (45+ min)
+- PR attempts
+- Full KG Shred workouts
+
+---
+
+## FREESTYLE / WING IT SESSION PROTOCOL (Dec 19, 2025)
+
+**The Truth**: Not every session needs a program.
+
+**When to Use**:
+- Coming back from gap (re-entry session)
+- High emotional energy (frustration to channel)
+- Momentum day (just need to MOVE)
+- Time-limited (only 20-30 min)
+
+**The Format**:
+- Cardio warmup (5 min stairs/bike)
+- 2-3 compound movements (whatever feels right)
+- Plank or core
+- Done
+
+**Example (Dec 19)**:
+- 5 min stairs
+- Single arm rows 35→45 lbs
+- Wide push-ups
+- Plank 60 sec
+- Total: ~20 min
+
+**The Principle**: FREQUENCY > STRUCTURE
+- 20 min freestyle > 0 min perfect program
+- Show up + move = win
+- "Just wanna get body warmed up" = valid mission
+
+---
+
+## FRUSTRATION CHANNELING PROTOCOL (Dec 19, 2025)
+
+**Situation**: Negative emotional state (biz stress, relationship friction, anger)
+
+**The Protocol**:
+1. **Recognize**: Frustration energy is FUEL, not blocker
+2. **Channel**: Gym is the release valve
+3. **Mission**: "Walk in frustrated, walk out powerful"
+4. **Execute**: Heavy + short + feel strong (not conditioning)
+
+**What NOT to do**:
+- Sit with the frustration
+- Analyze endlessly
+- Eat feelings
+- Delay workout ("not in the mood")
+
+**The Reframe**:
+- "I can take all this shit. Channel it better if I felt I looked better."
+- Frustration → Physical output → Mental shift → Identity activation
+
+**Mental Anchors for Frustration Days**:
+- "Thinking about the enemies. Can't get weak!"
+- Opposition visualization as fuel
+- The iron doesn't care about your problems - it cares about your output
+
+---
+
+## MENTAL SHIFT MARKERS (Discovery #19 - Dec 19, 2025)
+
+**The signals that workout "worked" beyond physical**:
+
+When these appear, identity activation is happening:
+- "Air changes direction"
+- "Face feels slim"
+- "Blood pulled into right areas"
+- "I feel alive"
+- "Waking up from hibernation"
+- "Alpha Sid. Young. Awake."
+
+**Why This Matters**:
+- Physical metrics (reps, weight) measure OUTPUT
+- Mental shift markers measure IDENTITY TRANSFORMATION
+- This is what we're actually chasing: #sid/2013
+
+**The Pattern**:
+- 20 min session can produce these
+- Full 55 min session might not
+- It's not duration, it's showing up + moving weight
+
+**Capture These**: When Sid reports these markers, LOG THEM. They're the real wins.
+
+---
+
 *Protocols improve through execution. When patterns fail, update the protocol.*

@@ -82,12 +82,20 @@ cat ~/.claude/skills/elster-vocab/references/dictionary-reading-protocol.md
 | | + Mimetic desire patterns |
 | | + Auto-antonyms when present |
 
-**5 Teaching Dimensions Operational:**
+**7 Teaching Dimensions Operational:**
 1. **Pronunciation** (stress-timing, diphthong targeting)
-2. **Etymology** (THE key - unlocks families)
+2. **Etymology** (THE key - unlocks families) ← MEMORY UNLOCK
 3. **Cascades** (synonym hierarchies)
 4. **Mimetic** (desire patterns)
-5. **Bilingual** (Hindi → English cultural anchors)
+5. **Bilingual** (Mumbai slang → English cultural anchors)
+6. **Double Anchor** (Etymology + Mumbai slang = strongest retention)
+7. **Visual Emoji Anchors** (scannable, instant recall) ← NEW Dec 18, 2025
+
+**Etymology Protocol (Dec 18, 2025 Discovery):**
+- Sid learns through ORIGIN, not just meaning
+- Latin roots make words stick: IN + GRATIA = INGRATIATING
+- Etymology + Mumbai slang = double anchor = unforgettable
+- Always capture Latin/Greek origin when analyzing words
 
 **vocab.md = Sid's AI-created personal dictionary** - each entry follows full superset protocol
 
@@ -202,14 +210,14 @@ cat ~/.claude/skills/elster-vocab/frameworks/coaching-voice.md
 cat ~/.claude/skills/elster-vocab/references/arsenal-words.md
 ```
 
-**Progress (as of Day 59):**
+**Progress (as of Day 61 - Dec 18, 2025):**
 - Level 1: COMPLETE (24 arsenal weapons)
 - Level 2: COMPLETE (34 arsenal weapons + 5 quiz corrections)
-- Level 3: STARTED (Word 1 captured)
-- **Total arsenal: 64 entries**
+- Level 3: IN PROGRESS (L3-Words 13-29 = 17 weapons captured)
+- **Total arsenal: 83 entries**
 - 3 pronunciation drills created
 - 5 pronunciation patterns operational
-- 5 teaching dimensions active
+- 6 teaching dimensions active (etymology double-anchor added)
 
 ## Quick Commands for Atlas
 
