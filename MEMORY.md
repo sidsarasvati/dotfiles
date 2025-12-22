@@ -191,6 +191,37 @@ The dotfiles repository now:
 
 ---
 
+## Emacs 30 Modern Dev Stack (Session: Dec 22, 2025)
+
+### What We Shipped
+Complete "Real VibeCoding" Emacs modernization:
+- **Tree-sitter** (Phase 1): tsx, typescript, javascript, json, css grammars
+- **LSP/Eglot** (Phase 2): Autocomplete, go-to-def, rename, type hints
+- Mode remapping: .ts/.tsx/.js/.jsx/.json/.css → tree-sitter modes
+- Keybindings: C-c d (docs), C-c r (rename), C-c a (actions)
+
+### Patterns Discovered
+1. **Tree-sitter vs LSP clarity**: Tree-sitter = syntax (how code LOOKS), LSP = semantics (what code MEANS)
+2. **Auto-install pattern**: Grammar sources + availability check + auto-compile on first launch
+3. **Keybinding archaeology**: Old windmove config (`windmove-default-keybindings 'meta`) was stealing M-up from org-mode
+4. **Literate programming payoff**: Documentation in config.org explains WHY, not just WHAT
+
+### Technical Decisions
+- **Gitignore .dylib grammars**: Machine-specific binaries, auto-install handles new machines
+- **Eglot over lsp-mode**: Built-in (Emacs 29+), minimal, just works
+- **Emacs symlink to ~/.local/bin/**: XDG standard, out of Homebrew's space
+- **Keep M-p/M-n for windmove**: Frees M-arrows for org-mode subtree movement
+
+### Files to Reference
+- `emacs/config.org:230-340` - Modern Development Stack section (Tree-sitter + LSP)
+- `emacs/.emacs.d/elisp/my-convenience.el:23-28` - Windmove bindings (M-p/M-n/M-1/M-0)
+- `emacs/CLAUDE.md` - Updated docs, version 30+, roadmap
+
+### Deferred
+- Stale file error on Emacs start (investigate later)
+
+---
+
 ## Intelligence Compounds Here
 
 **What gets referenced = what matters**
