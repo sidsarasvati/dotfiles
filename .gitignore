@@ -23,6 +23,7 @@ emacs/.emacs.d/transient/
 emacs/.emacs.d/quelpa/
 emacs/.emacs.d/.mc-lists.el
 emacs/.emacs.d/ac-comphist.dat
+emacs/.emacs.d/tree-sitter/
 
 # External repos for analysis
 external/

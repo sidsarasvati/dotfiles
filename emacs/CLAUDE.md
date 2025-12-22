@@ -1,7 +1,9 @@
 # Emacs Configuration Notes
 
 ## Overview
-This folder contains Sid's Emacs configuration, recently converted to a literate programming style using org-mode. The configuration has been maintained since 2012 and is designed to work on modern Emacs (version 26+).
+This folder contains Sid's Emacs configuration, recently converted to a literate
+programming style using org-mode. The configuration has been maintained since
+2012 and is designed to work on Emacs 30+ (tree-sitter support requires 29+).
 
 ## Key Files
 - **config.org**: The main configuration file in literate programming style
@@ -21,6 +23,10 @@ This folder contains Sid's Emacs configuration, recently converted to a literate
 - Added improved terminal/GUI launching commands in zsh aliases
 - Enabled show-paren-mode for highlighting matching parentheses
 - Set default frame size with 9:16 aspect ratio (100 columns × 56 lines)
+- Added tree-sitter support for TypeScript/React (Dec 2025):
+  - Grammars: tsx, typescript, javascript, json, css
+  - Auto-install on first launch (~30sec compile)
+  - .ts/.tsx/.js/.jsx/.json/.css now use tree-sitter modes
 
 ## Technical Details
 1. **Path Resolution**: Uses file-truename to resolve the actual path of the .emacs symlink
@@ -32,9 +38,9 @@ This folder contains Sid's Emacs configuration, recently converted to a literate
    - Lock files → Disabled entirely
 
 ## Usage Instructions
-1. The configuration is installed via GNU Stow from the dotfiles repository
-2. Launch GUI Emacs with `em` command
-3. Launch terminal Emacs with `emacs` command
+1. The configuration is installed via `./install.sh` from the dotfiles repository
+2. Launch GUI Emacs with `em` command (requires symlink: `ln -s /Applications/Emacs.app/Contents/MacOS/Emacs ~/.local/bin/emacs`)
+3. Launch terminal Emacs with `emacs -nw` command
 4. Edit configuration by opening `config.org` in Emacs
 
 ## Troubleshooting
@@ -46,7 +52,11 @@ This folder contains Sid's Emacs configuration, recently converted to a literate
 - dracula-theme: Dark color theme
 - smart-mode-line: Improved mode line (conditionally loaded if available)
 - flycheck: Syntax checking
-- web-mode: Web development (HTML/CSS/JS)
+- web-mode: HTML templates
 - go-mode: Go programming language support
 - org-mode: Organization, notes, TODOs
 - magit: Git interface for Emacs
+- tree-sitter (built-in): Modern syntax for TypeScript/React/JS/CSS
+
+## Roadmap
+- LSP integration (eglot) for TypeScript/React intellisense

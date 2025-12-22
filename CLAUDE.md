@@ -87,6 +87,15 @@
   - Defaults to Yes when user presses Enter for quick workflow
 - Added `kp` alias as shorthand for killport
 
+## Recent Updates (2025-12-22)
+- Upgraded Emacs to version 30.2 with tree-sitter support
+- Added tree-sitter for modern TypeScript/React development:
+  - Grammars: tsx, typescript, javascript, json, css
+  - Auto-install on first launch (~30sec compile)
+  - Replaces web-mode for JS/TS/CSS/JSON files
+- Updated emacs symlink location: `/opt/homebrew/bin/` → `~/.local/bin/`
+- Next: LSP integration with eglot for TypeScript intellisense
+
 ## Active Issues and Roadmap
 The following issues have been created for ongoing improvements:
 - #9: Add GitHub Copilot Integration for Emacs
