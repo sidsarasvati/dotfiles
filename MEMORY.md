@@ -222,6 +222,35 @@ Complete "Real VibeCoding" Emacs modernization:
 
 ---
 
+## Emacs Doom Theme + Modeline + Cleanup (Session: Dec 23, 2025)
+
+### What We Shipped
+- **Theme**: dracula → doom-monokai-pro (red keywords, warm background)
+- **Modeline**: smart-mode-line → doom-modeline (clear active/inactive distinction)
+- **Cleanup**: Removed 338 legacy elpa files (-74K lines)
+- **Untracked**: transient/history.el (was tracked before .gitignore existed)
+
+### Packages Removed (Superseded)
+- auto-complete, company → corfu + cape
+- flycheck → flymake (built-in)
+- dracula-theme → doom-themes
+- smart-mode-line, powerline → doom-modeline
+- ivy, swiper → (unused, vertico/consult later)
+- use-package 2.4.5 → built-in (Emacs 29+)
+
+### Technical Decisions
+- **doom-monokai-pro**: Red/magenta keywords = classic Java/C++ IDE feel
+- **nerd-icons**: HARD dependency of doom-modeline (don't delete)
+- **Organized package-selected-packages**: Categories in .emacs (core, completion, AI, theme, modes, utilities)
+- **Removed duplicate custom-set-variables**: Only in .emacs now, not config.org
+
+### Files to Reference
+- `emacs/.emacs:16-32` - Theme loading with rationale comments
+- `emacs/config.org:175-210` - Theme + modeline documentation
+- `emacs/.emacs:43-58` - Organized package-selected-packages
+
+---
+
 ## Intelligence Compounds Here
 
 **What gets referenced = what matters**
