@@ -404,13 +404,21 @@ All executable config lives here. Eval with =C-c C-c=.
 
 **** Understanding AI Assistance
 
-**AI Prediction:**
+| Type | Package | Mode | What It Does | Visual |
+|------+---------+------+--------------+--------|
+| Prediction | copilot.el | Passive | Guesses what you'll type next | Gray ghost text |
+| Integration | claude-code-ide | Bidirectional | Claude Code controls Emacs via MCP | Sidebar + diff |
 
-| Type | Package | What It Does | Visual |
-|------+---------+--------------+--------|
-| Prediction | copilot.el | Guesses what you'll type next | Gray ghost text |
+**Mental Model:**
+- Copilot = "What will I type next?" (autocomplete on steroids)
+- Claude Code IDE = "Claude Code WITH Emacs powers" (MCP bridge)
 
-**How Copilot Works:**
+**When to use which:**
+- Typing boilerplate → Let Copilot predict
+- Writing standard patterns → Let Copilot flow
+- Need to think/refactor/explain → Claude Code IDE (has your context)
+
+***** How Copilot Works
 
 #+begin_example
 ┌─────────────┐     stdin/stdout      ┌─────────────────────────┐
@@ -436,6 +444,66 @@ Same architecture as LSP - subprocess speaking JSON-RPC.
 | Valid code (what CAN you write) | Likely code (what WILL you write) |
 | Type-aware completions | Pattern-based predictions |
 | Popup menu | Ghost text overlay |
+
+**The Three AIs in Your Editor (Dec 2025):**
+
+| Tool | What | When |
+|------+------+------|
+| LSP (Eglot) | Valid completions | Always (knows types) |
+| Copilot | Likely predictions | Typing (pattern matching) |
+| Claude Code IDE | Full AI partner | Refactoring, explaining, generating |
+
+LSP ensures correctness, Copilot speeds typing, Claude Code IDE thinks with you.
+
+***** How Claude Code IDE Works
+
+#+begin_example
+┌─────────────────────────────────────────────────────────────┐
+│                         EMACS                               │
+│  ┌─────────────┐     MCP Protocol     ┌─────────────────┐  │
+│  │ Your Buffer │ ◄──────────────────► │ Claude Code CLI │  │
+│  │ (code)      │  bidirectional       │ (in vterm)      │  │
+│  └─────────────┘                      └─────────────────┘  │
+│         │                                     │            │
+│         ▼                                     ▼            │
+│  - LSP (xref)                         - Sees your buffer   │
+│  - Tree-sitter                        - Uses LSP features  │
+│  - Project.el                         - Runs Emacs cmds    │
+│  - imenu                              - Suggests diffs     │
+└─────────────────────────────────────────────────────────────┘
+#+end_example
+
+*The key insight:* Claude Code gains Emacs superpowers via MCP.
+
+**What Claude Code can now do:**
+- =xref-find-references= - Find all usages of symbol
+- =xref-find-apropos= - Search symbols by pattern
+- =treesit-info= - Analyze syntax tree at cursor
+- =imenu-list-symbols= - List all functions/classes
+- =project-info= - Understand project structure
+- Any Emacs function you expose
+
+**Why this matters:**
+- Claude Code alone: Reads files, runs shell commands
+- Claude Code + MCP: Uses YOUR editor's intelligence (LSP, tree-sitter)
+- Result: AI that understands code like your IDE does
+
+**Capability Comparison:**
+
+| Capability | Claude in Emacs (MCP) | Terminal Claude |
+|------------|----------------------|-----------------|
+| Find all usages | Uses LSP xref | Would grep (misses some) |
+| Go to definition | Uses LSP | Would guess from text |
+| See syntax tree | Uses tree-sitter AST | Just sees text |
+| List all functions | Uses imenu | Would parse manually |
+| Know cursor position | Emacs tells it | Doesn't know |
+| Open file in buffer | Yes | Can't control editor |
+| Suggest diff | IDE diff viewer | Just shows text |
+
+**First-time setup:**
+1. Install vterm (terminal backend)
+2. =M-x claude-code-ide= - Start Claude for current project
+3. Claude appears in sidebar, ready to work
 
 **** copilot.el Configuration
 
@@ -473,6 +541,58 @@ Same architecture as LSP - subprocess speaking JSON-RPC.
     (setq copilot-idle-delay 0.1))
 #+end_src
 
+**** claude-code-ide Configuration
+
+#+begin_src emacs-lisp :results silent
+  ;; ============================================================
+  ;; VTERM: Terminal emulator (required by claude-code-ide)
+  ;; ============================================================
+  ;; Full terminal emulation via libvterm (C library)
+  ;; First-time: needs cmake (brew install cmake), compiles on install
+
+  (use-package vterm
+    :ensure t
+    :config
+    (setq vterm-max-scrollback 10000))
+#+end_src
+
+#+begin_src emacs-lisp :results silent
+  ;; ============================================================
+  ;; CLAUDE-CODE-IDE: Claude Code ↔ Emacs MCP Bridge
+  ;; ============================================================
+  ;; STATUS: ACTIVE - Claude Code with Emacs superpowers
+  ;; WHAT YOU SEE: Claude in sidebar, can see/edit your buffers
+  ;; TRIGGER: C-c C-' for menu, or M-x claude-code-ide
+  ;; REQUIRES: Claude Code CLI installed (claude command in PATH)
+  ;;
+  ;; The inception: Claude Code gains access to LSP, tree-sitter,
+  ;; project.el - everything your Emacs knows about your code.
+
+  ;; Transient: Popup menu library (claude-code-ide uses it for C-c C-' menu)
+  (use-package transient :ensure t)
+
+  ;; Install from GitHub (Emacs 30+ package-vc)
+  (unless (package-installed-p 'claude-code-ide)
+    (package-vc-install "https://github.com/manzaltu/claude-code-ide.el"))
+
+  (use-package claude-code-ide
+    :after transient
+    :bind ("C-c C-'" . claude-code-ide-menu)
+    :config
+    ;; Position Claude on the right side
+    (setq claude-code-ide-window-side 'right)
+    (setq claude-code-ide-window-width 80)
+
+    ;; Use vterm as terminal backend (best performance)
+    (setq claude-code-ide-terminal-backend 'vterm)
+
+    ;; Enable IDE diff viewer for reviewing changes
+    (setq claude-code-ide-use-ide-diff t)
+
+    ;; Expose Emacs tools to Claude via MCP
+    (claude-code-ide-emacs-tools-setup))
+#+end_src
+
 *** Quick Reference
 
 **** All Keybindings Added
@@ -490,12 +610,16 @@ Same architecture as LSP - subprocess speaking JSON-RPC.
 | =TAB= | corfu-next / copilot-accept | Cycle completions / Accept AI suggestion |
 | =M-f= | copilot-accept-by-word | Accept AI word-by-word |
 | =M-n/M-p= | copilot-next/prev | Cycle AI suggestions |
+| =C-c C-'= | claude-code-ide-menu | Open Claude Code IDE menu |
 
 **** First-Time Setup Checklist
 
 - [ ] =npm install -g typescript-language-server typescript= (for TS/JS LSP)
 - [ ] =M-x copilot-install-server= (one-time)
 - [ ] =M-x copilot-login= (GitHub OAuth)
+- [ ] =nvm alias default 22= (copilot needs Node 22+)
+- [ ] Verify =claude= command in PATH (for claude-code-ide)
+- [ ] =brew install cmake= (for vterm compilation)
 
 **** Troubleshooting
 
@@ -505,6 +629,8 @@ Same architecture as LSP - subprocess speaking JSON-RPC.
 | Copilot server dies | Check Node version: needs 22+ (=node --version=) |
 | No completions | Verify eglot connected: =M-x eglot-events-buffer= |
 | Tree-sitter mode not loading | Check grammar: =M-: (treesit-language-available-p 'tsx)= |
+| vterm won't compile | =brew install cmake=, restart Emacs, say yes to compile |
+| claude-code-ide not starting | Verify: =which claude= returns path |
 
 ** Global Development Settings
 
@@ -860,7 +986,7 @@ Emacs custom variables, managed by the Customize interface.
    '(google-this-mode t)
    '(inhibit-startup-screen t)
    '(package-selected-packages
-     '(counsel-jq json-mode typescript typescript-mode avy bind-key org-cliplink htmlize multiple-cursors restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-tramp docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))
+     '(counsel-jq json-mode typescript typescript-mode avy bind-key org-cliplink htmlize multiple-cursors restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))
    '(send-mail-function 'mailclient-send-it))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.

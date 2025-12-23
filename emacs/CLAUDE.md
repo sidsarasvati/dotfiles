@@ -40,8 +40,12 @@ programming style using org-mode. The configuration has been maintained since
   - TAB accepts, M-f accepts word, M-n/M-p cycles
   - First-time: `M-x copilot-install-server`, `M-x copilot-login`
   - Requires Node 22+
-- Added gptel for Claude chat (Dec 2025):
-  - Requires ANTHROPIC_API_KEY in shell (see zsh/local.zsh)
+- Added claude-code-ide (Dec 2025) - THE MILESTONE:
+  - Claude Code ↔ Emacs bidirectional MCP bridge
+  - Claude gains Emacs superpowers: LSP xref, tree-sitter, imenu, project.el
+  - C-c C-' opens menu, runs in vterm sidebar
+  - Key insight: Claude in Emacs = LSP brain, Terminal Claude = file reader
+  - Requires: `claude` CLI in PATH, vterm (cmake for compile)
 
 ## Technical Details
 1. **Path Resolution**: Uses file-truename to resolve the actual path of the .emacs symlink
@@ -69,7 +73,8 @@ programming style using org-mode. The configuration has been maintained since
 - eglot (built-in): LSP client for intellisense
 - corfu + cape + kind-icon: Modern completion UI
 - copilot.el: GitHub Copilot ghost text
-- gptel: LLM chat (Claude, GPT, etc.)
+- claude-code-ide: Claude Code ↔ Emacs MCP bridge (THE PRIZE)
+- vterm: Terminal emulator for claude-code-ide
 - org-mode: Organization, notes, TODOs
 - magit: Git interface for Emacs
 - flycheck: Syntax checking (legacy, consider removing)
@@ -77,6 +82,7 @@ programming style using org-mode. The configuration has been maintained since
 - go-mode: Go programming language support
 
 ## Roadmap
+- Test drive claude-code-ide with real refactoring
 - Modernize Go config (gopls + eglot like TypeScript)
 - Consider removing legacy cruft: flycheck, web-mode, autopair
 - Explore vertico/consult for minibuffer completion
