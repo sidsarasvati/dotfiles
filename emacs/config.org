@@ -162,29 +162,59 @@ Configure the global UI elements and behavior.
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-** Mode Line Customization
-
-Configure the status line (mode line) with the smart-mode-line package.
+** Mode Line Customization (LEGACY - superseded by doom-modeline)
 
 #+begin_src emacs-lisp
-  ;; Initialize smart-mode-line if available
-  (when (package-installed-p 'smart-mode-line)
-    (require 'smart-mode-line)
-    (setq sml/no-confirm-load-theme t)
-    (setq sml/theme 'automatic)
-    (sml/setup))
+  ;; LEGACY: smart-mode-line config - SUPERSEDED by doom-modeline (Dec 2025)
+  ;; Keeping for reference in case we ever switch back
+  ;; (when (package-installed-p 'smart-mode-line)
+  ;;   (require 'smart-mode-line)
+  ;;   (setq sml/no-confirm-load-theme t)
+  ;;   (setq sml/theme 'automatic)
+  ;;   (sml/setup))
 #+end_src
 
 ** Theme Configuration
 
-Set up the Dracula theme for a pleasant dark mode experience.
+*Theme: doom-monokai-pro* (from doom-themes package)
+
+Chosen Dec 2025 after testing multiple options:
+- =dracula= - good but keywords are pink, wanted more classic feel
+- =doom-one= - Atom One Dark style, orange keywords
+- =doom-dracula= - pink keywords
+- =doom-monokai-pro= - RED keywords, warm brown-ish background (not pure black)
+
+*Why monokai-pro:*
+- Red/magenta keywords = classic Java/C++ IDE feel
+- Non-black background reduces eye strain
+- Excellent syntax differentiation for TypeScript/React
 
 #+begin_src emacs-lisp
   ;; Theme is loaded early in .emacs for immediate visual feedback
-  ;; This is just a note that we're using the Dracula theme
-  ;;------------------------------------------------
-  ;; Global Emacs Config }
-  ;;------------------------------------------------
+  ;; See .emacs for the (load-theme 'doom-monokai-pro t) call
+  ;; This ensures theme loads BEFORE config.org processes
+#+end_src
+
+** Modeline (doom-modeline)
+
+Clean, informative modeline with clear active/inactive window distinction.
+
+*Why doom-modeline:*
+- Clear visual indicator of active buffer (main requirement)
+- Shows git branch, file status, LSP diagnostics
+- Pairs perfectly with doom-themes
+- Requires =nerd-icons= (auto-installed as dependency)
+
+*Dec 2025 learning:* nerd-icons is a HARD dependency of doom-modeline.
+Do NOT delete it - breaks the modeline completely.
+
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1)
+    :custom
+    (doom-modeline-height 25)
+    (doom-modeline-bar-width 3))
 #+end_src
 
 ** GUI Elements
@@ -349,6 +379,11 @@ All executable config lives here. Eval with =C-c C-c=.
   (global-set-key (kbd "C-c d") #'eldoc-doc-buffer)    ;; Show docs in buffer
   (global-set-key (kbd "C-c r") #'eglot-rename)        ;; Rename symbol
   (global-set-key (kbd "C-c a") #'eglot-code-actions)  ;; Code actions (quick fixes)
+
+  ;; xref navigation (LSP-powered)
+  ;; M-. and M-, already work by default (goto-def, go-back)
+  ;; M-? already works (find-references)
+  (global-set-key (kbd "M-g s") #'xref-find-apropos)   ;; Symbol search (like git grep but semantic)
 #+end_src
 
 **** Completion UI (Corfu + Cape)
@@ -641,15 +676,10 @@ Set up common development tools and settings that apply to all programming modes
   ;; GLOBAL DEV MODE SETUP {
   ;;----------------------------------------------------------
 
-  ;; flycheck and linting settings (copied from web-mode setup)
-  ;; ---------------------------------------------------------
-  (require 'flycheck) ;; http://www.flycheck.org/manual/latest/index.html
-
-  ;; turn on flychecking globally
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-
-  ;; customize flycheck temp file prefix
-  (setq-default flycheck-temp-prefix ".flycheck")
+  ;; LEGACY: flycheck removed Dec 2025 - using flymake (built-in) instead
+  ;; (require 'flycheck)
+  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
+  ;; (setq-default flycheck-temp-prefix ".flycheck")
 
   ;;----------------------------------------------------------
   ;; } END GLOBAL DEV MODE ----------------------------------
@@ -787,13 +817,10 @@ Configure settings for web development, including JavaScript, HTML, CSS, and JSX
         ad-do-it)
       ad-do-it))
 
-  ;; disable jshint since we prefer eslint checking
-  (setq-default flycheck-disabled-checkers
-    (append flycheck-disabled-checkers
-            '(javascript-jshint)))
-
-  ;; use eslint with web-mode for jsx files
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  ;; LEGACY: flycheck eslint config removed Dec 2025
+  ;; (setq-default flycheck-disabled-checkers
+  ;;   (append flycheck-disabled-checkers '(javascript-jshint)))
+  ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 
 
   ;;---------------------------------------------------------
@@ -981,25 +1008,7 @@ Add useful utility functions and hooks.
 
 * Custom Variables
 
-Emacs custom variables, managed by the Customize interface.
+*NOTE:* custom-set-variables lives in =.emacs= (not here).
+Emacs auto-appends customizations there. This avoids duplicate blocks.
 
-#+begin_src emacs-lisp
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(custom-safe-themes
-     '("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "d0fe9efeaf9bbb6f42ce08cd55be3f63d4dfcb87601a55e36c3421f2b5dc70f3" default))
-   '(google-this-mode t)
-   '(inhibit-startup-screen t)
-   '(package-selected-packages
-     '(counsel-jq json-mode typescript typescript-mode avy bind-key org-cliplink htmlize multiple-cursors restclient dracula-theme google-this go-autocomplete auto-complete govet go-mode markdown-mode kotlin-mode swift-mode command-log-mode eshell-bookmark docker-compose-mode yaml-mode web-mode smart-mode-line git-gutter-fringe flycheck exec-path-from-shell cmake-mode))
-   '(send-mail-function 'mailclient-send-it))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   )
-#+end_src
+Dec 2025: Removed duplicate custom-set-variables from config.org to fix conflicts.
