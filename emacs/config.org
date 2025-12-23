@@ -914,7 +914,7 @@ Configure display of whitespace to maintain consistent code style.
 
 Functions for better window management.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   ;; someday might want to rotate windows if more than 2 of them
   (defun swap-windows () "If you have 2 windows, it swaps them."
     (interactive) (cond ((not (= (count-windows) 2))
@@ -932,8 +932,16 @@ Functions for better window management.
                            (set-window-start w2 s1)))))
 
   ;;(global-set-key (kbd "M-2") 'swap-windows)
-#+end_src
 
+  
+  ;; xref results in side window at bottom (25% of frame height)
+  (add-to-list 'display-buffer-alist
+               '("\\*xref\\*"
+                 (display-buffer-in-side-window)
+                 (side . bottom)
+                 (slot . 0)
+                 (window-height . 0.25)))
+#+end_src
 
 * Utility Functions
 
