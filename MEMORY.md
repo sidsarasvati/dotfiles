@@ -251,6 +251,36 @@ Complete "Real VibeCoding" Emacs modernization:
 
 ---
 
+## Claude Atlas Statusline (Session: Dec 23, 2025)
+
+### What We Shipped
+Renamed `awesome-statusline.sh` → `claude-atlas-statusline.sh` with complete rewrite.
+
+### Features
+- Per-workspace Atlas project context (set by `/wake-project`)
+- Git status with doom-style indicators: ◆ modified, ● clean, ○ no-git
+- Context window usage % from built-in JSON
+- Unpushed commits count (+N)
+- Removed cost tracking (Max plan doesn't need it)
+
+### Architecture
+- State file: `~/.claude/project-state/${workspace}.project`
+- `/wake-project` writes project name to state file
+- Statusline reads per-workspace (dotfiles doesn't see logseq's project)
+- Validation only for secondbrain-logseq (has `projects/` folder structure)
+
+### Output Format
+```
+◆ [rai-ceo] secondbrain-logseq  42%    Claude Opus 4  master +2✱
+```
+
+### Files to Reference
+- `claude/claude-atlas-statusline.sh` - Full implementation
+- `claude/settings.json:378` - statusLine.command config
+- `install.sh:117-118` - Symlink setup
+
+---
+
 ## Intelligence Compounds Here
 
 **What gets referenced = what matters**
