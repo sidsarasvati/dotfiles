@@ -114,8 +114,8 @@ link_claude_config() {
   fi
   ln -sf "$(pwd)/claude/skills" "$HOME/.claude/skills"
 
-  # Link awesome-statusline.sh
-  ln -sf "$(pwd)/claude/awesome-statusline.sh" "$HOME/.claude/awesome-statusline.sh"
+  # Link claude-atlas-statusline.sh
+  ln -sf "$(pwd)/claude/claude-atlas-statusline.sh" "$HOME/.claude/claude-atlas-statusline.sh"
 
   echo "Claude configuration linked (CLAUDE.md, settings.json, hooks, commands, agents, skills, statusline)."
 }
@@ -498,14 +498,14 @@ setup_claude() {
   if [[ -L "$HOME/.claude/CLAUDE.md" && -L "$HOME/.claude/settings.json" && \
         -L "$HOME/.claude/hooks" && -L "$HOME/.claude/commands" && \
         -L "$HOME/.claude/agents" && -L "$HOME/.claude/skills" && \
-        -L "$HOME/.claude/awesome-statusline.sh" ]]; then
+        -L "$HOME/.claude/claude-atlas-statusline.sh" ]]; then
     local claude_target=$(readlink "$HOME/.claude/CLAUDE.md")
     local settings_target=$(readlink "$HOME/.claude/settings.json")
     local hooks_target=$(readlink "$HOME/.claude/hooks")
     local commands_target=$(readlink "$HOME/.claude/commands")
     local agents_target=$(readlink "$HOME/.claude/agents")
     local skills_target=$(readlink "$HOME/.claude/skills")
-    local statusline_target=$(readlink "$HOME/.claude/awesome-statusline.sh")
+    local statusline_target=$(readlink "$HOME/.claude/claude-atlas-statusline.sh")
 
     # Fixed path check - CLAUDE.md is in claude/ not claude/.claude/
     if [[ "$claude_target" == "$dotfiles_path/claude/CLAUDE.md" && \
@@ -514,7 +514,7 @@ setup_claude() {
           "$commands_target" == "$dotfiles_path/claude/commands" && \
           "$agents_target" == "$dotfiles_path/claude/agents" && \
           "$skills_target" == "$dotfiles_path/claude/skills" && \
-          "$statusline_target" == "$dotfiles_path/claude/awesome-statusline.sh" ]]; then
+          "$statusline_target" == "$dotfiles_path/claude/claude-atlas-statusline.sh" ]]; then
       claude_already_linked=true
     fi
   fi
@@ -531,7 +531,7 @@ setup_claude() {
     [[ -e "$HOME/.claude/commands" ]] && existing_files+=("commands directory")
     [[ -e "$HOME/.claude/agents" ]] && existing_files+=("agents directory")
     [[ -e "$HOME/.claude/skills" ]] && existing_files+=("skills directory")
-    [[ -e "$HOME/.claude/awesome-statusline.sh" ]] && existing_files+=("awesome-statusline.sh")
+    [[ -e "$HOME/.claude/claude-atlas-statusline.sh" ]] && existing_files+=("claude-atlas-statusline.sh")
     
     if [[ ${#existing_files[@]} -gt 0 ]]; then
       echo "⚠️  WARNING: Found existing Claude configuration files:"
@@ -592,7 +592,7 @@ setup_claude() {
       [[ -e "$HOME/.claude/commands" ]] && files_to_backup+=("commands")
       [[ -e "$HOME/.claude/agents" ]] && files_to_backup+=("agents")
       [[ -e "$HOME/.claude/skills" ]] && files_to_backup+=("skills")
-      [[ -e "$HOME/.claude/awesome-statusline.sh" ]] && files_to_backup+=("awesome-statusline.sh")
+      [[ -e "$HOME/.claude/claude-atlas-statusline.sh" ]] && files_to_backup+=("claude-atlas-statusline.sh")
       
       if [[ ${#files_to_backup[@]} -gt 0 ]]; then
         read -p "Would you like to back up your existing Claude configuration first? (y/N): " backup_choice
